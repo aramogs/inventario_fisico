@@ -1,0 +1,69 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+<!-- Begin Page Content -->
+<div class="container-fluid"  id="back">
+
+  <!-- Page Heading -->
+
+  <div class="container-fluid">
+
+      
+    <div class="row ">
+      <!-- Carousel -->
+      <div class="col-lg-8 ">
+
+        <div class="mb-2 animated bounceInLeft slow">
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner  ">
+              <div class="carousel-item active ">
+                <img class="d-block w-100 image-carousel center-block" src="/img/inventario.png" alt="First slide">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Carousel -->
+      <!-- Mapa -->
+      <div class="col-lg-4 animated bounceInRight slow">
+        <div id="world-map-markers" style="height: 300px;"></div>
+      </div>
+      <!-- /Mapa -->
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="alert alert-secondary animated bounceInLeft slow" role="alert">
+          <h5 style="text-align: center">Sistema de Captura de Inventario</h5>
+        </div>
+        <div class="row">
+          <!-- Collapse -->
+          <div class="col-lg-12 animated bounceInLeft slow">
+
+            <div class="card shadow mb-4 shadow-lg">
+              <div class="card-header py-3">
+                <h5 style="text-align: center">Inventario Diciembre 2019</h5>
+              </div>
+              <div class="accordion" id="accordionExample">
+
+              </div>
+            </div>
+          </div>
+          <!-- /Collapse -->
+        </div>
+      </div>
+
+
+   </div>  
+
+    <!-- /.container-fluid -->
+  </div>
+  <!-- End of Main Content -->
+  <!-- Vector Maps -->
+
+  <% include ./static/footer.ejs%>
+  <!-- Vector map -->
+  <script src="/resources/jvectormap/jvectormap-custom.js"></script>
+  <!-- OrgCharts -->
+  <script src="/resources/orgChart/jquery.orgchart.js"></script>
+  <script src="/js/orgChartjs.js"></script>

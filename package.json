@@ -2,10 +2,10 @@
   "name": "inventario_fisico",
   "version": "1.0.0",
   "description": "",
-  "main": "la.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon if",
-    "dev": "nodemon if"
+    "start": "nodemon app",
+    "dev": "nodemon app"
   },
   "keywords": [],
   "author": "",

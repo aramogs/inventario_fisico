@@ -1,38 +1,36 @@
- <!-- Page Content -->
- <div id="page-content-wrapper">
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-dark bg-dark topbar mb-4 static-top shadow">
 
-        <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary border-bottom">
-          <button class="btnNavbar btn btn-info fas fa-bars" id="menu-toggle"></button>
-  
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-              <li class="nav-item dropdown no-arrow">
-                <a class="nav-link  nav-link text-info" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-user-cog fa-lg fa-fw mr-2 text-gray-600"></i></span>
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-user-cog fa-lg fa-fw mr-2 text-gray-600"></i></span>
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="/login/alta_anuncio">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Anuncios
                 </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="/login/alta_supervisores">
-                      <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Alta Supervisores
-                  </a>
-                    <a class="dropdown-item" href="/login/alta_empleados">
-                        <i class="fas fa-sitemap fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Alta Empleados
-                    </a>
-                    
-                </div>
-    
-                
-            </li>
+                <a class="dropdown-item" href="/login/cambiar_directorio">
+                    <i class="fas fa-phone fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Directorio
+                </a>
+            </div>
 
-            </ul>
-          </div>
-        </nav>
-        <div class="container-fluid">
-                <div class="row">
+            
+        </li>
+
+    </ul>
+
+</nav>
+<!-- End of Topbar -->

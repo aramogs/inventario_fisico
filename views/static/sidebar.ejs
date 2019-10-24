@@ -1,34 +1,52 @@
     <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading bg-secondary text-white" ><span><img src="/img/icon.png" style="width: 25px"  alt=""></span> Tristone Flowtech </div>
-        <div class="list-group list-group-flush">
-          <a href="/" class="list-group-item list-group-item-action bg-light"><span class="text-info fas fa-tachometer-alt"></span>  Dashboard</a>
-          <ul class="list-group">
-            <li class="list-group_item">
-              <a href="#" class="list-group-item list-group-item-action bg-light" id="click_hide_show"><span class="text-info fas fa-angle-right"></span><span class="text-info fas fa-table"></span> Captura</a>
-              <ul>
-                <a href="/login/captura_diaria" class="list-group-item list-group-item-action bg-light hide_show" ><span class="text-info fas fa-angle-double-right"></span><span class="text-info fas fa-calendar-day"></span>  Captura Diaria</a>
-                <a href="/login/captura" class="list-group-item list-group-item-action bg-light hide_show"><span class="text-info fas fa-angle-double-right"></span><span class="text-info fas fa-calendar-alt"></span> Captura Mensual</a>
-                <a href="/login/motivo_falta" class="list-group-item list-group-item-action bg-light hide_show"><span class="text-info fas fa-angle-double-right"></span><span class="text-info fas fa-calendar-alt"></span> Motivo de faltas</a>
-                </ul>
-              </li>
-          </ul>
-          <ul class="list-group">
-            <li class="list-group_item">
-              <a href="#" class="list-group-item list-group-item-action bg-light"id="click_hide_show2"><span class="text-info fas fa-angle-right"></span><span class="text-info fas fa-chart-pie"></span> Reportes</a>
-              <ul>
-                <a href="/seleccionar_semana" class="list-group-item list-group-item-action bg-light hide_show2" ><span class="text-info fas fa-angle-double-right"></span><span class="text-info fas fa-chart-line"></span>  Reporte semanal</a>
-                <a href="/seleccionar_mes" class="list-group-item list-group-item-action bg-light hide_show2" ><span class="text-info fas fa-angle-double-right"></span><span class="text-info fas fa-chart-bar"></span>  Reporte mensual</a>
-                <a href="/select_year" class="list-group-item list-group-item-action bg-light hide_show2" ><span class="text-info fas fa-angle-double-right"></span><span class="text-info fas fa-chart-area"></span>  Reporte anual</a>
-              </ul>
-              </li>
-          </ul>
-          
-          <a href="http://10.56.99.21:9675/portal/portal-login" target="_blank" class="list-group-item list-group-item-action bg-light"><span class="text-info fas fa-ticket-alt"></span> Soporte</a>
-          
+    <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
-
-
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center " href="index.html">
+        <div class="sidebar-brand-icon animated pulse slow infinite">
+          <img src="/img/tristone_logo_head.png" alt="" style="width:100%">
         </div>
+        <div class="sidebar-brand-text mx-3">Tristone Flowtech</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/login/mesa_captura">
+          <i class="fas fa-fw fa-keyboard"></i>
+          <span>Mesa Captura</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="/login/conteo">
+          <i class="fas fa-fw fa-clipboard"></i>
+          <span>Conteo</span></a>
+      </li>
+
+      <hr class="sidebar-divider">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-      <!-- /#sidebar-wrapper -->
+
+    </ul>
+    <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">

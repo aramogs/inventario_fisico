@@ -1,0 +1,78 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <h3>Mesa Captura</h3>
+    </div>
+    <!-- form start -->
+    <form action="/guardar_anuncio" method="POST">
+      <div class="row">
+
+        <div class="col-lg-2">
+          <div class="form-group">
+            <input readonly type="text" class="form-control" id="gafete" name="gafete" value="<%= gafete%>"
+              name="gafete" hidden>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <dic class="col-lg-1">
+          <div class="form-group">
+            <label for="titulo">Ticket</label>
+            <input type="text" class="form-control" id="ticket" name="ticket">
+          </div>
+        </dic>
+        <dic class="col-lg-3">
+          <div class="form-group">
+            <label for="titulo">Numero Parte</label>
+            <input type="text" class="form-control" id="sap" name="sap">
+          </div>
+        </dic>
+        <dic class="col-lg-1">
+          <div class="form-group">
+            <label for="titulo">Cantidad</label>
+            <input type="number" class="form-control" id="cantidad" name="cantidad">
+          </div>
+        </dic>
+        <dic class="col-lg-1">
+          <div class="form-group">
+            <label for="titulo">Area</label>
+            <input type="text" class="form-control" id="area" name="area">
+          </div>
+        </dic>
+      </div>
+
+      <div class="row">
+
+        <dic class="col-lg-4">
+          <div class="form-group">
+            <label for="titulo">Descripcion</label>
+            <input type="text" class="form-control" id="sap" name="sap" readonly>
+          </div>
+        </dic>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+<% include ./static/footer.ejs%>
+
+<script>
+    $(document).ready(function () {
+
+        document.getElementById("ticket").focus();
+    });
+</script>
