@@ -9,13 +9,17 @@
 
   <div class="container-fluid">
     <div class="row">
-      <h4>MESA CAPTURA </h4> <span class="align-baseline">(<%= nombre%>)</span>
 
-    </div>
-    <br>
-    <!-- form start -->
-    <div class="row">
+
+
+
+      <!-- form start -->
+
       <div class="col-lg-6">
+        <div class="row">
+          <h4>MESA CAPTURA </h4>
+          <h6 class="align-baseline">(<%= nombre%>)</h6>
+        </div>
         <form action="/guardar_captura" method="POST">
           <div class="row">
 
@@ -90,18 +94,18 @@
           </div>
         </form>
       </div>
-<div class="col-lg-3">
-  <div class="card">
-    <div class="card-header">
-      Ubicaciones
-    </div>
-    <div class="card-body">
-      <span class="badge badge-secondary">L1</span>
-     
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-header">
+            Ubicaciones
+          </div>
+          <div class="card-body">
+            <span class="badge badge-secondary">L1</span>
 
-    </div>
-  </div>
-</div>
+
+          </div>
+        </div>
+      </div>
       <div class="col-lg-3">
         <div class="card">
           <div class="card-header">
