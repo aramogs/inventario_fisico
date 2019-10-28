@@ -17,7 +17,7 @@
       <div class="col-lg-6">
         <div class="input-group mb-3">
           <div class="input-group-prepend ">
-            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white "id="basic-addon1"><span class="fas fa-unlock-alt"></span></span>
+            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white " id="basic-addon1"><span class="fas fa-unlock-alt"></span></span>
           </div>
           <input type="password" placeholder="Contraseña" id="user" class="form-control rounded" name="user" required>
         </div>
@@ -40,31 +40,35 @@
 <% include ./static/footer.ejs%>
 
 <script>
+
+
+
   user.addEventListener("keyup", function (e) {
+
     accesos = <%- JSON.stringify(data2) %>;
     var id = $('#user').val();
+      for (var i = 0; i < accesos.length; i++) {
+        if (id == accesos[i].acc_id) {
 
-
-    for (var i = 0; i < accesos.length; i++) {
-      if (id == accesos[i].acc_id) {
-
-        $('#login_button').prop("disabled", false);
-        break;
-
-      } else {
-
-        $('#login_button').prop("disabled", true);
-
-        if (id.length > 4) {
-          $("#danger-alert").show()
+          $('#login_button').prop("disabled", false);
           setTimeout(function () {
-            $("#danger-alert").slideUp(500);
-          }, 1000);
+            $("#danger-alert").hide()
+            console.log("ts");
+            
+            }, 500);
+            break;
+
+          } else {
+            $('#login_button').prop("disabled", true)
+            setTimeout(function () {
+              console.log("tt");
+              $("#danger-alert").show()
+            }, 500);
+
         }
 
-
       }
-    }
+    });
 
-  });
+  
 </script>

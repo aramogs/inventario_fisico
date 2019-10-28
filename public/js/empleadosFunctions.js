@@ -15,6 +15,18 @@ funcionE.empleadosNombre=(gafete,callback)=>{
 
 }
 
+funcionE.empleados=(callback)=>{
+    dbE.query(`SELECT * FROM del_empleados `, function (err, result, fields) {
+        if (err) {
+            callback (err,null);
+        }else{
+            
+        callback (null,result);
+        }
+    })
+
+}
+
 
 funcionE.empleadosRevisarAccess1= (callback)=>{
 

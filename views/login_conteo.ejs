@@ -1,0 +1,99 @@
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
+
+<div class="col-md-10 col-lg-10-2 col-xl-11">
+
+  <div class="row row mt-1 animated fadeIn fast">
+    <div class="col-lg-6">
+      <img id="loginImg" src="/img/tristone_logo_head.png" class="rounded mx-auto d-block" alt="Tristone Flowtech">
+    </div>
+  </div>
+
+  <form id="login" action="/<%=data%>" method="POST">
+
+
+    <div class="row row mt-4 animated fadeIn fast">
+      <div class="col-lg-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend ">
+            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"  id="basic-addon1"><span class="fas fa-unlock-alt"></span></span>
+          </div>
+          <input type="password" placeholder="Contraseña" id="user" class="form-control rounded" name="user" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row animated fadeIn fast">
+      <div class="col-lg-6">
+
+        <div class="box-footer">
+          <button id="login_button" type="submit" class="btn btn-primary btn-lg btn-block" disabled>Iniciar
+            Sesion</button>
+        </div>
+        <div class="alert alert-danger text-center mt-1" id='danger-alert' role="alert">
+          <span>Contraseña Incorrecta</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<% include ./static/footer %>
+</div>
+</body>
+
+</html>
+
+<script>
+  document.getElementById("user").focus();
+
+  user.addEventListener("keyup", function (e) {
+    accesos = <%- JSON.stringify(data2) %>;
+
+    var escaneado = $('#user').val();
+    let gafete;
+    if (escaneado.length == 9) {
+
+      if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] != 0) {
+        gafete = escaneado.substring(2, 8);
+        $('#user').val(gafete);
+
+      } else if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] == 0) {
+        gafete = escaneado.substring(3, 8);
+        $('#user').val(gafete);
+      }
+
+    } else {
+      gafete = escaneado
+      $('#user').val(gafete);
+    }
+
+    for (var i = 0; i < accesos.length; i++) {
+      if (gafete == accesos[i].emp_id) {
+
+        $('#login_button').prop("disabled", false);
+        $('#login_button').click();
+        break;
+
+      } else {
+
+        $('#login_button').prop("disabled", true);
+
+        if (gafete.length > 5) {
+          $("#danger-alert").show()
+          setTimeout(function () {
+            $("#danger-alert").slideUp(1000);
+          }, 1000);
+        }
+
+
+      }
+    }
+
+
+
+
+
+  });
+</script>

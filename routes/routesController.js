@@ -23,15 +23,23 @@ controller.login = (req, res) => {
                 data: loginId, data2: result
             });
         });
-    } else if (loginId == 'conteo') {
-        funcionE.empleadosRevisarAccess1((err, result) => {
+    }
+}
 
-            res.render('login.ejs', {
+controller.login_conteo = (req, res) => {
+
+    loginId = req.params.id
+
+     if (loginId == 'conteo') {
+        funcionE.empleados((err, result) => {
+            
+            res.render('login_conteo.ejs', {
                 data: loginId, data2: result
             });
         });
     }
 }
+
 
 controller.mesa_captura_POST = (req, res) => {
     gafete = req.body.user;
@@ -90,7 +98,13 @@ controller.guardar_captura_POST = (req, res) => {
 
 };
 
+controller.conteo_POST = (req, res) => {
+    gafete = req.body.user;
 
-
+    res.render('conteo.ejs', {
+       gafete
+    });
+    
+};
 
 module.exports = controller;

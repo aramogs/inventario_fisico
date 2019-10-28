@@ -1,0 +1,146 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+
+  <div class="container-fluid">
+    <div class="row">
+
+
+
+
+      <!-- form start -->
+
+      <div class="col-lg-6">
+        <div class="row">
+          <h4>MESA CAPTURA </h4>
+          <h6 class="align-baseline">(<%= nombre%>)</h6>
+        </div>
+        <form action="/guardar_captura" method="POST">
+          <div class="row">
+
+            <div class="col-lg-2">
+              <div class="form-group">
+                <input readonly type="text" class="form-control" id="gafete" name="gafete" value="<%= gafete%>"
+                  name="gafete" hidden>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <label for="titulo">Ticket: </label> <label id="msgTicket"></label>
+                <input type="text" class="form-control" id="ticket" name="ticket" required>
+              </div>
+            </dic>
+            <dic class="col-lg-6">
+              <div class="form-group">
+                <label for="titulo">Numero Parte: </label> <label id="msgParte"></label>
+                <input type="text" class="form-control" id="parte" name="parte"
+                  onkeyup="this.value = this.value.toUpperCase();" required>
+              </div>
+            </dic>
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <label for="titulo">Cantidad: </label>
+                <input type="number" step="0.01" class="form-control" id="cantidad" name="cantidad" required>
+              </div>
+            </dic>
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <label for="titulo">Ubicacion: </label>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
+              </div>
+            </dic>
+          </div>
+
+          <div class="row">
+
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <label for="titulo">Unidad: </label>
+                <input type="text" class="form-control" id="unidad" name="unidad" readonly>
+              </div>
+            </dic>
+            <dic class="col-lg-10">
+              <div class="form-group">
+                <label for="titulo">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" readonly>
+              </div>
+            </dic>
+          </div>
+          <div class="row">
+
+            <dic class="col-lg-8">
+              <div class="form-group">
+                <label for="titulo">Asignado A: </label>
+                <input type="text" class="form-control" id="asignado" name="asignado" readonly>
+              </div>
+            </dic>
+            <dic class="col-lg-4">
+              <div class="form-group">
+                <label for="titulo">Telefono: </label>
+                <input type="text" class="form-control" id="telefono" name="telefono" readonly>
+              </div>
+            </dic>
+          </div>
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btnguardar" hidden>Guardar</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-header">
+            Ubicaciones
+          </div>
+          <div class="card-body">
+            <span class="badge badge-secondary">L1</span>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-header">
+            Featured
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+<% include ./static/footer.ejs%>
+
+<script>
+
+</script>
