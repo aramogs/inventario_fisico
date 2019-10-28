@@ -45,9 +45,12 @@ controller.mesa_captura_POST = (req, res) => {
                     if (err) throw err;
                     funcion.misTicketsCapturados(gafete, (err, result6) => {
                         if (err) throw err;
+                        funcion.ubicacion( (err, result7) => {
+                            if (err) throw err;
 
-                        res.render('mesa_captura.ejs', {
-                            gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6
+                            res.render('mesa_captura.ejs', {
+                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion:result7
+                            });
                         });
                     });
                 });
@@ -77,9 +80,11 @@ controller.guardar_captura_POST = (req, res) => {
                         if (err) throw err;
                         funcion.misTicketsCapturados(gafete, (err, result6) => {
                             if (err) throw err;
+                            funcion.ubicacion( (err, result7) => {
+                                if (err) throw err;
 
                             res.render('mesa_captura.ejs', {
-                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets:result6
+                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion:result7
                             });
                         });
                     });
@@ -87,6 +92,7 @@ controller.guardar_captura_POST = (req, res) => {
             });
         });
     });
+});
 
 };
 
