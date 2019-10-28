@@ -15,7 +15,7 @@
 
       <!-- form start -->
 
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <div class="row">
           <h4>MESA CAPTURA </h4>
           <h6 class="align-baseline">(<%= nombre%>)</h6>
@@ -34,10 +34,10 @@
             <dic class="col-lg-2">
               <div class="form-group">
                 <label for="titulo">Ticket: </label> <label id="msgTicket"></label>
-                <input type="text" class="form-control" id="ticket" name="ticket" required>
+                <input type="number" class="form-control" id="ticket" name="ticket" required>
               </div>
             </dic>
-            <dic class="col-lg-6">
+            <dic class="col-lg-4">
               <div class="form-group">
                 <label for="titulo">Numero Parte: </label> <label id="msgParte"></label>
                 <input type="text" class="form-control" id="parte" name="parte"
@@ -46,14 +46,20 @@
             </dic>
             <dic class="col-lg-2">
               <div class="form-group">
-                <label for="titulo">Cantidad: </label>
+                <label for="titulo">Cantidad: </label> <label id="msgCant"></label>
                 <input type="number" step="0.01" class="form-control" id="cantidad" name="cantidad" required>
               </div>
             </dic>
             <dic class="col-lg-2">
               <div class="form-group">
-                <label for="titulo">Ubicacion: </label>
-                <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
+                <label for="titulo">Cantidad: </label> <label id="msgCant2"></label>
+                <input type="number" step="0.01" class="form-control" id="cantidad2" name="cantidad2" required>
+              </div>
+            </dic>
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <label for="titulo">Ubicacion: </label> <label id="msgubicacion"></label>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion"  onkeyup="this.value = this.value.toUpperCase();" required>
               </div>
             </dic>
           </div>
@@ -100,21 +106,69 @@
             Ubicaciones
           </div>
           <div class="card-body">
-            <span class="badge badge-secondary">L1</span>
+            <% for(let x = 0;x < ubicacion.length;x++){ %>
+            <span class="badge badge-secondary fspan" ><%= ubicacion[x].ubicacion%></span>
+
+            <%}%>
 
 
           </div>
         </div>
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <div class="card">
           <div class="card-header">
-            Featured
+            Instrucciones
           </div>
           <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <table class="table table-sm ">
+              <thead>
+                <tr>
+                  <th style="border-top: none">
+                    Prefijo
+                  </th>
+                  <th style="border-top: none">
+                    Autocompletado
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td style="border-top: none"><span class="badge badge-secondary fspan">C</span></td>
+                  <td> Cancelado</td>
+                </tr>
+                <tr>
+                  <td style="border-top: none"><span class="badge badge-secondary fspan">5V</span></td>
+                  <td style="border-top: none"> 5V000</td>
+                </tr>
+                <tr>
+                  <td style="border-top: none"> <span class="badge badge-secondary fspan">5E</span></td>
+                  <td style="border-top: none"> 5E000</td>
+                </tr>
+                <tr>
+                  <td style="border-top: none"><span class="badge badge-secondary fspan">50</span></td>
+                  <td style="border-top: none"> 50000</td>
+                </tr>
+                <tr>
+                  <td style="border-top: none"><span class="badge badge-secondary fspan">10</span></td>
+                  <td style="border-top: none"> 10000</td>
+                </tr>
+                <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">1M </span></td>
+                    <td style="border-top: none"> 1M0000</td>
+                  </tr>
+                <tr>
+                  <td style="border-top: none"><span class="badge badge-secondary fspan">7 </span></td>
+                  <td style="border-top: none"> 70000</td>
+                </tr>
+
+
+
+              </tbody>
+            </table>
+
+
           </div>
         </div>
       </div>
@@ -139,33 +193,22 @@
               </thead>
               <tbody>
                 <% for(let i = 0;i < misTickets.length;i++){ %>
-                <%
+            <%
                   %>
-                <tr>
-                  <td><%= misTickets[i].serial%></td>
-                  <td><%= misTickets[i].material%></td>
-                  <td><%= misTickets[i].cantidad%></td>
-                  <td><%= misTickets[i].ubicacion%></td>
-                  <%  } %>
-                </tr>
-              </tbody>
+            <tr>
+              <td><%= misTickets[i].serial%></td>
+              <td><%= misTickets[i].material%></td>
+              <td><%= misTickets[i].cantidad%></td>
+              <td><%= misTickets[i].ubicacion%></td>
+              <%  } %>
+            </tr>
+            </tbody>
             </table>
           </div>
         </div>
       </div>
       <!-- /Collapse -->
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
   </div>
@@ -176,6 +219,12 @@
 <% include ./static/footer.ejs%>
 
 <script>
+/*
+if (window.history.replaceState) {
+        window.history.replaceState(null, null, '/');
+
+    }
+*/
   $(document).ready(function () {
 
     document.getElementById("ticket").focus();
@@ -183,7 +232,7 @@
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   parte.addEventListener("keyup", function (e) {
 
-    material = <% - JSON.stringify(materiales) %>;
+    material = <%- JSON.stringify(materiales) %>;
     var msg = document.getElementById("msgParte");
     var id = $('#parte').val();
 
@@ -199,11 +248,20 @@
 
     }
 
+    if (id.length == 2 && (($('#parte').val()).startsWith("1M"))) {
+
+      $('#parte').val($('#parte').val() + "0000")
+
+    }
+
     if (id.length == 1 && (($('#parte').val()).startsWith("C"))) {
 
       $('#parte').val("CANCELADO")
       $('#cantidad').val(0)
       $('#ubicacion').val("N/A")
+      $('#cantidad').prop("readonly", true);
+      $('#cantidad2').prop("readonly", true);
+      $('#ubicacion').prop("readonly", true);
 
     }
 
@@ -247,8 +305,8 @@
 
   ticket.addEventListener("keyup", function (e) {
 
-    ticket = <% - JSON.stringify(tickets) %>;
-    maxmin = <% - JSON.stringify(maxmin) %>;
+    ticket = <%- JSON.stringify(tickets) %>;
+    maxmin = <%- JSON.stringify(maxmin) %>;
     var msg = document.getElementById("msgTicket");
     var id = parseInt($('#ticket').val(), 10);
     minimo = parseInt(maxmin[0].minimo, 10)
@@ -298,7 +356,105 @@
 
 
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  cantidad.addEventListener("keyup", function (e) {
+
+    var msg = document.getElementById("msgCant");
+    var msg2 = document.getElementById("msgCant2");
+    var cantidad = $('#cantidad').val();
+    var cantidad2 = $('#cantidad2').val();
 
 
+    if (cantidad2 != "") {
+
+      if (cantidad == cantidad2) {
+
+        $('#btnguardar').prop("disabled", false);
+        msg.innerHTML = ' Correcto';
+        msg2.innerHTML = '';
+        msg.classList.add('text-success');
+        msg.classList.remove('text-danger');
+        msg2.classList.add('text-success');
+        msg2.classList.remove('text-danger');
+
+      } else {
+
+        $('#btnguardar').prop("disabled", true);
+        msg.innerHTML = ' Incorrecto';
+        msg.classList.remove('text-success');
+        msg.classList.add('text-danger');
+
+
+      }
+    }
+
+  });
+
+  cantidad2.addEventListener("keyup", function (e) {
+
+    var msg = document.getElementById("msgCant2");
+    var msg2 = document.getElementById("msgCant");
+    var cantidad = $('#cantidad').val();
+    var cantidad2 = $('#cantidad2').val();
+
+
+    if (cantidad != "") {
+
+      if (cantidad == cantidad2) {
+
+        $('#btnguardar').prop("disabled", false);
+        msg.innerHTML = ' Correcto';
+        msg2.innerHTML = '';
+        msg.classList.add('text-success');
+        msg.classList.remove('text-danger');
+        msg2.classList.add('text-success');
+        msg2.classList.remove('text-danger');
+
+      } else {
+
+        $('#btnguardar').prop("disabled", true);
+        msg.innerHTML = ' Incorrecto';
+        msg.classList.remove('text-success');
+        msg.classList.add('text-danger');
+
+
+      }
+    }
+
+  });
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ubicacion.addEventListener("keyup", function (e) {
+
+    ubicaciones = <%- JSON.stringify(ubicacion) %>;
+
+    var msg = document.getElementById("msgubicacion");
+    var id = $('#ubicacion').val();
+
+
+    for (var i = 0; i < ubicaciones.length; i++) {
+
+      if (id == ubicaciones[i].ubicacion) {
+
+        $('#btnguardar').prop("disabled", false);
+        msg.innerHTML = ' Correcto';
+        msg.classList.add('text-success');
+        msg.classList.remove('text-danger');
+        break;
+
+      } else {
+
+        $('#btnguardar').prop("disabled", true);
+        msg.innerHTML = ' Incorrecta';
+        msg.classList.remove('text-success');
+        msg.classList.add('text-danger');
+
+      }
+    }
+
+  });
 
 </script>

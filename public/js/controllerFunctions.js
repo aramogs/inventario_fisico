@@ -72,6 +72,19 @@ funcion.misTicketsCapturados= (gafete,callback)=>{
     })
 }
 
+funcion.ubicacion = (callback)=>{
+    db.query(`SELECT * FROM ubicaciones`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 /*
 funcion.empleadosInsertCaptura = (cap_id,emp_id, emp_id_jefe,cap_año,cap_mes,cap_dia,cap_captura,callback)=>{
     db.query(`
