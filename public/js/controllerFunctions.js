@@ -4,7 +4,75 @@ const express = require('express');
 
 const db = require('../db/conn');
 
+funcion.material= (callback)=>{
+    db.query(`SELECT material, material_description, unidad_medida FROM material`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
 
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.InsertMesaCaptura = (ticket,material, cantidad, ubicacion, gafete,callback)=>{
+    db.query(`
+    INSERT INTO captura (serial, material, cantidad, ubicacion, num_empleado, fecha)
+    VALUES ('${ticket}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.ticketsCapturados= (callback)=>{
+    db.query(`SELECT serial FROM captura WHERE captura_grupo IS NULL`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.MaxTickets= (callback)=>{
+    db.query(`SELECT MIN(ticket_inical) AS minimo, MAX(ticket_final) AS maximo FROM talones`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.misTicketsCapturados= (gafete,callback)=>{
+    db.query(`SELECT * FROM captura WHERE num_empleado= ${gafete}`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+/*
 funcion.empleadosInsertCaptura = (cap_id,emp_id, emp_id_jefe,cap_año,cap_mes,cap_dia,cap_captura,callback)=>{
     db.query(`
     INSERT INTO captura (cap_id, emp_id, emp_id_jefe, cap_año, cap_mes, cap_dia, cap_captura)
@@ -392,6 +460,6 @@ funcion.SearchCaptura_General = (callback)=>{
 }
 
 
-
+*/
 
 module.exports = funcion;

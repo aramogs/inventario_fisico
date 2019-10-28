@@ -20,7 +20,6 @@ funcionE.empleadosRevisarAccess1= (callback)=>{
 
     dbE.query(`SELECT * FROM del_accesos WHERE del_anuncios = 1` , function (err, result, fields) {
         if (err) {
-            console.log(err);
             
             callback (err,null);
         }else{
@@ -35,7 +34,6 @@ funcionE.empleadosDirectorio= (callback)=>{
 
     dbE.query(`SELECT * FROM del_directorio ORDER BY del_nombre` , function (err, result, fields) {
         if (err) {
-            console.log(err);
             
             callback (err,null);
         }else{

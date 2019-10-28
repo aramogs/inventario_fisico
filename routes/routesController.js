@@ -34,10 +34,60 @@ controller.login = (req, res) => {
 }
 
 controller.mesa_captura_POST = (req, res) => {
-    gafete= req.body.user;
-    res.render('mesa_captura.ejs', {
-    gafete:gafete
+    gafete = req.body.user;
+    funcion.material((err, result) => {
+        if (err) throw err;
+        funcionE.empleadosNombre(gafete, (err, result2) => {
+            if (err) throw err;
+            funcion.ticketsCapturados((err, result4) => {
+                if (err) throw err;
+                funcion.MaxTickets((err, result5) => {
+                    if (err) throw err;
+                    funcion.misTicketsCapturados(gafete, (err, result6) => {
+                        if (err) throw err;
+
+                        res.render('mesa_captura.ejs', {
+                            gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6
+                        });
+                    });
+                });
+            });
+        });
     });
+
+};
+
+controller.guardar_captura_POST = (req, res) => {
+
+    gafete = req.body.gafete;
+    ticket = req.body.ticket
+    material = req.body.parte
+    cantidad = req.body.cantidad
+    ubicacion = req.body.ubicacion
+
+    funcion.InsertMesaCaptura(ticket, material, cantidad, ubicacion, gafete, (err, result3) => {
+        if (err) throw err;
+        funcion.material((err, result) => {
+            if (err) throw err;
+            funcionE.empleadosNombre(gafete, (err, result2) => {
+                if (err) throw err;
+                funcion.ticketsCapturados((err, result4) => {
+                    if (err) throw err;
+                    funcion.MaxTickets((err, result5) => {
+                        if (err) throw err;
+                        funcion.misTicketsCapturados(gafete, (err, result6) => {
+                            if (err) throw err;
+
+                            res.render('mesa_captura.ejs', {
+                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets:result6
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
 };
 
 

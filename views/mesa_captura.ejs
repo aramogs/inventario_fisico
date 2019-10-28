@@ -9,13 +9,15 @@
 
   <div class="container-fluid">
     <div class="row">
-      <h3>Mesa Captura</h3>
+      <h4>MESA CAPTURA (<%= nombre%>) </h4>
+
     </div>
+    <br>
     <!-- form start -->
-    <form action="/guardar_anuncio" method="POST">
+    <form action="/guardar_captura" method="POST">
       <div class="row">
 
-        <div class="col-lg-2">
+        <div class="col-lg-1">
           <div class="form-group">
             <input readonly type="text" class="form-control" id="gafete" name="gafete" value="<%= gafete%>"
               name="gafete" hidden>
@@ -25,44 +27,114 @@
       <div class="row">
         <dic class="col-lg-1">
           <div class="form-group">
-            <label for="titulo">Ticket</label>
-            <input type="text" class="form-control" id="ticket" name="ticket">
+            <label for="titulo">Ticket: </label> <label id="msgTicket"></label>
+            <input type="text" class="form-control" id="ticket" name="ticket" required>
           </div>
         </dic>
         <dic class="col-lg-3">
           <div class="form-group">
-            <label for="titulo">Numero Parte</label>
-            <input type="text" class="form-control" id="sap" name="sap">
+            <label for="titulo">Numero Parte: </label> <label id="msgParte"></label>
+            <input type="text" class="form-control" id="parte" name="parte"
+              onkeyup="this.value = this.value.toUpperCase();" required>
           </div>
         </dic>
         <dic class="col-lg-1">
           <div class="form-group">
-            <label for="titulo">Cantidad</label>
-            <input type="number" class="form-control" id="cantidad" name="cantidad">
+            <label for="titulo">Cantidad: </label>
+            <input type="number" step="0.01" class="form-control" id="cantidad" name="cantidad" required>
           </div>
         </dic>
         <dic class="col-lg-1">
           <div class="form-group">
-            <label for="titulo">Area</label>
-            <input type="text" class="form-control" id="area" name="area">
+            <label for="titulo">Ubicacion: </label>
+            <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
           </div>
         </dic>
       </div>
 
       <div class="row">
 
-        <dic class="col-lg-4">
+        <dic class="col-lg-1">
+          <div class="form-group">
+            <label for="titulo">Unidad: </label>
+            <input type="text" class="form-control" id="unidad" name="unidad" readonly>
+          </div>
+        </dic>
+        <dic class="col-lg-5">
           <div class="form-group">
             <label for="titulo">Descripcion</label>
-            <input type="text" class="form-control" id="sap" name="sap" readonly>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" readonly>
+          </div>
+        </dic>
+      </div>
+      <div class="row">
+
+        <dic class="col-lg-4">
+          <div class="form-group">
+            <label for="titulo">Asignado A: </label>
+            <input type="text" class="form-control" id="asignado" name="asignado" readonly>
+          </div>
+        </dic>
+        <dic class="col-lg-2">
+          <div class="form-group">
+            <label for="titulo">Telefono: </label>
+            <input type="text" class="form-control" id="telefono" name="telefono" readonly>
           </div>
         </dic>
       </div>
 
       <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary" id="btnguardar" hidden>Guardar</button>
       </div>
     </form>
+
+    <div class="row">
+      <!-- Collapse -->
+      <div class="col-lg-12">
+
+        <div class="card shadow mb-4 shadow-lg">
+          <div class="card-header py-3">
+            <strong>Capturas</strong>
+          </div>
+          <div class="accordion" id="accordionExample">
+            <table class="table table-hover" id="myTable">
+              <thead>
+                <th> <span class="text-primary"></span> Ticket</th>
+                <th><span class="text-primary"></span> Numero Parte</th>
+                <th><span class="text-primary"></span> Cantidad</th>
+                <th><span class="text-primary"></span> Ubicacion</th>
+              </thead>
+              <tbody>
+              <% for(let i = 0;i < misTickets.length;i++){ %>
+              <%
+                  %>
+                <tr>
+                  <td><%= misTickets[i].serial%></td>
+                  <td><%= misTickets[i].material%></td>
+                  <td><%= misTickets[i].cantidad%></td>
+                  <td><%= misTickets[i].ubicacion%></td>
+                  <%  } %>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /Collapse -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
   <!-- /.container-fluid -->
 </div>
@@ -71,8 +143,129 @@
 <% include ./static/footer.ejs%>
 
 <script>
-    $(document).ready(function () {
+  $(document).ready(function () {
 
-        document.getElementById("ticket").focus();
-    });
+    document.getElementById("ticket").focus();
+  });
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  parte.addEventListener("keyup", function (e) {
+
+    material = <%- JSON.stringify(materiales) %>;
+    var msg = document.getElementById("msgParte");
+    var id = $('#parte').val();
+
+    if (id.length == 2 && (($('#parte').val()).startsWith("5V") || ($('#parte').val()).startsWith("5E") || ($('#parte').val()).startsWith("50") || ($('#parte').val()).startsWith("10"))) {
+
+      $('#parte').val($('#parte').val() + "000")
+
+    }
+
+    if (id.length == 1 && (($('#parte').val()).startsWith("7"))) {
+
+      $('#parte').val($('#parte').val() + "0000")
+
+    }
+
+    if (id.length == 1 && (($('#parte').val()).startsWith("C"))) {
+
+      $('#parte').val("CANCELADO")
+      $('#cantidad').val(0)
+      $('#ubicacion').val("N/A")
+
+    }
+
+
+
+    if (id.length > 11) {
+
+      for (var i = 0; i < material.length; i++) {
+        if (id == material[i].material) {
+
+          $('#cantidad').focus();
+          $('#btnguardar').prop("disabled", false);
+          msg.innerHTML = ' Correcto';
+          msg.classList.add('text-success');
+          msg.classList.remove('text-danger');
+          $('#unidad').val(material[i].unidad_medida);
+          $('#descripcion').val(material[i].material_description);
+
+          break;
+
+        } else {
+
+          $('#btnguardar').prop("disabled", true);
+          msg.innerHTML = ' No Encontrado';
+          msg.classList.remove('text-success');
+          msg.classList.add('text-danger');
+          $('#descripcion').val("");
+        }
+      }
+
+    }else{
+      if($('#parte').val()=="CANCELADO"){
+        $('#btnguardar').prop("disabled", false);
+      }else{
+      $('#btnguardar').prop("disabled", true);
+      }
+    }
+
+  });
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ticket.addEventListener("keyup", function (e) {
+
+    ticket = <%- JSON.stringify(tickets) %>;
+    maxmin = <%- JSON.stringify(maxmin) %>;
+    var msg = document.getElementById("msgTicket");
+    var id = parseInt($('#ticket').val(),10);
+    minimo= parseInt(maxmin[0].minimo,10)
+    maximo= parseInt(maxmin[0].maximo,10)
+
+
+    if (id >=  minimo && id <= maximo) {
+
+      if(ticket.length==0){
+        
+        $('#btnguardar').prop("disabled", false);
+          msg.innerHTML = ' Correcto';
+          msg.classList.add('text-success');
+          msg.classList.remove('text-danger');
+
+      }
+
+      for (var i = 0; i < ticket.length; i++) {
+
+        if (id == ticket[i].serial) {
+
+          $('#btnguardar').prop("disabled", true);
+          msg.innerHTML = ' Duplicado';
+          msg.classList.remove('text-success');
+          msg.classList.add('text-danger');
+          break;
+
+        } else {
+
+          $('#btnguardar').prop("disabled", false);
+          msg.innerHTML = ' Correcto';
+          msg.classList.add('text-success');
+          msg.classList.remove('text-danger');
+
+        }
+      }
+    }else{
+
+      $('#btnguardar').prop("disabled", true);
+          msg.innerHTML = ' Incorrecto';
+          msg.classList.remove('text-success');
+          msg.classList.add('text-danger');
+    }
+
+
+  });
+
+
+
+
+
+
 </script>
