@@ -17,8 +17,19 @@
 
       <div class="col-lg-10">
         <div class="row">
-          <h4>MESA CAPTURA </h4>
-          <h6 class="align-baseline">(<%= nombre%>)</h6>
+          <div class="col-lg-4">
+              <h4>MESA CAPTURA </h4>
+              <h6 class="align-baseline">(<%= nombre%>)</h6>
+    
+          </div>
+
+              <form method="POST" class="col-lg-4" style="text-align: right">
+                  <button formAction="/cancelar_block" type="submit" class="btn btn-warning  icoWhite fas fa-trash-alt"
+                id="btnCancelar" >
+                Cancelar Block</button>
+              </form>
+  
+
         </div>
         <form action="/guardar_captura" method="POST">
           <div class="row">
@@ -124,12 +135,7 @@
 
      <br>
      <div style="text-align: center">
-            <form method="POST">
-              <button formAction="/cancelar_block" type="submit" class="btn btn-warning col-lg-3 icoWhite fas fa-trash-alt"
-            id="btnCancelar" >
-            Cancelar Block</button>
-          </form>
-      
+     
       </div>
     </div>
 
