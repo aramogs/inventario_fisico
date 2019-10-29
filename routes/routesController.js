@@ -150,7 +150,6 @@ controller.delete_ticket_POST = (req, res) => {
                                     if (err) throw err;
 
                                     res.render('mesa_captura.ejs', {
-<<<<<<< HEAD
                                         gafete,
                                         materiales,
                                         nombre,
@@ -159,9 +158,6 @@ controller.delete_ticket_POST = (req, res) => {
                                         misTickets,
                                         ubicacion,
                                         talones
-=======
-                                        gafete, materiales, nombre, tickets, maxmin, misTickets, ubicacion, talones
->>>>>>> 5a98a9504c103f8e4bb14a25d12246e2f805b76d
                                     });
                                 });
                             });
@@ -171,11 +167,8 @@ controller.delete_ticket_POST = (req, res) => {
             });
         });
     });
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 5a98a9504c103f8e4bb14a25d12246e2f805b76d
 };
 
 controller.ubicacion_POST = (req, res) => {
