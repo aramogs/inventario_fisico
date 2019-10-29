@@ -20,7 +20,8 @@ controller.login = (req, res) => {
         funcionE.empleadosRevisarAccess1((err, result) => {
 
             res.render('login.ejs', {
-                data: loginId, data2: result
+                data: loginId,
+                data2: result
             });
         });
     }
@@ -30,11 +31,12 @@ controller.login_conteo = (req, res) => {
 
     loginId = req.params.id
 
-     if (loginId == 'conteo') {
+    if (loginId == 'ubicacion') {
         funcionE.empleados((err, result) => {
-            
+
             res.render('login_conteo.ejs', {
-                data: loginId, data2: result
+                data: loginId,
+                data2: result
             });
         });
     }
@@ -53,11 +55,17 @@ controller.mesa_captura_POST = (req, res) => {
                     if (err) throw err;
                     funcion.misTicketsCapturados(gafete, (err, result6) => {
                         if (err) throw err;
-                        funcion.ubicacion( (err, result7) => {
+                        funcion.ubicacion((err, result7) => {
                             if (err) throw err;
 
                             res.render('mesa_captura.ejs', {
-                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion:result7
+                                gafete: gafete,
+                                materiales: result,
+                                nombre: result2,
+                                tickets: result4,
+                                maxmin: result5,
+                                misTickets: result6,
+                                ubicacion: result7
                             });
                         });
                     });
@@ -78,21 +86,28 @@ controller.guardar_captura_POST = (req, res) => {
 
     funcion.InsertMesaCaptura(ticket, material, cantidad, ubicacion, gafete, (err, result3) => {
         if (err) throw err;
-        funcion.material((err, result) => {
+        funcion.material((err, materiales) => {
             if (err) throw err;
-            funcionE.empleadosNombre(gafete, (err, result2) => {
+            funcionE.empleadosNombre(gafete, (err, nombre) => {
                 if (err) throw err;
-                funcion.ticketsCapturados((err, result4) => {
+                funcion.ticketsCapturados((err, tickets) => {
                     if (err) throw err;
-                    funcion.MaxTickets((err, result5) => {
+                    funcion.MaxTickets((err, maxmin) => {
                         if (err) throw err;
-                        funcion.misTicketsCapturados(gafete, (err, result6) => {
+                        funcion.misTicketsCapturados(gafete, (err, misTickets) => {
                             if (err) throw err;
-                            funcion.ubicacion( (err, result7) => {
+                            funcion.ubicacion((err, ubicacion) => {
                                 if (err) throw err;
 
-                            res.render('mesa_captura.ejs', {
-                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion:result7
+                                res.render('mesa_captura.ejs', {
+                                    gafete,
+                                    materiales,
+                                    nombre,
+                                    tickets,
+                                    maxmin,
+                                    misTickets,
+                                    ubicacion
+                                });
                             });
                         });
                     });
@@ -100,17 +115,40 @@ controller.guardar_captura_POST = (req, res) => {
             });
         });
     });
-});
 
 };
 
-controller.conteo_POST = (req, res) => {
+controller.ubicacion_POST = (req, res) => {
     gafete = req.body.user;
 
-    res.render('conteo.ejs', {
-       gafete
-    });
-    
-};
+    funcionE.empleadosNombre(gafete, (err, nombreContador) => {
 
+        res.render('ubicacion.ejs', {
+            gafete,
+            nombreContador
+        })
+    })
+}
+
+controller.conteo_POST = (req, res) => {
+    gafete = req.body.gafete;
+    nombreContador = req.body.nombreContador
+    ubicacion = req.body.ubicacion
+ 
+        res.render('conteo.ejs', {
+            gafete,
+            nombreContador,
+            ubicacion
+        })
+  
+}
+
+controller.conteo_verificar_POST = (req, res) => {
+    gafete = req.body.gafete;
+    nombreContador = req.body.nombreContador
+    ubicacion = req.body.ubicacion
+    serial = req.body.serial
+
+
+}
 module.exports = controller;
