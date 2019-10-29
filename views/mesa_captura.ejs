@@ -17,16 +17,20 @@
 
       <div class="col-lg-10">
         <div class="row">
-          <div class="col-lg-4">
-              <h4>MESA CAPTURA </h4>
-              <h6 class="align-baseline">(<%= nombre%>)</h6>
-    
+          <div class="col-lg-8">
+              <h4>MESA CAPTURA <span> <h5>(<%= nombre%>)<h5></span></h4>
           </div>
 
               <form method="POST" class="col-lg-4" style="text-align: right">
-                  <button formAction="/cancelar_block" type="submit" class="btn btn-warning  icoWhite fas fa-trash-alt"
+                  <button formAction="/cancelar_multiple" type="submit" class="btn btn-warning  icoWhite "
                 id="btnCancelar" >
-                Cancelar Block</button>
+                Cancelado Multiple <span class="fas fa-arrow-right"></span></button>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                      <input readonly type="text" class="form-control" id="Mgafete" name="Mgafete" value="<%= gafete%>"
+                        name="gafete" hidden>
+                    </div>
+                  </div>
               </form>
   
 
