@@ -1,0 +1,63 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+
+
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class=" col-lg-2">
+                <label for=""> Gefete:</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                    value="<%= gafete %>" readonly>
+
+            </div>
+            <div class=" col-lg-4">
+                <label for=""> Nombre de empleado:</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                    value="<%= nombreContador %>" readonly>
+
+            </div>
+        </div>
+        <br>
+        <!-- form start -->
+
+        <form action="/conteo" method="POST">
+            <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder="" value="<%= gafete%>" hidden>
+            <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
+
+            <label for="">Ubicacion:</label>
+            <div class="input-group  col-lg-6">
+
+                <div class="input-group-prepend ">
+                    <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                        id="basic-addon1"><span class="fas fa-barcode"></span></span>
+                </div>
+                <input type="text" name="ubicacion" id="ubicacion" class="form-control" placeholder="Ubicacion" aria-describedby="helpId" required>
+
+            </div>
+
+            <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="btnguardar" hidden>Guardar</button>
+                  </div>
+        </form>
+
+
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ./static/footer.ejs%>
+
+    <script>
+$('#ubicacion').focus()
+    </script>
