@@ -205,7 +205,7 @@ controller.conteo_POST = (req, res) => {
             posicion = serialesCapturados.length
             current_captura_grupo = serialesCapturados[posicion-1].captura_grupo
             split = current_captura_grupo.split("-")
-            gafete = split[0]
+           // gafete = split[0]
             currentCaptura = parseInt(split[1])
 
             captura_grupo = `${gafete}-${currentCaptura+1}`
@@ -225,14 +225,15 @@ controller.conteo_POST = (req, res) => {
 
 }
 
-controller.conteo_verificar_POST = (req, res) => {
+controller.conteo_guardar_POST = (req, res) => {
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
     serial = req.body.serial
         serial = serial.slice(1)
-    captura_grupo = req.body.captura_grupo
-    
+
+
+    captura_grupo = req.body.captura_grupo    
 
     funcion.SelectSerial(serial, (err, infoNumeroParte) => {
         material = infoNumeroParte[0].material
@@ -240,7 +241,15 @@ controller.conteo_verificar_POST = (req, res) => {
 
 
         funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
-            console.log(err);
+
+        res.render('conteo.ejs', {
+            gafete,
+            nombreContador,
+            ubicacion,
+            captura_grupo
+
+        })
+
 
         })
 
