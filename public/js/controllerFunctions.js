@@ -1,5 +1,5 @@
 const funcion = {};
-const express = require('express');
+
 
 
 const db = require('../db/conn');
@@ -17,10 +17,39 @@ funcion.material= (callback)=>{
     })
 }
 
-funcion.InsertMesaCaptura = (ticket,material, cantidad, ubicacion, gafete,callback)=>{
+funcion.SelectSerial= (serial,callback)=>{
+    db.query(`SELECT material, stock FROM material WHERE storage_unit = ${serial}`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.InsertCaptura = (serial,material, cantidad, ubicacion, gafete,callback)=>{
     db.query(`
     INSERT INTO captura (serial, material, cantidad, ubicacion, num_empleado, fecha)
-    VALUES ('${ticket}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
+    VALUES ('${serial}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.InsertCapturaSerial = (captura_grupo, serial,material, cantidad, ubicacion, gafete,callback)=>{
+    db.query(`
+    INSERT INTO captura (captura_grupo, serial, material, cantidad, ubicacion, num_empleado, fecha)
+    VALUES ('${captura_grupo}','${serial}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
     function (err, result, fields) {
         if (err) {
             
@@ -35,6 +64,19 @@ funcion.InsertMesaCaptura = (ticket,material, cantidad, ubicacion, gafete,callba
 
 funcion.ticketsCapturados= (callback)=>{
     db.query(`SELECT serial FROM captura WHERE captura_grupo IS NULL`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectSerialesCapturados= (callback)=>{
+    db.query(`SELECT serial, captura_grupo FROM captura WHERE captura_grupo IS NOT NULL`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
