@@ -67,7 +67,8 @@ controller.mesa_captura_POST = (req, res) => {
                                 tickets: result4,
                                 maxmin: result5,
                                 misTickets: result6,
-                                ubicacion: result7
+                                ubicacion: result7,
+                                talones
                             });
                         });
                     });
@@ -111,7 +112,8 @@ controller.guardar_captura_POST = (req, res) => {
                                     tickets,
                                     maxmin,
                                     misTickets,
-                                    ubicacion
+                                    ubicacion,
+                                    talones
                                 });
                             });
                         });
