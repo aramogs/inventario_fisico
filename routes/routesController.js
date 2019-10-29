@@ -200,16 +200,16 @@ controller.conteo_POST = (req, res) => {
                 captura_grupo
 
             })
-        }else{
+        } else {
 
             posicion = serialesCapturados.length
-            current_captura_grupo = serialesCapturados[posicion-1].captura_grupo
+            current_captura_grupo = serialesCapturados[posicion - 1].captura_grupo
             split = current_captura_grupo.split("-")
             gafete = split[0]
             currentCaptura = parseInt(split[1])
 
-            captura_grupo = `${gafete}-${currentCaptura+1}`
-            
+            captura_grupo = `${gafete}-${currentCaptura + 1}`
+
             res.render('conteo.ejs', {
                 gafete,
                 nombreContador,
@@ -217,7 +217,7 @@ controller.conteo_POST = (req, res) => {
                 captura_grupo
 
             })
-            
+
         }
     })
 
@@ -230,9 +230,9 @@ controller.conteo_verificar_POST = (req, res) => {
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
     serial = req.body.serial
-        serial = serial.slice(1)
+    serial = serial.slice(1)
     captura_grupo = req.body.captura_grupo
-    
+
 
     funcion.SelectSerial(serial, (err, infoNumeroParte) => {
         material = infoNumeroParte[0].material
@@ -267,5 +267,55 @@ controller.cancelar_multiple_POST = (req, res) => {
 
 
 };
+
+
+controller.guardar_cancelado_POST = (req, res) => {
+
+    gafete = req.body.gafete;
+    ticketI = parseInt(req.body.ticketInicial)
+    ticketF = parseInt(req.body.ticketFinal)
+   
+    for (var i = ticketI; i <= ticketF; i++) {
+  
+        funcion.InsertCaptura(i, "Cancelado", 0, "N/A", gafete, (err, result3) => {
+            if (err) throw err;
+        });
+    }
+
+    funcion.material((err, materiales) => {
+        if (err) throw err;
+        funcionE.empleadosNombre(gafete, (err, nombre) => {
+            if (err) throw err;
+            funcion.ticketsCapturados((err, tickets) => {
+                if (err) throw err;
+                funcion.MaxTickets((err, maxmin) => {
+                    if (err) throw err;
+                    funcion.misTicketsCapturados(gafete, (err, misTickets) => {
+                        if (err) throw err;
+                        funcion.ubicacion((err, ubicacion) => {
+                            if (err) throw err;
+                            funcion.Talones((err, talones) => {
+                                if (err) throw err;
+
+                                res.render('mesa_captura.ejs', {
+                                    gafete,
+                                    materiales,
+                                    nombre,
+                                    tickets,
+                                    maxmin,
+                                    misTickets,
+                                    ubicacion,
+                                    talones
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+
+}
 
 module.exports = controller;

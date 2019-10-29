@@ -18,12 +18,12 @@
       <div class="col-lg-10">
         <div class="row">
           <div class="col-lg-8">
-              <h4>CANCELADO MULTIPLE (<%= nombre%>)</h4>
+            <h4>CANCELADO MULTIPLE (<%= nombre%>)</h4>
           </div>
 
 
         </div>
-        <form action="/guardar_cancelado" method="POST">
+        <form action="/guardar_cancelado" method="POST" autocomplete="off">
           <div class="row">
 
             <div class="col-lg-2">
@@ -41,28 +41,28 @@
               </div>
             </dic>
             <dic class="col-lg-2">
-                <div class="form-group">
-                  <label for="titulo">Ticket Final: </label> <label id="msgTicketF"></label>
-                  <input type="number" class="form-control" id="ticketFinal" name="ticketInicial" required>
-                </div>
-              </dic>
+              <div class="form-group">
+                <label for="titulo">Ticket Final: </label> <label id="msgTicketF"></label>
+                <input type="number" class="form-control" id="ticketFinal" name="ticketFinal" required>
+              </div>
+            </dic>
 
           </div>
 
 
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary" id="btnguardar" >Guardar</button>
+            <button type="submit" class="btn btn-primary" id="btnguardar">Guardar</button>
           </div>
         </form>
 
-     <br>
-     <div style="text-align: center">
-     
+        <br>
+        <div style="text-align: center">
+
+        </div>
       </div>
-    </div>
 
 
-      
+
     </div>
     <br>
 
@@ -74,24 +74,31 @@
 <% include ./static/footer.ejs%>
 
 <script>
-ticketFinal.addEventListener("keyup", function (e) {
+  ticketFinal.addEventListener("keyup", function (e) {
 
-  ticket = <%- JSON.stringify(tickets) %>;
-  inicial= $('#ticketInicial').val();
-  final= $('#ticketFinal').val();
-  
+    ticket = <%- JSON.stringify(tickets) %>;
+    inicial = $('#ticketInicial').val();
+    final = $('#ticketFinal').val();
+    var msg = document.getElementById("msgTicketF");
 
-  for(var i= inicial; i<=final; i++){
+    if (final > inicial) {
+      for (var i = inicial; i <= final; i++) {
 
-      for(var y = 0; y < ticket.length; y++){
-          if(ticket.serial[y]==i){
-            console.log("foundddddd")
+        for (var y = 0; y < ticket.length; y++) {
+
+          if (ticket[y].serial == i) {
+
+            $('#btnguardar').prop("disabled", true);
+            msg.innerHTML = ' Ticket: ' + i + " ya Capturado";
+            msg.classList.remove('text-success');
+            msg.classList.add('text-danger');
+            break;
+
           }
+        }
+
       }
-
-  }
-
-
-})
+    }
+  })
 
 </script>
