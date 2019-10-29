@@ -30,9 +30,9 @@ controller.login_conteo = (req, res) => {
 
     loginId = req.params.id
 
-     if (loginId == 'conteo') {
+    if (loginId == 'conteo') {
         funcionE.empleados((err, result) => {
-            
+
             res.render('login_conteo.ejs', {
                 data: loginId, data2: result
             });
@@ -53,11 +53,14 @@ controller.mesa_captura_POST = (req, res) => {
                     if (err) throw err;
                     funcion.misTicketsCapturados(gafete, (err, result6) => {
                         if (err) throw err;
-                        funcion.ubicacion( (err, result7) => {
+                        funcion.ubicacion((err, result7) => {
                             if (err) throw err;
+                            funcion.Talones((err, talones) => {
+                                if (err) throw err;
 
-                            res.render('mesa_captura.ejs', {
-                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion:result7
+                                res.render('mesa_captura.ejs', {
+                                    gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion: result7, talones
+                                });
                             });
                         });
                     });
@@ -88,11 +91,15 @@ controller.guardar_captura_POST = (req, res) => {
                         if (err) throw err;
                         funcion.misTicketsCapturados(gafete, (err, result6) => {
                             if (err) throw err;
-                            funcion.ubicacion( (err, result7) => {
+                            funcion.ubicacion((err, result7) => {
                                 if (err) throw err;
+                                funcion.Talones((err, talones) => {
+                                    if (err) throw err;
 
-                            res.render('mesa_captura.ejs', {
-                                gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion:result7
+                                    res.render('mesa_captura.ejs', {
+                                        gafete: gafete, materiales: result, nombre: result2, tickets: result4, maxmin: result5, misTickets: result6, ubicacion: result7, talones
+                                    });
+                                });
                             });
                         });
                     });
@@ -100,7 +107,44 @@ controller.guardar_captura_POST = (req, res) => {
             });
         });
     });
-});
+
+};
+
+controller.delete_ticket_POST = (req, res) => {
+
+    gafete = req.body.idGafete;
+    idTicket = req.body.idTicket
+
+
+    funcion.DeleteTicket(idTicket,(err, result) => {
+        if(err) throw err;
+            funcion.material((err, materiales) => {
+                if (err) throw err;
+                funcionE.empleadosNombre(gafete, (err, nombre) => {
+                    if (err) throw err;
+                    funcion.ticketsCapturados((err, tickets) => {
+                        if (err) throw err;
+                        funcion.MaxTickets((err, maxmin) => {
+                            if (err) throw err;
+                            funcion.misTicketsCapturados(gafete, (err, misTickets) => {
+                                if (err) throw err;
+                                funcion.ubicacion((err, ubicacion) => {
+                                    if (err) throw err;
+                                    funcion.Talones((err, talones) => {
+                                        if (err) throw err;
+
+                                        res.render('mesa_captura.ejs', {
+                                            gafete, materiales, nombre, tickets, maxmin, misTickets, ubicacion, talones
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+   
 
 };
 
@@ -108,9 +152,9 @@ controller.conteo_POST = (req, res) => {
     gafete = req.body.user;
 
     res.render('conteo.ejs', {
-       gafete
+        gafete
     });
-    
+
 };
 
 module.exports = controller;

@@ -15,7 +15,7 @@
 
       <!-- form start -->
 
-      <div class="col-lg-7">
+      <div class="col-lg-10">
         <div class="row">
           <h4>MESA CAPTURA </h4>
           <h6 class="align-baseline">(<%= nombre%>)</h6>
@@ -59,67 +59,86 @@
             <dic class="col-lg-2">
               <div class="form-group">
                 <label for="titulo">Ubicacion: </label> <label id="msgubicacion"></label>
-                <input type="text" class="form-control" id="ubicacion" name="ubicacion"  onkeyup="this.value = this.value.toUpperCase();" required>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion"
+                  onkeyup="this.value = this.value.toUpperCase();" required>
               </div>
             </dic>
           </div>
 
+
+          
           <div class="row">
-
-            <dic class="col-lg-2">
-              <div class="form-group">
-                <label for="titulo">Unidad: </label>
-                <input type="text" class="form-control" id="unidad" name="unidad" readonly>
-              </div>
-            </dic>
-            <dic class="col-lg-10">
-              <div class="form-group">
-                <label for="titulo">Descripcion</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" readonly>
-              </div>
-            </dic>
+            <div class="col-lg-2">
+            <div class="card ">
+              <div class="card-header bg-secondary text-white">
+                  Unidad
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"id="unidad">.</li>
+                  </ul>
+            </div>
           </div>
-          <div class="row">
 
-            <dic class="col-lg-8">
-              <div class="form-group">
-                <label for="titulo">Asignado A: </label>
-                <input type="text" class="form-control" id="asignado" name="asignado" readonly>
+            <div class="col-lg-4">
+                <div class="card ">
+                  <div class="card-header bg-secondary text-white">
+                      Descripcion
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"id="descripcion">.</li>
+                      </ul>
+                </div>
               </div>
-            </dic>
-            <dic class="col-lg-4">
-              <div class="form-group">
-                <label for="titulo">Telefono: </label>
-                <input type="text" class="form-control" id="telefono" name="telefono" readonly>
+    
+            <div class="col-lg-4">
+                <div class="card ">
+                  <div class="card-header bg-secondary text-white">
+                      Asignado A
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"id="asignado">.</li>
+                      </ul>
+                </div>
               </div>
-            </dic>
+    
+     
+            <div class="col-lg-2">
+            <div class="card ">
+              <div class="card-header bg-secondary text-white">
+                  Telefono
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"id="telefono">.</li>
+                  </ul>
+            </div>
           </div>
+
+  
+
+        </div>
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary" id="btnguardar" hidden>Guardar</button>
           </div>
         </form>
+
+     <br>
+     <div style="text-align: center">
+            <form method="POST">
+              <button formAction="/cancelar_block" type="submit" class="btn btn-warning col-lg-3 icoWhite fas fa-trash-alt"
+            id="btnCancelar" >
+            Cancelar Block</button>
+          </form>
+      
       </div>
-      <div class="col-lg-3">
-        <div class="card">
-          <div class="card-header">
-            Ubicaciones
-          </div>
-          <div class="card-body">
-            <% for(let x = 0;x < ubicacion.length;x++){ %>
-            <span class="badge badge-secondary fspan" ><%= ubicacion[x].ubicacion%></span>
-
-            <%}%>
+    </div>
 
 
-          </div>
-        </div>
-      </div>
+      
+
       <div class="col-lg-2">
         <div class="card">
-          <div class="card-header">
-            Instrucciones
-          </div>
+
           <div class="card-body">
             <table class="table table-sm ">
               <thead>
@@ -128,7 +147,7 @@
                     Prefijo
                   </th>
                   <th style="border-top: none">
-                    Autocompletado
+                    Completado
                   </th>
                 </tr>
               </thead>
@@ -155,37 +174,48 @@
                   <td style="border-top: none"> 10000</td>
                 </tr>
                 <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">1M </span></td>
-                    <td style="border-top: none"> 1M0000</td>
-                  </tr>
+                  <td style="border-top: none"><span class="badge badge-secondary fspan">1M </span></td>
+                  <td style="border-top: none"> 1M0000</td>
+                </tr>
                 <tr>
                   <td style="border-top: none"><span class="badge badge-secondary fspan">7 </span></td>
                   <td style="border-top: none"> 70000</td>
                 </tr>
-
-
-
               </tbody>
             </table>
-
-
           </div>
         </div>
       </div>
-
     </div>
+    <br>
+
+    
+    
 
     <div class="row">
       <!-- Collapse -->
       <div class="col-lg-12">
 
+        <div class="card">
+          <div class="card-header bg-secondary text-white">
+            Ubicaciones
+          </div>
+          <div class="card-body">
+            <% for(let x = 0;x < ubicacion.length;x++){ %>
+            <span class="badge badge-secondary fspan"><%= ubicacion[x].ubicacion%></span>
+            <%}%>
+           
+                </div>
+              </div>
+              <br>
         <div class="card shadow mb-4 shadow-lg">
-          <div class="card-header py-3">
+          <div class="card-header py-3 bg-secondary text-white">
             <strong>Capturas</strong>
           </div>
           <div class="accordion" id="accordionExample">
-            <table class="table table-hover" id="myTable">
+            <table class="table table-hover table-sm" id="myTable">
               <thead>
+                  <th> <span class="text-primary"></span> Eliminar</th>
                 <th> <span class="text-primary"></span> Ticket</th>
                 <th><span class="text-primary"></span> Numero Parte</th>
                 <th><span class="text-primary"></span> Cantidad</th>
@@ -193,13 +223,22 @@
               </thead>
               <tbody>
                 <% for(let i = 0;i < misTickets.length;i++){ %>
-            <%
-                  %>
+ 
             <tr>
-              <td><%= misTickets[i].serial%></td>
-              <td><%= misTickets[i].material%></td>
-              <td><%= misTickets[i].cantidad%></td>
-              <td><%= misTickets[i].ubicacion%></td>
+              <td class="text-center " width='5%'>
+                <form method="POST">
+                  <button name="equipoid" type="submit" formaction="/delete_ticket" class="btn btn-danger text-center"
+                    data-toggle="tooltip" data-placement="left" onclick="clicked(event)" ><span class="icoWhite fas fa-trash-alt"></span></button>
+                    <input type="text" name="idTicket" value="<%= misTickets[i].serial%>" hidden>
+                    <input type="text" name="idGafete" value="<%= gafete%>" hidden>
+
+                </form>
+
+              </td>
+              <td width='10%'><%= misTickets[i].serial%></td>
+              <td width='10%'><%= misTickets[i].material%></td>
+              <td width='10%'><%= misTickets[i].cantidad%></td>
+              <td width='10%'><%= misTickets[i].ubicacion%></td>
               <%  } %>
             </tr>
             </tbody>
@@ -219,12 +258,17 @@
 <% include ./static/footer.ejs%>
 
 <script>
-/*
-if (window.history.replaceState) {
-        window.history.replaceState(null, null, '/');
+function clicked(e)
+{
+    if(!confirm('Seguro que deseas eliminar?'))e.preventDefault();
+}
 
-    }
-*/
+  /*
+  if (window.history.replaceState) {
+          window.history.replaceState(null, null, '/');
+  
+      }
+  */
   $(document).ready(function () {
 
     document.getElementById("ticket").focus();
@@ -258,6 +302,7 @@ if (window.history.replaceState) {
 
       $('#parte').val("CANCELADO")
       $('#cantidad').val(0)
+      $('#cantidad2').val(0)
       $('#ubicacion').val("N/A")
       $('#cantidad').prop("readonly", true);
       $('#cantidad2').prop("readonly", true);
@@ -277,8 +322,8 @@ if (window.history.replaceState) {
           msg.innerHTML = ' Correcto';
           msg.classList.add('text-success');
           msg.classList.remove('text-danger');
-          $('#unidad').val(material[i].unidad_medida);
-          $('#descripcion').val(material[i].material_description);
+          $('#descripcion').text(material[i].material_description);
+          $('#unidad').text(material[i].unidad_medida)
 
           break;
 
@@ -288,7 +333,7 @@ if (window.history.replaceState) {
           msg.innerHTML = ' No Encontrado';
           msg.classList.remove('text-success');
           msg.classList.add('text-danger');
-          $('#descripcion').val("");
+          $('#descripcion').text("");
         }
       }
 
@@ -311,6 +356,7 @@ if (window.history.replaceState) {
     var id = parseInt($('#ticket').val(), 10);
     minimo = parseInt(maxmin[0].minimo, 10)
     maximo = parseInt(maxmin[0].maximo, 10)
+    talones = <%- JSON.stringify(talones) %>;
 
 
     if (id >= minimo && id <= maximo) {
@@ -332,6 +378,8 @@ if (window.history.replaceState) {
           msg.innerHTML = ' Duplicado';
           msg.classList.remove('text-success');
           msg.classList.add('text-danger');
+          $('#asignado').text('');
+          $('#telefono').text('');
           break;
 
         } else {
@@ -341,6 +389,17 @@ if (window.history.replaceState) {
           msg.classList.add('text-success');
           msg.classList.remove('text-danger');
 
+          for (var y = 0; y < talones.length; y++) {
+
+            if (id >= talones[y].ticket_inicial || id <= talones[y].ticket_final) {
+              $('#asignado').text(talones[y].nombre_empleado);
+              $('#telefono').text(talones[y].telefono);
+              break
+            }
+
+          }
+
+
         }
       }
     } else {
@@ -349,6 +408,9 @@ if (window.history.replaceState) {
       msg.innerHTML = ' Incorrecto';
       msg.classList.remove('text-success');
       msg.classList.add('text-danger');
+      $('#asignado').text('');
+      $('#telefono').text('');
+
     }
 
 

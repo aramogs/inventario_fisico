@@ -59,8 +59,21 @@ funcion.MaxTickets= (callback)=>{
     })
 }
 
+funcion.Talones= (callback)=>{
+    db.query(`SELECT * FROM talones`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.misTicketsCapturados= (gafete,callback)=>{
-    db.query(`SELECT * FROM captura WHERE num_empleado= ${gafete}`,function (err, result, fields) {
+    db.query(`SELECT * FROM captura WHERE num_empleado= ${gafete} ORDER BY captura_id DESC`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -74,6 +87,19 @@ funcion.misTicketsCapturados= (gafete,callback)=>{
 
 funcion.ubicacion = (callback)=>{
     db.query(`SELECT * FROM ubicaciones`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.DeleteTicket= (idTicket,callback)=>{
+    db.query(`DELETE FROM captura WHERE serial='${idTicket}'`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
