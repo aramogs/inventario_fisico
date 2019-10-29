@@ -1,0 +1,97 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+
+  <div class="container-fluid">
+    <div class="row">
+
+
+
+
+      <!-- form start -->
+
+      <div class="col-lg-10">
+        <div class="row">
+          <div class="col-lg-8">
+              <h4>CANCELADO MULTIPLE (<%= nombre%>)</h4>
+          </div>
+
+
+        </div>
+        <form action="/guardar_cancelado" method="POST">
+          <div class="row">
+
+            <div class="col-lg-2">
+              <div class="form-group">
+                <input readonly type="text" class="form-control" id="gafete" name="gafete" value="<%= gafete%>"
+                  name="gafete" hidden>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <label for="titulo">Ticket Inicial: </label> <label id="msgTicketI"></label>
+                <input type="number" class="form-control" id="ticketInicial" name="ticketInicial" required>
+              </div>
+            </dic>
+            <dic class="col-lg-2">
+                <div class="form-group">
+                  <label for="titulo">Ticket Final: </label> <label id="msgTicketF"></label>
+                  <input type="number" class="form-control" id="ticketFinal" name="ticketInicial" required>
+                </div>
+              </dic>
+
+          </div>
+
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btnguardar" >Guardar</button>
+          </div>
+        </form>
+
+     <br>
+     <div style="text-align: center">
+     
+      </div>
+    </div>
+
+
+      
+    </div>
+    <br>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+<% include ./static/footer.ejs%>
+
+<script>
+ticketFinal.addEventListener("keyup", function (e) {
+
+  ticket = <%- JSON.stringify(tickets) %>;
+  inicial= $('#ticketInicial').val();
+  final= $('#ticketFinal').val();
+  
+
+  for(var i= inicial; i<=final; i++){
+
+      for(var y = 0; y < ticket.length; y++){
+          if(ticket.serial[y]==i){
+            console.log("foundddddd")
+          }
+      }
+
+  }
+
+
+})
+
+</script>

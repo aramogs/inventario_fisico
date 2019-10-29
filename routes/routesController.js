@@ -60,15 +60,16 @@ controller.mesa_captura_POST = (req, res) => {
                             funcion.Talones((err, talones) => {
                                 if (err) throw err;
 
-                            res.render('mesa_captura.ejs', {
-                                gafete: gafete,
-                                materiales: result,
-                                nombre: result2,
-                                tickets: result4,
-                                maxmin: result5,
-                                misTickets: result6,
-                                ubicacion: result7,
-                                talones
+                                res.render('mesa_captura.ejs', {
+                                    gafete: gafete,
+                                    materiales: result,
+                                    nombre: result2,
+                                    tickets: result4,
+                                    maxmin: result5,
+                                    misTickets: result6,
+                                    ubicacion: result7,
+                                    talones
+                                });
                             });
                         });
                     });
@@ -76,7 +77,6 @@ controller.mesa_captura_POST = (req, res) => {
             });
         });
     });
-});
 
 };
 
@@ -105,53 +105,15 @@ controller.guardar_captura_POST = (req, res) => {
                                 funcion.Talones((err, talones) => {
                                     if (err) throw err;
 
-                                res.render('mesa_captura.ejs', {
-                                    gafete,
-                                    materiales,
-                                    nombre,
-                                    tickets,
-                                    maxmin,
-                                    misTickets,
-                                    ubicacion,
-                                    talones
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
-
-});
-}
-
-controller.delete_ticket_POST = (req, res) => {
-
-    gafete = req.body.idGafete;
-    idTicket = req.body.idTicket
-
-
-    funcion.DeleteTicket(idTicket,(err, result) => {
-        if(err) throw err;
-            funcion.material((err, materiales) => {
-                if (err) throw err;
-                funcionE.empleadosNombre(gafete, (err, nombre) => {
-                    if (err) throw err;
-                    funcion.ticketsCapturados((err, tickets) => {
-                        if (err) throw err;
-                        funcion.MaxTickets((err, maxmin) => {
-                            if (err) throw err;
-                            funcion.misTicketsCapturados(gafete, (err, misTickets) => {
-                                if (err) throw err;
-                                funcion.ubicacion((err, ubicacion) => {
-                                    if (err) throw err;
-                                    funcion.Talones((err, talones) => {
-                                        if (err) throw err;
-
-                                        res.render('mesa_captura.ejs', {
-                                            gafete, materiales, nombre, tickets, maxmin, misTickets, ubicacion, talones
-                                        });
+                                    res.render('mesa_captura.ejs', {
+                                        gafete,
+                                        materiales,
+                                        nombre,
+                                        tickets,
+                                        maxmin,
+                                        misTickets,
+                                        ubicacion,
+                                        talones
                                     });
                                 });
                             });
@@ -160,8 +122,44 @@ controller.delete_ticket_POST = (req, res) => {
                 });
             });
         });
-   
 
+    });
+}
+
+controller.delete_ticket_POST = (req, res) => {
+
+    gafete = req.body.idGafete;
+    idTicket = req.body.idTicket
+
+
+    funcion.DeleteTicket(idTicket, (err, result) => {
+        if (err) throw err;
+        funcion.material((err, materiales) => {
+            if (err) throw err;
+            funcionE.empleadosNombre(gafete, (err, nombre) => {
+                if (err) throw err;
+                funcion.ticketsCapturados((err, tickets) => {
+                    if (err) throw err;
+                    funcion.MaxTickets((err, maxmin) => {
+                        if (err) throw err;
+                        funcion.misTicketsCapturados(gafete, (err, misTickets) => {
+                            if (err) throw err;
+                            funcion.ubicacion((err, ubicacion) => {
+                                if (err) throw err;
+                                funcion.Talones((err, talones) => {
+                                    if (err) throw err;
+
+                                    res.render('mesa_captura.ejs', {
+                                        gafete, materiales, nombre, tickets, maxmin, misTickets, ubicacion, talones
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
 };
 
 controller.ubicacion_POST = (req, res) => {
@@ -180,13 +178,13 @@ controller.conteo_POST = (req, res) => {
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
- 
-        res.render('conteo.ejs', {
-            gafete,
-            nombreContador,
-            ubicacion
-        })
-  
+
+    res.render('conteo.ejs', {
+        gafete,
+        nombreContador,
+        ubicacion
+    })
+
 }
 
 controller.conteo_verificar_POST = (req, res) => {
@@ -197,4 +195,25 @@ controller.conteo_verificar_POST = (req, res) => {
 
 
 }
+
+
+controller.cancelar_multiple_POST = (req, res) => {
+
+    gafete = req.body.Mgafete;
+    idTicket = req.body.idTicket
+
+
+    funcion.ticketsCapturados((err, tickets) => {
+        if (err) throw err;
+        funcionE.empleadosNombre(gafete, (err, nombre) => {
+            if (err) throw err;
+            res.render('cancelar_multiple.ejs', {
+                gafete, nombre, tickets
+            });
+        });
+    });
+
+
+};
+
 module.exports = controller;
