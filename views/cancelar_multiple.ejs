@@ -8,23 +8,23 @@
   <!-- Page Heading -->
 
   <div class="container-fluid">
-    <div class="row">
+    <div class="row ">
 
 
 
 
       <!-- form start -->
 
-      <div class="col-lg-10">
+      <div class="col-lg-8">
         <div class="row">
-          <div class="col-lg-8">
+          <div class="col-lg-12">
             <h4>CANCELADO MULTIPLE (<%= nombre%>)</h4>
           </div>
 
 
         </div>
-        <form action="/guardar_cancelado" method="POST" autocomplete="off">
-          <div class="row">
+        <form action="/guardar_cancelado" method="POST" autocomplete="off" id="form">
+          <div class="row text-center">
 
             <div class="col-lg-2">
               <div class="form-group">
@@ -34,13 +34,13 @@
             </div>
           </div>
           <div class="row">
-            <dic class="col-lg-2">
+            <dic class="col-lg-4">
               <div class="form-group">
                 <label for="titulo">Ticket Inicial: </label> <label id="msgTicketI"></label>
                 <input type="number" class="form-control" id="ticketInicial" name="ticketInicial" required>
               </div>
             </dic>
-            <dic class="col-lg-2">
+            <dic class="col-lg-4">
               <div class="form-group">
                 <label for="titulo">Ticket Final: </label> <label id="msgTicketF"></label>
                 <input type="number" class="form-control" id="ticketFinal" name="ticketFinal" required>
@@ -48,7 +48,6 @@
             </dic>
 
           </div>
-
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary" id="btnguardar">Guardar</button>
@@ -61,10 +60,61 @@
         </div>
       </div>
 
+      <div class="col-lg-4">
+        <div class="col-lg-12">
+          <div>
+            <div class="card">
+              <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
+              <div class="card-body">
+                <img src="/img/inventario.png" alt="Warehouse Image" class="img-fluid">
+              </div>
+            </div>
+          </div>
 
+        </div>
+      </div>
 
     </div>
     <br>
+
+    <div class="card shadow mb-4 shadow-lg">
+      <div class="card-header py-3 bg-secondary text-white">
+        <strong>Capturas</strong>
+      </div>
+      <div class="accordion" id="accordionExample">
+        <table class="table table-hover table-sm" id="myTable">
+          <thead>
+            <th> <span class="text-primary"></span> Eliminar</th>
+            <th> <span class="text-primary"></span> Ticket</th>
+            <th><span class="text-primary"></span> Numero Parte</th>
+            <th><span class="text-primary"></span> Cantidad</th>
+            <th><span class="text-primary"></span> Ubicacion</th>
+          </thead>
+          <tbody>
+            <% for(let i = 0;i < misTickets.length;i++){ %>
+
+            <tr>
+              <td class="text-center " width='5%'>
+                <form method="POST">
+                  <button name="equipoid" type="submit" formaction="/delete_ticket" class="btn btn-danger text-center"
+                    data-toggle="tooltip" data-placement="left" onclick="clicked(event)"><span
+                      class="icoWhite fas fa-trash-alt"></span></button>
+                  <input type="text" name="idTicket" value="<%= misTickets[i].serial%>" hidden>
+                  <input type="text" name="idGafete" value="<%= gafete%>" hidden>
+
+                </form>
+
+              </td>
+              <td width='10%'><%= misTickets[i].serial%></td>
+              <td width='10%'><%= misTickets[i].material%></td>
+              <td width='10%'><%= misTickets[i].cantidad%></td>
+              <td width='10%'><%= misTickets[i].ubicacion%></td>
+              <%  } %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
   </div>
   <!-- /.container-fluid -->
@@ -74,6 +124,16 @@
 <% include ./static/footer.ejs%>
 
 <script>
+
+  var submitting = false;
+  $("#form").submit(function (event) {
+    if (submitting) {
+      event.preventDefault();
+      return;
+    }
+    submitting = true;
+  });
+
   ticketFinal.addEventListener("keyup", function (e) {
 
     ticket = <%- JSON.stringify(tickets) %>;
@@ -81,6 +141,7 @@
     final = $('#ticketFinal').val();
     var msg = document.getElementById("msgTicketF");
 
+    let found = false
     if (final > inicial) {
       for (var i = inicial; i <= final; i++) {
 
@@ -92,12 +153,61 @@
             msg.innerHTML = ' Ticket: ' + i + " ya Capturado";
             msg.classList.remove('text-success');
             msg.classList.add('text-danger');
+            found = true
             break;
 
           }
         }
 
       }
+      if (found == false) {
+        $('#btnguardar').prop("disabled", false);
+        msg.innerHTML = '';
+        msg.classList.add('text-success');
+        msg.classList.remove('text-danger');
+
+      }
+    } else {
+      $('#btnguardar').prop("disabled", true);
+    }
+  })
+
+
+  ticketInicial.addEventListener("keyup", function (e) {
+
+    ticket = <%- JSON.stringify(tickets) %>;
+    inicial = $('#ticketInicial').val();
+    final = $('#ticketFinal').val();
+    var msg = document.getElementById("msgTicketF");
+
+    let found = false
+    if (inicial< final) {
+      for (var i = inicial; i <= final; i++) {
+
+        for (var y = 0; y < ticket.length; y++) {
+
+          if (ticket[y].serial == i) {
+
+            $('#btnguardar').prop("disabled", true);
+            msg.innerHTML = ' Ticket: ' + i + " ya Capturado";
+            msg.classList.remove('text-success');
+            msg.classList.add('text-danger');
+            found = true
+            break;
+
+          }
+        }
+
+      }
+      if (found == false) {
+        $('#btnguardar').prop("disabled", false);
+        msg.innerHTML = '';
+        msg.classList.add('text-success');
+        msg.classList.remove('text-danger');
+
+      }
+    } else {
+      $('#btnguardar').prop("disabled", true);
     }
   })
 

@@ -10,9 +10,6 @@
   <div class="container-fluid">
     <div class="row">
 
-
-
-
       <!-- form start -->
 
       <div class="col-lg-10">
@@ -35,7 +32,7 @@
   
 
         </div>
-        <form action="/guardar_captura" method="POST" autocomplete="off">
+        <form action="/guardar_captura" method="POST" autocomplete="off" id="form">
           <div class="row">
 
             <div class="col-lg-2">
@@ -264,6 +261,15 @@
 <% include ./static/footer.ejs%>
 
 <script>
+  var submitting = false;
+  $("#form").submit(function(event) {
+        if (submitting) {
+            event.preventDefault();
+            return;
+        }
+        submitting = true;
+    });
+
 function clicked(e)
 {
     if(!confirm('Seguro que deseas eliminar?'))e.preventDefault();
@@ -278,6 +284,7 @@ function clicked(e)
   $(document).ready(function () {
 
     document.getElementById("ticket").focus();
+
   });
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   parte.addEventListener("keyup", function (e) {
