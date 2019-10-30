@@ -243,7 +243,7 @@ controller.conteo_POST = (req, res) => {
             posicion = serialesCapturados.length
             current_captura_grupo = serialesCapturados[posicion - 1].captura_grupo
             split = current_captura_grupo.split("-")
-           // gafete = split[0]
+            // gafete = split[0]
             currentCaptura = parseInt(split[1])
 
             captura_grupo = `${gafete}-${currentCaptura + 1}`
@@ -270,6 +270,7 @@ controller.conteo_guardar_POST = (req, res) => {
     ubicacion = req.body.ubicacion
     serial = req.body.serial
     serial = serial.slice(1)
+<<<<<<< HEAD
     captura_grupo = req.body.captura_grupo
 
     funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
@@ -321,6 +322,27 @@ controller.conteo_guardar_POST = (req, res) => {
                 }
             
             })
+=======
+
+
+    captura_grupo = req.body.captura_grupo
+
+    funcion.SelectSerial(serial, (err, infoNumeroParte) => {
+        material = infoNumeroParte[0].material
+        cantidad = infoNumeroParte[0].stock
+
+
+        funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+
+            res.render('conteo.ejs', {
+                gafete,
+                nombreContador,
+                ubicacion,
+                captura_grupo
+
+            })
+
+>>>>>>> 257a6ddb6acb26a9098551ccb38af5c410bfe885
 
         })
 }
@@ -335,11 +357,20 @@ controller.cancelar_multiple_POST = (req, res) => {
     funcion.ticketsCapturados((err, tickets) => {
         if (err) throw err;
         funcionE.empleadosNombre(gafete, (err, nombre) => {
+<<<<<<< HEAD
             if (err) throw err;
             res.render('cancelar_multiple.ejs', {
                 gafete,
                 nombre,
                 tickets
+=======
+            funcion.misTicketsCapturados(gafete, (err, misTickets) => {
+                if (err) throw err;
+                if (err) throw err;
+                res.render('cancelar_multiple.ejs', {
+                    gafete, nombre, tickets, misTickets
+                });
+>>>>>>> 257a6ddb6acb26a9098551ccb38af5c410bfe885
             });
         });
     });
@@ -353,12 +384,13 @@ controller.guardar_cancelado_POST = (req, res) => {
     gafete = req.body.gafete;
     ticketI = parseInt(req.body.ticketInicial)
     ticketF = parseInt(req.body.ticketFinal)
-   
+
     for (var i = ticketI; i <= ticketF; i++) {
-  
-        funcion.InsertCaptura(i, "Cancelado", 0, "N/A", gafete, (err, result3) => {
+
+        funcion.InsertCaptura(i, "CANCELADO", 0, "N/A", gafete, (err, result) => {
             if (err) throw err;
         });
+
     }
 
     funcion.material((err, materiales) => {
