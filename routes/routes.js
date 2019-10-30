@@ -14,6 +14,7 @@ router.post('/conteo', routesController.conteo_POST);
 router.post('/conteo_guardar', routesController.conteo_guardar_POST)
 router.post('/delete_ticket', routesController.delete_ticket_POST);
 router.post('/cancelar_multiple', routesController.cancelar_multiple_POST)
+router.post('/guardar_cancelado', routesController.guardar_cancelado_POST);
 
 router.get('*', (req, res) => {
   res.send('404 Page not found');
