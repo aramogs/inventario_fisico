@@ -130,7 +130,7 @@ funcion.Select_CapturaGrupo= (captura_grupo,callback)=>{
 
 
 funcion.MaxTickets= (callback)=>{
-    db.query(`SELECT MIN(ticket_inical) AS minimo, MAX(ticket_final) AS maximo FROM talones`,function (err, result, fields) {
+    db.query(`SELECT MIN(ticket_inicial) AS minimo, MAX(ticket_final) AS maximo FROM talones`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -181,7 +181,7 @@ funcion.misTicketsCapturadosC= (gafete,callback)=>{
     })
 }
 
-funcion.Talones= (gafete,callback)=>{
+funcion.Talones= (callback)=>{
     db.query(`SELECT * FROM talones`,function (err, result, fields) {
         if (err) {
           
