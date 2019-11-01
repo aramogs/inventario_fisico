@@ -393,7 +393,7 @@ controller.talones_POST = (req, res) => {
 
 
     funcionE.empleadosNombre(gafete, (err, nombre) => {
-        funcion.Talones(gafete, (err, talones) => {
+        funcion.Talones((err, talones) => {
             funcionE.empleados((err, empleados) => {
             if (err) throw err;
             res.render('talones.ejs', {
