@@ -127,6 +127,33 @@ funcion.misTicketsCapturados= (gafete,callback)=>{
     })
 }
 
+funcion.misTicketsCapturadosC= (gafete,callback)=>{
+    db.query(`SELECT * FROM captura WHERE num_empleado= ${gafete} AND material= 'CANCELADO' ORDER BY captura_id DESC`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Talones= (gafete,callback)=>{
+    db.query(`SELECT * FROM talones`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+
 funcion.ubicacion = (callback)=>{
     db.query(`SELECT * FROM ubicaciones`, function (err, result, fields) {
         if (err) {

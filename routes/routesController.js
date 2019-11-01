@@ -24,6 +24,22 @@ controller.login = (req, res) => {
                 data2: result
             });
         });
+    } else if (loginId == 'talones') {
+        funcionE.empleadosRevisarAccess1((err, result) => {
+
+            res.render('login.ejs', {
+                data: loginId,
+                data2: result
+            });
+        });
+    } else if (loginId == 'acceso') {
+        funcionE.empleadosRevisarAccess1((err, result) => {
+
+            res.render('login.ejs', {
+                data: loginId,
+                data2: result
+            });
+        });
     }
 }
 
@@ -267,8 +283,7 @@ controller.cancelar_multiple_POST = (req, res) => {
     funcion.ticketsCapturados((err, tickets) => {
         if (err) throw err;
         funcionE.empleadosNombre(gafete, (err, nombre) => {
-            funcion.misTicketsCapturados(gafete, (err, misTickets) => {
-                if (err) throw err;
+            funcion.misTicketsCapturadosC(gafete, (err, misTickets) => {
                 if (err) throw err;
                 res.render('cancelar_multiple.ejs', {
                     gafete, nombre, tickets, misTickets
@@ -330,5 +345,45 @@ controller.guardar_cancelado_POST = (req, res) => {
 
 
 }
+
+controller.talones_POST = (req, res) => {
+
+    gafete = req.body.user;
+    idTicket = req.body.idTicket
+
+
+    funcionE.empleadosNombre(gafete, (err, nombre) => {
+        funcion.Talones(gafete, (err, talones) => {
+            funcionE.empleados((err, empleados) => {
+            if (err) throw err;
+            res.render('talones.ejs', {
+                gafete, nombre, talones, empleados
+            });
+        });
+    });
+});
+
+
+};
+
+controller.acceso_POST = (req, res) => {
+
+    gafete = req.body.Mgafete;
+    idTicket = req.body.idTicket
+
+
+    funcionE.empleadosNombre(gafete, (err, nombre) => {
+        funcion.Talones(gafete, (err, talones) => {
+      
+            res.render('talones.ejs', {
+                gafete, nombre, talones, empleados
+            });
+        });
+    });
+
+
+
+
+};
 
 module.exports = controller;

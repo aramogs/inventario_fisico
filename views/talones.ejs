@@ -18,7 +18,7 @@
       <div class="col-lg-8">
         <div class="row">
           <div class="col-lg-12">
-            <label><h4>CANCELADO MULTIPLE <span> <h5><%= nombre%><h5></span></h4></label>
+            <label><h4>TALONES <span> <h5><%= nombre%><h5></span></h4></label>
           </div>
 
 
@@ -44,6 +44,38 @@
               <div class="form-group">
                 <label for="titulo">Ticket Final: </label> <label id="msgTicketF"></label>
                 <input type="number" class="form-control" id="ticketFinal" name="ticketFinal" required>
+              </div>
+            </dic>
+
+          </div>
+
+          <div class="row">
+            <dic class="col-lg-4">
+        
+                <label for="Titulo">Empleado:</label>
+                <select class="form-control" name="empleado" id="empleado" required>
+                    <option value="" selected>Seleccionar</option>
+                    <% for (var i = 0; i < empleados.length; i++) { %>
+                    <option><%= empleados[i].emp_id %></option>
+                    <% } %>
+                </select>
+          
+            </dic>
+            <dic class="col-lg-4">
+              <div class="form-group">
+                <label for="titulo">Telefono: </label> <label id="msgTicketF"></label>
+                <input type="number" class="form-control" id="telefono" name="telefono" required>
+              </div>
+            </dic>
+
+          </div>
+
+          <div class="row">
+
+            <dic class="col-lg-8">
+              <div class="form-group">
+                <label for="titulo">Nombre: </label> 
+                <input type="number" class="form-control" id="nombre" name="nombre" readonly>
               </div>
             </dic>
 
@@ -79,19 +111,19 @@
 
     <div class="card shadow mb-4 shadow-lg">
       <div class="card-header py-3 bg-secondary text-white">
-        <strong>Capturas</strong>
+        <strong>Talones</strong>
       </div>
       <div class="accordion" id="accordionExample">
         <table class="table table-hover table-sm" id="myTable">
           <thead>
             <th> <span class="text-primary"></span> Eliminar</th>
-            <th> <span class="text-primary"></span> Ticket</th>
-            <th><span class="text-primary"></span> Numero Parte</th>
-            <th><span class="text-primary"></span> Cantidad</th>
-            <th><span class="text-primary"></span> Ubicacion</th>
+            <th> <span class="text-primary"></span> Ticket Inicial</th>
+            <th><span class="text-primary"></span> Ticket Final</th>
+            <th><span class="text-primary"></span> Nombre</th>
+            <th><span class="text-primary"></span> Telefono</th>
           </thead>
           <tbody>
-            <% for(let i = 0;i < misTickets.length;i++){ %>
+            <% for(let i = 0;i < talones.length;i++){ %>
 
             <tr>
               <td class="text-center " width='5%'>
@@ -99,16 +131,17 @@
                   <button name="equipoid" type="submit" formaction="/delete_ticket" class="btn btn-danger text-center"
                     data-toggle="tooltip" data-placement="left" onclick="clicked(event)"><span
                       class="icoWhite fas fa-trash-alt"></span></button>
-                  <input type="text" name="idTicket" value="<%= misTickets[i].serial%>" hidden>
+                  <input type="text" name="idTicket" value="<%= talones[i].id%>" hidden>
                   <input type="text" name="idGafete" value="<%= gafete%>" hidden>
 
                 </form>
 
               </td>
-              <td width='10%'><%= misTickets[i].serial%></td>
-              <td width='10%'><%= misTickets[i].material%></td>
-              <td width='10%'><%= misTickets[i].cantidad%></td>
-              <td width='10%'><%= misTickets[i].ubicacion%></td>
+              <td width='10%'><%= talones[i].ticket_inicial%></td>
+              <td width='10%'><%= talones[i].ticket_final%></td>
+              <td width='10%'><%= talones[i].nombre_empleado%></td>
+              <td width='10%'><%= talones[i].telefono%></td>
+
               <%  } %>
             </tr>
           </tbody>
@@ -124,91 +157,17 @@
 <% include ./static/footer.ejs%>
 
 <script>
+empleados = <%- JSON.stringify(empleados) %>;
+$('#empleado').on('change', function (e) {
+  id = $('#empleado').val();
 
-  var submitting = false;
-  $("#form").submit(function (event) {
-    if (submitting) {
-      event.preventDefault();
-      return;
+  for (let i = 0; i < empleado.length; i++) {
+    if(id == empleado[i].emp_id){
+      
     }
-    submitting = true;
-  });
-
-  ticketFinal.addEventListener("keyup", function (e) {
-
-    ticket = <%- JSON.stringify(tickets) %>;
-    inicial = $('#ticketInicial').val();
-    final = $('#ticketFinal').val();
-    var msg = document.getElementById("msgTicketF");
-
-    let found = false
-    if (final > inicial) {
-      for (var i = inicial; i <= final; i++) {
-
-        for (var y = 0; y < ticket.length; y++) {
-
-          if (ticket[y].serial == i) {
-
-            $('#btnguardar').prop("disabled", true);
-            msg.innerHTML = ' Ticket: ' + i + " ya Capturado";
-            msg.classList.remove('text-success');
-            msg.classList.add('text-danger');
-            found = true
-            break;
-
-          }
-        }
-
-      }
-      if (found == false) {
-        $('#btnguardar').prop("disabled", false);
-        msg.innerHTML = '';
-        msg.classList.add('text-success');
-        msg.classList.remove('text-danger');
-
-      }
-    } else {
-      $('#btnguardar').prop("disabled", true);
-    }
-  })
-
-
-  ticketInicial.addEventListener("keyup", function (e) {
-
-    ticket = <%- JSON.stringify(tickets) %>;
-    inicial = $('#ticketInicial').val();
-    final = $('#ticketFinal').val();
-    var msg = document.getElementById("msgTicketF");
-
-    let found = false
-    if (inicial< final) {
-      for (var i = inicial; i <= final; i++) {
-
-        for (var y = 0; y < ticket.length; y++) {
-
-          if (ticket[y].serial == i) {
-
-            $('#btnguardar').prop("disabled", true);
-            msg.innerHTML = ' Ticket: ' + i + " ya Capturado";
-            msg.classList.remove('text-success');
-            msg.classList.add('text-danger');
-            found = true
-            break;
-
-          }
-        }
-
-      }
-      if (found == false) {
-        $('#btnguardar').prop("disabled", false);
-        msg.innerHTML = '';
-        msg.classList.add('text-success');
-        msg.classList.remove('text-danger');
-
-      }
-    } else {
-      $('#btnguardar').prop("disabled", true);
-    }
-  })
+    
+  }
+    
+});
 
 </script>
