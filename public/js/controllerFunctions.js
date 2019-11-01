@@ -30,6 +30,19 @@ funcion.SelectSerial= (serial,callback)=>{
     })
 }
 
+funcion.SelectCurrentCapturas= (captura_grupo,callback)=>{
+    db.query(`SELECT captura_grupo FROM captura WHERE captura_grupo = '${captura_grupo}'`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.InsertCaptura = (serial,material, cantidad, ubicacion, gafete,callback)=>{
     db.query(`
     INSERT INTO captura (serial, material, cantidad, ubicacion, num_empleado, fecha)
@@ -47,6 +60,7 @@ funcion.InsertCaptura = (serial,material, cantidad, ubicacion, gafete,callback)=
 }
 
 funcion.InsertCapturaSerial = (captura_grupo, serial,material, cantidad, ubicacion, gafete,callback)=>{
+    
     db.query(`
     INSERT INTO captura (captura_grupo, serial, material, cantidad, ubicacion, num_empleado, fecha)
     VALUES ('${captura_grupo}','${serial}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
@@ -75,8 +89,8 @@ funcion.ticketsCapturados= (callback)=>{
     })
 }
 
-funcion.SelectSerialesCapturados= (callback)=>{
-    db.query(`SELECT serial, captura_grupo FROM captura WHERE captura_grupo IS NOT NULL`,function (err, result, fields) {
+funcion.Select_SerialesCapturados= (callback)=>{
+    db.query(`SELECT serial FROM captura WHERE captura_grupo IS NOT NULL`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -87,6 +101,20 @@ funcion.SelectSerialesCapturados= (callback)=>{
         }
     })
 }
+
+funcion.Select_GruposCapturados= (callback)=>{
+    db.query(`SELECT captura_grupo FROM captura WHERE captura_grupo IS NOT NULL`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 
 funcion.MaxTickets= (callback)=>{
     db.query(`SELECT MIN(ticket_inical) AS minimo, MAX(ticket_final) AS maximo FROM talones`,function (err, result, fields) {

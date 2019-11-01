@@ -204,37 +204,42 @@ controller.conteo_POST = (req, res) => {
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
 
-    funcion.SelectSerialesCapturados((err, serialesCapturados) => {
+    funcion.Select_GruposCapturados((err, gruposCapturados) => {
+        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
 
-        if (serialesCapturados == "") {
-            captura_grupo = `${gafete}-${+1}`
 
-            res.render('conteo.ejs', {
-                gafete,
-                nombreContador,
-                ubicacion,
-                captura_grupo
+            if (gruposCapturados == "") {
+                captura_grupo = `${gafete}-${+1}`
+                captura_actual = ""
+                res.render('conteo.ejs', {
+                    gafete,
+                    nombreContador,
+                    ubicacion,
+                    captura_grupo,
+                    captura_actual,
+                    serialesCapturados
 
-            })
-        } else {
+                })
+            } else {
 
-            posicion = serialesCapturados.length
-            current_captura_grupo = serialesCapturados[posicion - 1].captura_grupo
-            split = current_captura_grupo.split("-")
-            // gafete = split[0]
-            currentCaptura = parseInt(split[1])
+                posicion = gruposCapturados.length
+                current_captura_grupo = gruposCapturados[posicion - 1].captura_grupo
+                split = current_captura_grupo.split("-")
+                // gafete = split[0]
+                currentCaptura = parseInt(split[1])
 
-            captura_grupo = `${gafete}-${currentCaptura + 1}`
-
-            res.render('conteo.ejs', {
-                gafete,
-                nombreContador,
-                ubicacion,
-                captura_grupo
-
-            })
-
-        }
+                captura_grupo = `${gafete}-${currentCaptura+1}`
+                captura_actual = ""
+                res.render('conteo.ejs', {
+                    gafete,
+                    nombreContador,
+                    ubicacion,
+                    captura_grupo,
+                    captura_actual,
+                    serialesCapturados
+                })
+            }
+        })
     })
 
 
@@ -247,30 +252,59 @@ controller.conteo_guardar_POST = (req, res) => {
     ubicacion = req.body.ubicacion
     serial = req.body.serial
     serial = serial.slice(1)
-
-
     captura_grupo = req.body.captura_grupo
 
-    funcion.SelectSerial(serial, (err, infoNumeroParte) => {
-        material = infoNumeroParte[0].material
-        cantidad = infoNumeroParte[0].stock
+    funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
+
+        captura_actual = Countcaptura_actual.length + 1
+
+        funcion.SelectSerial(serial, (err, infoNumeroParte) => {
+
+                if (infoNumeroParte.length == "") {
+                    material = "NULL"
+                    cantidad = null
 
 
-        funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
 
-            res.render('conteo.ejs', {
-                gafete,
-                nombreContador,
-                ubicacion,
-                captura_grupo
+                            console.table(serialesCapturados);
+                            
+                        res.render('conteo.ejs', {
+                            gafete,
+                            nombreContador,
+                            ubicacion,
+                            captura_grupo,
+                            captura_actual,
+                            serialesCapturados
+                        })
+                        })
+                    })
+                } else {
+                    material = infoNumeroParte[0].material
+                    cantidad = infoNumeroParte[0].stock
 
+
+                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+
+                            console.table(serialesCapturados);
+                        res.render('conteo.ejs', {
+                            gafete,
+                            nombreContador,
+                            ubicacion,
+                            captura_grupo,
+                            captura_actual,
+                            serialesCapturados
+
+                        })
+                    })
+                })
+                }
+            
             })
 
-
         })
-
-
-    })
 }
 
 
@@ -301,13 +335,12 @@ controller.guardar_cancelado_POST = (req, res) => {
     gafete = req.body.gafete;
     ticketI = parseInt(req.body.ticketInicial)
     ticketF = parseInt(req.body.ticketFinal)
-
+   
     for (var i = ticketI; i <= ticketF; i++) {
-
-        funcion.InsertCaptura(i, "CANCELADO", 0, "N/A", gafete, (err, result) => {
+  
+        funcion.InsertCaptura(i, "Cancelado", 0, "N/A", gafete, (err, result3) => {
             if (err) throw err;
         });
-
     }
 
     funcion.material((err, materiales) => {
