@@ -115,6 +115,19 @@ funcion.Select_GruposCapturados= (callback)=>{
     })
 }
 
+funcion.Select_CapturaGrupo= (captura_grupo,callback)=>{
+    db.query(`SELECT * FROM captura WHERE captura_grupo = '${captura_grupo}'`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 
 funcion.MaxTickets= (callback)=>{
     db.query(`SELECT MIN(ticket_inical) AS minimo, MAX(ticket_final) AS maximo FROM talones`,function (err, result, fields) {

@@ -195,32 +195,36 @@ controller.conteo_POST = (req, res) => {
             if (gruposCapturados == "") {
                 captura_grupo = `${gafete}-${+1}`
                 captura_actual = ""
-                res.render('conteo.ejs', {
-                    gafete,
-                    nombreContador,
-                    ubicacion,
-                    captura_grupo,
-                    captura_actual,
-                    serialesCapturados
-
+                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                    res.render('conteo.ejs', {
+                        gafete,
+                        nombreContador,
+                        ubicacion,
+                        captura_grupo,
+                        captura_actual,
+                        serialesCapturados,
+                        capturasPorGrupo
+                    })
                 })
             } else {
 
                 posicion = gruposCapturados.length
                 current_captura_grupo = gruposCapturados[posicion - 1].captura_grupo
                 split = current_captura_grupo.split("-")
-                // gafete = split[0]
                 currentCaptura = parseInt(split[1])
 
                 captura_grupo = `${gafete}-${currentCaptura+1}`
                 captura_actual = ""
-                res.render('conteo.ejs', {
-                    gafete,
-                    nombreContador,
-                    ubicacion,
-                    captura_grupo,
-                    captura_actual,
-                    serialesCapturados
+                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                    res.render('conteo.ejs', {
+                        gafete,
+                        nombreContador,
+                        ubicacion,
+                        captura_grupo,
+                        captura_actual,
+                        serialesCapturados,
+                        capturasPorGrupo
+                    })
                 })
             }
         })
@@ -244,51 +248,54 @@ controller.conteo_guardar_POST = (req, res) => {
 
         funcion.SelectSerial(serial, (err, infoNumeroParte) => {
 
-                if (infoNumeroParte.length == "") {
-                    material = "NULL"
-                    cantidad = null
+            if (infoNumeroParte.length == "") {
+                material = "NULL"
+                cantidad = null
 
 
-                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
-                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-
-                            console.table(serialesCapturados);
+                funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                    funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+                        funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
                             
-                        res.render('conteo.ejs', {
-                            gafete,
-                            nombreContador,
-                            ubicacion,
-                            captura_grupo,
-                            captura_actual,
-                            serialesCapturados
-                        })
-                        })
-                    })
-                } else {
-                    material = infoNumeroParte[0].material
-                    cantidad = infoNumeroParte[0].stock
 
-
-                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
-                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-
-                            console.table(serialesCapturados);
-                        res.render('conteo.ejs', {
-                            gafete,
-                            nombreContador,
-                            ubicacion,
-                            captura_grupo,
-                            captura_actual,
-                            serialesCapturados
-
+                            res.render('conteo.ejs', {
+                                gafete,
+                                nombreContador,
+                                ubicacion,
+                                captura_grupo,
+                                captura_actual,
+                                serialesCapturados,
+                                capturasPorGrupo
+                            })
                         })
                     })
                 })
-                }
-            
-            })
+            } else {
+                material = infoNumeroParte[0].material
+                cantidad = infoNumeroParte[0].stock
+
+
+                funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                    funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+                        funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+
+                            res.render('conteo.ejs', {
+                                gafete,
+                                nombreContador,
+                                ubicacion,
+                                captura_grupo,
+                                captura_actual,
+                                serialesCapturados,
+                                capturasPorGrupo
+                            })
+                        })
+                    })
+                })
+            }
 
         })
+
+    })
 }
 
 
@@ -319,9 +326,9 @@ controller.guardar_cancelado_POST = (req, res) => {
     gafete = req.body.gafete;
     ticketI = parseInt(req.body.ticketInicial)
     ticketF = parseInt(req.body.ticketFinal)
-   
+
     for (var i = ticketI; i <= ticketF; i++) {
-  
+
         funcion.InsertCaptura(i, "Cancelado", 0, "N/A", gafete, (err, result3) => {
             if (err) throw err;
         });
