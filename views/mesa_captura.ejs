@@ -15,21 +15,24 @@
       <div class="col-lg-10">
         <div class="row">
           <div class="col-lg-8">
-              <label><h4>MESA CAPTURA <span> <h5><%= nombre%><h5></span></h4></label>
+            <label>
+              <h4>MESA CAPTURA <span>
+                  <h5><%= nombre%><h5>
+                </span></h4>
+            </label>
           </div>
 
-              <form method="POST" class="col-lg-4" style="text-align: right" >
-                  <button formAction="/cancelar_multiple" type="submit" class="btn btn-danger  icoWhite "
-                id="btnCancelar" >
-                Cancelado Multiple <span class="fas fa-arrow-right"></span></button>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                      <input readonly type="text" class="form-control" id="Mgafete" name="Mgafete" value="<%= gafete%>"
-                        name="gafete" hidden>
-                    </div>
-                  </div>
-              </form>
-  
+          <form method="POST" class="col-lg-4" style="text-align: right">
+            <button formAction="/cancelar_multiple" type="submit" class="btn btn-danger  icoWhite " id="btnCancelar">
+              Cancelado Multiple <span class="fas fa-arrow-right"></span></button>
+            <div class="col-lg-2">
+              <div class="form-group">
+                <input readonly type="text" class="form-control" id="Mgafete" name="Mgafete" value="<%= gafete%>"
+                  name="gafete" hidden>
+              </div>
+            </div>
+          </form>
+
 
         </div>
         <form action="/guardar_captura" method="POST" autocomplete="off" id="form">
@@ -78,67 +81,67 @@
           </div>
 
 
-          
+
           <div class="row">
             <div class="col-lg-2">
-            <div class="card ">
-              <div class="card-header bg-secondary text-white">
+              <div class="card ">
+                <div class="card-header bg-secondary text-white">
                   Unidad
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"id="unidad">.</li>
-                  </ul>
+                  <li class="list-group-item" id="unidad">.</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
             <div class="col-lg-4">
-                <div class="card ">
-                  <div class="card-header bg-secondary text-white">
-                      Descripcion
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"id="descripcion">.</li>
-                      </ul>
+              <div class="card ">
+                <div class="card-header bg-secondary text-white">
+                  Descripcion
                 </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="descripcion">.</li>
+                </ul>
               </div>
-    
+            </div>
+
             <div class="col-lg-4">
-                <div class="card ">
-                  <div class="card-header bg-secondary text-white">
-                      Asignado A
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"id="asignado">.</li>
-                      </ul>
+              <div class="card ">
+                <div class="card-header bg-secondary text-white">
+                  Asignado A
                 </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="asignado">.</li>
+                </ul>
               </div>
-    
-     
+            </div>
+
+
             <div class="col-lg-2">
-            <div class="card ">
-              <div class="card-header bg-secondary text-white">
+              <div class="card ">
+                <div class="card-header bg-secondary text-white">
                   Telefono
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"id="telefono">.</li>
-                  </ul>
+                  <li class="list-group-item" id="telefono">.</li>
+                </ul>
+              </div>
             </div>
+
+
+
           </div>
-
-  
-
-        </div>
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary" id="btnguardar" hidden>Guardar</button>
           </div>
         </form>
 
-     <br>
-     <div style="text-align: center">
-     
+        <br>
+        <div style="text-align: center">
+
+        </div>
       </div>
-    </div>
 
 
       <div class="col-lg-2">
@@ -194,7 +197,7 @@
     </div>
     <br>
 
-    
+
     <div class="row">
       <!-- Collapse -->
       <div class="col-lg-12">
@@ -216,7 +219,7 @@
             <strong>Capturas</strong>
           </div>
           <div class="accordion" id="accordionExample">
-            <table class="table table-hover table-sm" id="myTable">
+            <table class="table table-hover table-sm" id="classTable">
               <thead>
                   <th> <span class="text-primary"></span> Eliminar</th>
                 <th> <span class="text-primary"></span> Ticket</th>
@@ -226,14 +229,15 @@
               </thead>
               <tbody>
                 <% for(let i = 0;i < misTickets.length;i++){ %>
- 
+
             <tr>
               <td class="text-center " width='5%'>
                 <form method="POST">
                   <button name="equipoid" type="submit" formaction="/delete_ticket" class="btn btn-danger text-center"
-                    data-toggle="tooltip" data-placement="left" onclick="clicked(event)" ><span class="icoWhite fas fa-trash-alt"></span></button>
-                    <input type="text" name="idTicket" value="<%= misTickets[i].serial%>" hidden>
-                    <input type="text" name="idGafete" value="<%= gafete%>" hidden>
+                    data-toggle="tooltip" data-placement="left" onclick="clicked(event)"><span
+                      class="icoWhite fas fa-trash-alt"></span></button>
+                  <input type="text" name="idTicket" value="<%= misTickets[i].serial%>" hidden>
+                  <input type="text" name="idGafete" value="<%= gafete%>" hidden>
 
                 </form>
 
@@ -262,18 +266,17 @@
 
 <script>
   var submitting = false;
-  $("#form").submit(function(event) {
-        if (submitting) {
-            event.preventDefault();
-            return;
-        }
-        submitting = true;
-    });
+  $("#form").submit(function (event) {
+    if (submitting) {
+      event.preventDefault();
+      return;
+    }
+    submitting = true;
+  });
 
-function clicked(e)
-{
-    if(!confirm('Seguro que deseas eliminar?'))e.preventDefault();
-}
+  function clicked(e) {
+    if (!confirm('Seguro que deseas eliminar?')) e.preventDefault();
+  }
 
   /*
   if (window.history.replaceState) {
