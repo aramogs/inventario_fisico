@@ -57,6 +57,20 @@ div#danger-alert {
   font-size:12px;
 }
 
+#wrapper{
+   
+  background-image: url("/img/background2.jpg"); 
+  background-size:cover
+}
+
+.cardbg {
+  background: linear-gradient(166deg, rgba(12,59,107,0.7875525210084033) 8%, rgba(162,162,162,0.4430147058823529) 47%, rgba(12,59,107,0.8267682072829132) 94%);
+}
+
+.cardbghd {
+  background:#0c3b6b
+}
+
 
 
 

@@ -1,34 +1,138 @@
 <%include ./static/header.ejs %>
-<%include ./static/sidebar.ejs%>
-<%include ./static/navbar.ejs%>
+
+
 
   <!-- End of Main Content -->
   <!-- Vector Maps -->
-  <canvas id="pie-chart" width="80px" height="20px" class="animated pulse slow infinite"></canvas>
 
-  <% include ./static/footer.ejs%>
+<div class="container-fluid">
+
+
+
+    <div class="card animated bounceInLeft slow  cardbghd">
+
+        <div class="card-body">
+            <div class="container">
+                <div class="row  animated fadeIn fast">
+                    <div class="col-lg-12">
+                        <img id="centeredImg" src="/img/tristone_logo_head.png" class="rounded mx-auto d-block text-center"
+                            alt="Tristone Flowtech">
+                    </div>
+                </div>
+                <h1 class="display-3 text-center text-white">Avance Inventario</h1>
+       
+            </div>
+        </div>
+      </div>
+    <hr>
+
+
+
+  <div class="row">
+    <div class="col-lg-3 mt-3">
+      <div class="card animated bounceInLeft slow bg-transparent cardbg">
+        <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Tickets Capturados</strong></div>
+        <div class="card-body">
+          <strong style="font-size: 30px;" class="text-white" > 10000</strong>
+        </div>
+      </div>
+  </div>
+  <div class="col-lg-3 mt-3">
+    <div class="card animated bounceInLeft slow cardbg">
+      <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Tickets Faltantes</strong></div>
+      <div class="card-body">
+        <strong style="font-size: 30px;" class="text-white"  >5000</strong>
+      </div>
+    </div>
+</div>
+<div class="col-lg-3 mt-3">
+  <div class="card animated bounceInRight slow cardbg">
+    <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Seriales Capturados</strong></div>
+    <div class="card-body ">
+      <strong style="font-size: 50px;" class="text-white"  >5000</strong>
+    </div>
+  </div>
+</div>
+<div class="col-lg-3 mt-3">
+  <div class="card animated bounceInRight slow cardbg">
+    <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Seriales Faltantes</strong></div>
+    <div class="card-body ">
+      <strong style="font-size: 50px;" class="text-white"  >5000</strong>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+  
+  <div class="row">
+
+    <div class="col-lg-6 mt-3">
+        <div class="card animated bounceInLeft slow bg-transparent ">
+          <div class="card-header text-white text-center cardbghd"><strong style="font-size: 30px">Captura Tickets</strong></div>
+          <div class="card-body cardbg" >
+            <canvas id="pie-chart2" width="200px" height="150px" class="animated pulse slow infinite"></canvas>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mt-3">
+      <div class="card animated bounceInRight slow bg-transparent">
+        <div class="card-header text-white text-center cardbghd" ><strong style="font-size: 30px">Captura Almacen</strong></div>
+        <div class="card-body cardbg">
+          <canvas id="pie-chart" width="200px" height="150px"></canvas>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+  
+
+
   <!-- Vector map -->
   <script src="/resources/jvectormap/jvectormap-custom.js"></script>
 
   <script>
   new Chart(document.getElementById("pie-chart"), {
-    type: 'pie',
+    type: 'doughnut',
     data: {
-      labels: ["Capturado", "Faltante"],
+      
       datasets: [{
         label: "Avance",
-        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 206, 86, 0.2)'],
-        borderColor: ['rgba(75, 192, 192, 1)','rgba(255, 206, 86, 1)',
+        backgroundColor: ['#0c3b6b', 'rgba(214, 214, 214, 0.57)'],
+        borderColor: ['rgb(255, 255, 255)','rgb(255, 255, 255)',
                 ],
-                borderWidth: 1,
+                borderWidth: 0,
         data: [2478,5267]
       }]
     },
     options: {
-      title: {
-        display: true,
-        text: 'Avance Total'
-      }
+      
+    }
+});
+
+new Chart(document.getElementById("pie-chart2"), {
+    type: 'doughnut',
+    data: {
+      
+      datasets: [{
+        label: "Avance",
+        backgroundColor: ['#0c3b6b', 'rgba(214, 214, 214, 0.57)'],
+        borderColor: ['rgb(255, 255, 255)','rgb(255, 255, 255)',
+                ],
+                borderWidth: 0,
+        data: [2478,5267]
+      }]
+    },
+    options: {
+      labels: {
+                
+                fontSize:20
+            }
+
     }
 });
   </script>
