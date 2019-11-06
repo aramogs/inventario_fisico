@@ -5,7 +5,8 @@ const controller = {};
 //Require Funciones
 const funcion = require('../public/js/controllerFunctions');
 const funcionE = require('../public/js/empleadosFunctions');
-
+//Conexion RabbitMQ
+const RabbitPublisher = require('../public/js/RabbitMQ_Publisher');
 
 // Index GET
 controller.index_GET = (req, res) => {
@@ -17,7 +18,7 @@ controller.login = (req, res) => {
 
     loginId = req.params.id
     if (loginId == 'mesa_captura') {
-        funcionE.empleadosRevisarAccesso('>=',1,(err, result) => {
+        funcionE.empleadosRevisarAccesso('>=', 1, (err, result) => {
 
             res.render('login.ejs', {
                 data: loginId,
@@ -25,7 +26,7 @@ controller.login = (req, res) => {
             });
         });
     } else if (loginId == 'talones') {
-        funcionE.empleadosRevisarAccesso('=',2,(err, result) => {
+        funcionE.empleadosRevisarAccesso('=', 2, (err, result) => {
 
             res.render('login.ejs', {
                 data: loginId,
@@ -33,7 +34,7 @@ controller.login = (req, res) => {
             });
         });
     } else if (loginId == 'acceso') {
-        funcionE.empleadosRevisarAccesso('=',2,(err, result) => {
+        funcionE.empleadosRevisarAccesso('=', 2, (err, result) => {
 
             res.render('login.ejs', {
                 data: loginId,
@@ -268,20 +269,25 @@ controller.conteo_guardar_POST = (req, res) => {
                 material = "NULL"
                 cantidad = null
 
-
-                funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
-                    funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-                        funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                 RabbitPublisher.get_label(serial, (callback) => {
+                })
 
 
-                            res.render('conteo.ejs', {
-                                gafete,
-                                nombreContador,
-                                ubicacion,
-                                captura_grupo,
-                                captura_actual,
-                                serialesCapturados,
-                                capturasPorGrupo
+
+                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+                            funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+
+
+                                res.render('conteo.ejs', {
+                                    gafete,
+                                    nombreContador,
+                                    ubicacion,
+                                    captura_grupo,
+                                    captura_actual,
+                                    serialesCapturados,
+                                    capturasPorGrupo
+                               
                             })
                         })
                     })
@@ -327,7 +333,10 @@ controller.cancelar_multiple_POST = (req, res) => {
             funcion.misTicketsCapturadosC(gafete, (err, misTickets) => {
                 if (err) throw err;
                 res.render('cancelar_multiple.ejs', {
-                    gafete, nombre, tickets, misTickets
+                    gafete,
+                    nombre,
+                    tickets,
+                    misTickets
                 });
             });
         });
@@ -397,7 +406,10 @@ controller.talones_POST = (req, res) => {
             funcionE.empleados((err, empleados) => {
                 if (err) throw err;
                 res.render('talones.ejs', {
-                    gafete, nombre, talones, empleados
+                    gafete,
+                    nombre,
+                    talones,
+                    empleados
                 });
             });
         });
@@ -417,7 +429,11 @@ controller.acceso_POST = (req, res) => {
                 funcionE.empleados((err, empleados) => {
                     if (err) throw err;
                     res.render('accesos.ejs', {
-                        gafete, nombre, accesos, empleados, ubicaciones
+                        gafete,
+                        nombre,
+                        accesos,
+                        empleados,
+                        ubicaciones
                     });
                 });
             });
@@ -445,7 +461,10 @@ controller.guardar_talon_POST = (req, res) => {
                 funcionE.empleados((err, empleados) => {
                     if (err) throw err;
                     res.render('talones.ejs', {
-                        gafete, nombre, talones, empleados
+                        gafete,
+                        nombre,
+                        talones,
+                        empleados
                     });
                 });
             });
@@ -466,7 +485,10 @@ controller.delete_talon_POST = (req, res) => {
                 funcionE.empleados((err, empleados) => {
                     if (err) throw err;
                     res.render('talones.ejs', {
-                        gafete, nombre, talones, empleados
+                        gafete,
+                        nombre,
+                        talones,
+                        empleados
                     });
                 });
             });
@@ -482,21 +504,26 @@ controller.guardar_ubicacion_POST = (req, res) => {
     ubicacion = req.body.ubicacion;
 
     funcionE.EmpleadosAccesos((err, accesos) => {
-    funcion.InsertUbicacion(ubicacion, (err, result) => {
-        funcion.ubicacion((err, ubicaciones) => {
-            funcionE.empleadosNombre(gafete, (err, nombre) => {
-                funcion.Talones((err, talones) => {
-                    funcionE.empleados((err, empleados) => {
-                        if (err) throw err;
-                        res.render('accesos.ejs', {
-                            gafete, nombre, talones, empleados, ubicaciones, accesos
+        funcion.InsertUbicacion(ubicacion, (err, result) => {
+            funcion.ubicacion((err, ubicaciones) => {
+                funcionE.empleadosNombre(gafete, (err, nombre) => {
+                    funcion.Talones((err, talones) => {
+                        funcionE.empleados((err, empleados) => {
+                            if (err) throw err;
+                            res.render('accesos.ejs', {
+                                gafete,
+                                nombre,
+                                talones,
+                                empleados,
+                                ubicaciones,
+                                accesos
+                            });
                         });
                     });
                 });
             });
         });
     });
-});
 
 
 };
@@ -507,21 +534,26 @@ controller.delete_ubicacion_POST = (req, res) => {
     ubicacion = req.body.idTicket;
 
     funcionE.EmpleadosAccesos((err, accesos) => {
-    funcion.DeleteUbicacion(ubicacion, (err, result) => {
-        funcion.ubicacion((err, ubicaciones) => {
-            funcionE.empleadosNombre(gafete, (err, nombre) => {
-                funcion.Talones((err, talones) => {
-                    funcionE.empleados((err, empleados) => {
-                        if (err) throw err;
-                        res.render('accesos.ejs', {
-                            gafete, nombre, talones, empleados, ubicaciones, accesos
+        funcion.DeleteUbicacion(ubicacion, (err, result) => {
+            funcion.ubicacion((err, ubicaciones) => {
+                funcionE.empleadosNombre(gafete, (err, nombre) => {
+                    funcion.Talones((err, talones) => {
+                        funcionE.empleados((err, empleados) => {
+                            if (err) throw err;
+                            res.render('accesos.ejs', {
+                                gafete,
+                                nombre,
+                                talones,
+                                empleados,
+                                ubicaciones,
+                                accesos
+                            });
                         });
                     });
                 });
             });
         });
     });
-});
 
 };
 
@@ -531,30 +563,35 @@ controller.guardar_acceso_POST = (req, res) => {
     gafete = req.body.user;
     ubicacion = req.body.ubicacion;
     empleado = req.body.empleado
-    acceso= req.body.acceso
+    acceso = req.body.acceso
 
-    if(acceso=="CAPTURISTA"){
-        acc=1
-    }else if(acceso=="ADMINISTRADOR"){
-        acc=2
+    if (acceso == "CAPTURISTA") {
+        acc = 1
+    } else if (acceso == "ADMINISTRADOR") {
+        acc = 2
     }
 
-    funcionE.InsertAcceso(empleado,acc, (err, result) => {
+    funcionE.InsertAcceso(empleado, acc, (err, result) => {
         funcion.ubicacion((err, ubicaciones) => {
             funcionE.empleadosNombre(gafete, (err, nombre) => {
                 funcion.Talones((err, talones) => {
                     funcionE.empleados((err, empleados) => {
                         funcionE.EmpleadosAccesos((err, accesos) => {
-            
-                        res.render('accesos.ejs', {
-                            gafete, nombre, talones, empleados, ubicaciones, accesos
+
+                            res.render('accesos.ejs', {
+                                gafete,
+                                nombre,
+                                talones,
+                                empleados,
+                                ubicaciones,
+                                accesos
+                            });
                         });
                     });
                 });
             });
         });
     });
-});
 
 
 
@@ -573,16 +610,21 @@ controller.delete_acceso_POST = (req, res) => {
                 funcion.Talones((err, talones) => {
                     funcionE.empleados((err, empleados) => {
                         funcionE.EmpleadosAccesos((err, accesos) => {
-            
-                        res.render('accesos.ejs', {
-                            gafete, nombre, talones, empleados, ubicaciones, accesos
+
+                            res.render('accesos.ejs', {
+                                gafete,
+                                nombre,
+                                talones,
+                                empleados,
+                                ubicaciones,
+                                accesos
+                            });
                         });
                     });
                 });
             });
         });
     });
-});
 
 
 
