@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqp": "^0.2.7",
+    "amqplib": "^0.5.5",
     "animate.css": "^3.7.2",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
