@@ -28,9 +28,9 @@ funcionE.empleados=(callback)=>{
 }
 
 
-funcionE.empleadosRevisarAccess1= (callback)=>{
+funcionE.empleadosRevisarAccesso= (sign, acc,callback)=>{
 
-    dbE.query(`SELECT * FROM del_accesos WHERE del_anuncios = 1` , function (err, result, fields) {
+    dbE.query(`SELECT * FROM del_accesos WHERE acc_inventario ${sign}${acc}` , function (err, result, fields) {
         if (err) {
             
             callback (err,null);
@@ -75,6 +75,55 @@ funcionE.empleadosInsertDirectorio = (del_extension, del_nombre, callback) => {
 funcionE.empleadosDeleteDirectorio = (extension, callback) => {
 
     dbE.query(`DELETE FROM del_directorio WHERE del_extension='${extension}'`, function (err, result, fields) {
+            if (err) {
+                
+                callback(err, null);
+
+            } else {
+
+                callback(null, result);
+            }
+        })
+
+}
+
+funcionE.EmpleadosAccesos = ( callback) => {
+
+    dbE.query(`SELECT * FROM del_empleados, del_accesos 
+    WHERE del_empleados.emp_id=del_accesos.acc_id 
+    AND del_accesos.acc_inventario>=1`, function (err, result, fields) {
+            if (err) {
+                
+                callback(err, null);
+
+            } else {
+
+                callback(null, result);
+            }
+        })
+
+}
+
+funcionE.InsertAcceso = (empleado, acc, callback) => {
+
+    dbE.query(`INSERT INTO del_accesos (acc_id, acc_inventario)
+    VALUES('${empleado}',${acc})
+    ON DUPLICATE KEY UPDATE acc_inventario = VALUES(acc_inventario)`, function (err, result, fields) {
+            if (err) {
+
+                callback(err, null);
+
+            } else {
+
+                callback(null, result);
+            }
+        })
+
+}
+
+funcionE.DeleteAcceso = (gafete, callback) => {
+
+    dbE.query(`UPDATE del_accesos SET acc_inventario = 0 WHERE acc_id ='${gafete}'`, function (err, result, fields) {
             if (err) {
                 
                 callback(err, null);

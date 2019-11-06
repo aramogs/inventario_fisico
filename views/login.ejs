@@ -42,7 +42,6 @@
 <script>
 
 
-
   user.addEventListener("keyup", function (e) {
 
     accesos = <%- JSON.stringify(data2) %>;
@@ -53,7 +52,7 @@
           $('#login_button').prop("disabled", false);
           setTimeout(function () {
             $("#danger-alert").hide()
-            console.log("ts");
+        
             
             }, 500);
             break;
@@ -61,7 +60,7 @@
           } else {
             $('#login_button').prop("disabled", true)
             setTimeout(function () {
-              console.log("tt");
+            
               $("#danger-alert").show()
             }, 500);
 

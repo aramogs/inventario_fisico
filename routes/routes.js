@@ -18,6 +18,14 @@ router.post('/guardar_cancelado', routesController.guardar_cancelado_POST);
 router.post('/talones', routesController.talones_POST);
 router.post('/acceso', routesController.acceso_POST);
 router.post('/', routesController.talones_POST);
+router.post('/guardar_talon', routesController.guardar_talon_POST);
+router.post('/delete_talon', routesController.delete_talon_POST);
+router.post('/guardar_ubicacion', routesController.guardar_ubicacion_POST);
+router.post('/delete_ubicacion', routesController.delete_ubicacion_POST);
+router.post('/guardar_acceso', routesController.guardar_acceso_POST);
+router.post('/delete_acceso', routesController.delete_acceso_POST);
+router.get('/graficas', routesController.graficas_GET);
+
 
 
 router.get('*', (req, res) => {

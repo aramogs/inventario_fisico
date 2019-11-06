@@ -1,0 +1,279 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+
+  <div class="container-fluid">
+    <div class="row ">
+      <!-- form start -->
+
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-12">
+            <label>
+              <h4>ACCESOS<span> </span></h4>
+            </label>
+          </div>
+        </div>
+        <form action="/guardar_acceso" method="POST" autocomplete="off" id="form">
+          <div class="row text-center">
+
+            <div class="col-lg-2">
+              <div class="form-group">
+                <input readonly type="text" class="form-control" id="gafete" name="gafete" value="<%= gafete%>"
+                  name="gafete" hidden>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <dic class="col-lg-5">
+
+              <label for="Titulo">Empleado:</label>
+              <select class="form-control" name="empleado" id="empleado" required>
+                <option value="" selected>Seleccionar</option>
+                <% for (var i = 0; i < empleados.length; i++) { %>
+                <option><%= empleados[i].emp_id %></option>
+                <% } %>
+              </select>
+
+            </dic>
+            <dic class="col-lg-5">
+              <label for="Titulo">Acceso:</label>
+              <select class="form-control" name="acceso" id="acceso" required>
+                <option value="" selected>Seleccionar</option>
+                <option>CAPTURISTA</option>
+                <option>ADMINISTRADOR</option>
+
+              </select>
+
+          </div>
+          <br>
+          <div class="row">
+
+            <dic class="col-lg-10">
+              <div class="form-group">
+                <label for="titulo">Nombre: </label>
+                <input type="text" class="form-control" id="nombre" name="nombre" readonly>
+              </div>
+            </dic>
+
+          </div>
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btnguardarA">Guardar</button>
+          </div>
+        </form>
+
+        <br>
+  
+      </div>
+
+
+
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-12">
+            <label>
+              <h4>UBICACIONES<span> </span></h4>
+            </label>
+          </div>
+        </div>
+        <form action="/guardar_ubicacion" method="POST" autocomplete="off" id="form">
+          <div class="row text-center">
+
+            <div class="col-lg-2">
+              <div class="form-group">
+                <input readonly type="text" class="form-control" id="gafete" name="gafete" value="<%= gafete%>"
+                  name="gafete" hidden>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+
+            <dic class="col-lg-10">
+              <div class="form-group">
+                <label for="titulo">Ubicacion: </label> <label id="msgUbic"></label>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion"
+                  onkeyup="this.value = this.value.toUpperCase();">
+              </div>
+            </dic>
+
+          </div>
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btnguardarU">Guardar</button>
+          </div>
+        </form>
+
+        <br>
+
+      </div>
+
+    </div>
+    <br>
+
+
+      <div class="row ">
+        <div class="col-lg-6">
+          <div class="card shadow mb-4 shadow-lg">
+            <div class="card-header py-3 bg-secondary text-white">
+              <strong>Accesos</strong>
+            </div>
+            <div class="accordion" id="accordionExample">
+              <table class="table table-hover table-sm" id="myTable2">
+                <thead>
+                  <th> <span class="text-primary"></span> Eliminar</th>
+                  <th> <span class="text-primary"></span> Nombre</th>
+                  <th><span class="text-primary"></span> Acceso</th>
+                </thead>
+                <tbody>
+                  <% for(let i = 0;i < accesos.length;i++){ %>
+
+                  <tr>
+                    <td class="text-center " width='5%'>
+                      <form method="POST">
+                        <button name="equipoid" type="submit" formaction="/delete_acceso"
+                          class="btn btn-danger text-center" data-toggle="tooltip" data-placement="left"
+                          onclick="clicked(event)"><span class="icoWhite fas fa-trash-alt"></span></button>
+                        <input type="text" name="idGafete" value="<%= accesos[i].acc_id%>" hidden>
+                      </form>
+
+                    </td>
+                    <td width='10%'><%= accesos[i].emp_nombre%></td>
+                    <% if (accesos[i].acc_inventario==1) {%>
+                    <td width='10%'>CAPTURISTA</td>
+                    <%  }else {%>
+                      <td width='10%'>ADMINISTRADOR</td>
+                      <%  } %>
+                    <%  } %>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-6">
+          <div class="card shadow mb-4 shadow-lg">
+            <div class="card-header py-3 bg-secondary text-white">
+              <strong>Ubicaciones</strong>
+            </div>
+            <div class="accordion" id="accordionExample">
+              <table class="table table-hover table-sm" id="myTable2">
+                <thead>
+                  <th> <span class="text-primary"></span> Eliminar</th>
+                  <th> <span class="text-primary"></span> Ubicacion</th>
+
+                </thead>
+                <tbody>
+                  <% for(let i = 0;i < ubicaciones.length;i++){ %>
+
+                  <tr>
+                    <td class="text-center " width='5%'>
+                      <form method="POST">
+                        <button name="equipoid" type="submit" formaction="/delete_ubicacion"
+                          class="btn btn-danger text-center" data-toggle="tooltip" data-placement="left"
+                          onclick="clicked(event)"><span class="icoWhite fas fa-trash-alt"></span></button>
+                        <input type="text" name="idTicket" value="<%= ubicaciones[i].id%>" hidden>
+                        <input type="text" name="idGafete" value="<%= gafete%>" hidden>
+                      </form>
+
+                    </td>
+                    <td width='10%'><%= ubicaciones[i].ubicacion%></td>
+
+
+                    <%  } %>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+<% include ./static/footer.ejs%>
+
+<script>
+
+function clicked(e) {
+    if (!confirm('Seguro que deseas eliminar?')) e.preventDefault();
+  }
+
+  
+  if (window.history.replaceState) {
+          window.history.replaceState(null, null, '/');
+  
+      }
+
+  ubicaciones = <%- JSON.stringify(ubicaciones) %>;
+  var msg = document.getElementById("msgUbic");
+
+  ubicacion.addEventListener("keyup", function (e) {
+    id = $('#ubicacion').val();
+    let found = false;
+
+    for (let i = 0; i < ubicaciones.length; i++) {
+      if (id == ubicaciones[i].ubicacion) {
+
+        $('#btnguardarU').prop("disabled", true);
+        msg.innerHTML = ' Ya Registrada';
+        msg.classList.add('text-danger');
+        found = true;
+        break;
+      }
+
+    }
+    if (found == false) {
+
+      $('#btnguardarU').prop("disabled", false);
+      msg.innerHTML = '';
+      msg.classList.remove('text-danger');
+
+    }
+  })
+
+  empleados = <%- JSON.stringify(empleados) %>;
+
+  $('#empleado').on('change', function (e) {
+    id = $('#empleado').val();
+
+
+    for (let i = 0; i < empleados.length; i++) {
+      if (id == empleados[i].emp_id) {
+
+        $('#nombre').val(empleados[i].emp_nombre);
+
+      }
+
+    }
+
+    for (let i = 0; i < talones.length; i++) {
+      if (id == talones[i].num_empleado) {
+
+        $('#telefono').val(talones[i].telefono);
+
+      }
+
+    }
+
+  });
+
+
+
+</script>

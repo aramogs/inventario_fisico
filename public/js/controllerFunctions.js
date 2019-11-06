@@ -130,13 +130,12 @@ funcion.Select_CapturaGrupo= (captura_grupo,callback)=>{
 
 
 funcion.MaxTickets= (callback)=>{
-    db.query(`SELECT MIN(ticket_inicial) AS minimo, MAX(ticket_final) AS maximo FROM talones`,function (err, result, fields) {
+    db.query(`SELECT MIN(CONVERT(ticket_inicial, SIGNED INTEGER)) AS minimo, MAX(CONVERT(ticket_final, SIGNED INTEGER))AS maximo FROM talones`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
 
         } else {
-
             callback(null, result);
         }
     })
@@ -221,6 +220,64 @@ funcion.DeleteTicket= (idTicket,callback)=>{
     })
 }
 
+funcion.InsertTalon = (inicio,final, empleado, nombre, telefono,callback)=>{
+    db.query(`
+    INSERT INTO talones (ticket_inicial, ticket_final, num_empleado, nombre_empleado, telefono)
+    VALUES ('${inicio}' , '${final}' , ${empleado}, '${nombre}' , '${telefono}')`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.DeleteTalon= (idTicket,callback)=>{
+    db.query(`DELETE FROM talones WHERE id='${idTicket}'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.InsertUbicacion = (ubicacion,callback)=>{
+    db.query(`
+    INSERT INTO ubicaciones (ubicacion)
+    VALUES ('${ubicacion}')`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.DeleteUbicacion= (idTicket,callback)=>{
+    db.query(`DELETE FROM ubicaciones WHERE id=${idTicket}`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+ 
 /*
 funcion.empleadosInsertCaptura = (cap_id,emp_id, emp_id_jefe,cap_año,cap_mes,cap_dia,cap_captura,callback)=>{
     db.query(`

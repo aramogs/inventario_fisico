@@ -61,7 +61,31 @@
   </div>
   <!-- End of Main Content -->
   <!-- Vector Maps -->
+  <canvas id="pie-chart" width="80px" height="20px" class="animated pulse slow infinite"></canvas>
 
   <% include ./static/footer.ejs%>
   <!-- Vector map -->
   <script src="/resources/jvectormap/jvectormap-custom.js"></script>
+
+  <script>
+  new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    data: {
+      labels: ["Capturado", "Faltante"],
+      datasets: [{
+        label: "Avance",
+        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+        borderColor: ['rgba(75, 192, 192, 1)','rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1,
+        data: [2478,5267]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Avance Total'
+      }
+    }
+});
+  </script>

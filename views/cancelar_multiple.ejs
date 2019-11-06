@@ -125,6 +125,16 @@
 
 <script>
 
+function clicked(e) {
+    if (!confirm('Seguro que deseas eliminar?')) e.preventDefault();
+  }
+
+  
+  if (window.history.replaceState) {
+          window.history.replaceState(null, null, '/');
+  
+      }
+
   var submitting = false;
   $("#form").submit(function (event) {
     if (submitting) {
@@ -181,7 +191,7 @@
     var msg = document.getElementById("msgTicketF");
 
     let found = false
-    if (inicial< final) {
+    if (inicial< final && final != "") {
       for (var i = inicial; i <= final; i++) {
 
         for (var y = 0; y < ticket.length; y++) {
@@ -206,9 +216,19 @@
         msg.classList.remove('text-danger');
 
       }
-    } else {
-      $('#btnguardar').prop("disabled", true);
+    // } else {
+    //   $('#btnguardar').prop("disabled", true);
+    // }
     }
   })
+
+  var currentDate = new Date(),
+      day = currentDate.getDate(),
+      month = currentDate.getMonth() + 1,
+      year = currentDate.getFullYear(),
+      date = day + "/" + month + "/" + year;
+
+
+    document.getElementById("date").innerHTML = date;
 
 </script>

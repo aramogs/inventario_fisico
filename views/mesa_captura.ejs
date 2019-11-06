@@ -278,12 +278,12 @@
     if (!confirm('Seguro que deseas eliminar?')) e.preventDefault();
   }
 
-  /*
+  
   if (window.history.replaceState) {
           window.history.replaceState(null, null, '/');
   
       }
-  */
+  
   $(document).ready(function () {
 
     document.getElementById("ticket").focus();
@@ -375,6 +375,8 @@
     talones = <%- JSON.stringify(talones) %>;
 
 
+
+
     if (id >= minimo && id <= maximo) {
 
       if (ticket.length == 0) {
@@ -383,6 +385,15 @@
         msg.innerHTML = ' Correcto';
         msg.classList.add('text-success');
         msg.classList.remove('text-danger');
+        for (var y = 0; y < talones.length; y++) {
+
+          if (id >= talones[y].ticket_inicial && id <= talones[y].ticket_final) {
+            $('#asignado').text(talones[y].nombre_empleado);
+            $('#telefono').text(talones[y].telefono);
+            break
+          }
+
+      }
 
       }
 
@@ -405,9 +416,10 @@
           msg.classList.add('text-success');
           msg.classList.remove('text-danger');
 
+      
           for (var y = 0; y < talones.length; y++) {
 
-            if (id >= talones[y].ticket_inicial || id <= talones[y].ticket_final) {
+            if (id >= talones[y].ticket_inicial && id <= talones[y].ticket_final) {
               $('#asignado').text(talones[y].nombre_empleado);
               $('#telefono').text(talones[y].telefono);
               break
