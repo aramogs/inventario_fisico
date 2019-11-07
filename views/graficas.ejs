@@ -1,6 +1,6 @@
 <%include ./static/header.ejs %>
 
-
+<meta http-equiv="refresh" content="60" />
 
   <!-- End of Main Content -->
   <!-- Vector Maps -->
@@ -34,7 +34,7 @@
       <div class="card animated bounceInLeft slow bg-transparent cardbg">
         <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Tickets Capturados</strong></div>
         <div class="card-body">
-          <strong style="font-size: 30px;" class="text-white" > 10000</strong>
+          <strong style="font-size: 30px;" class="text-white" > <%= TicketsCapturados[0].TCapturados%></strong>
         </div>
       </div>
   </div>
@@ -42,7 +42,7 @@
     <div class="card animated bounceInLeft slow cardbg">
       <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Tickets Faltantes</strong></div>
       <div class="card-body">
-        <strong style="font-size: 30px;" class="text-white"  >5000</strong>
+        <strong style="font-size: 30px;" class="text-white"  ><%= TicketsFaltantes%></strong>
       </div>
     </div>
 </div>
@@ -50,7 +50,7 @@
   <div class="card animated bounceInLeft slow cardbg">
     <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Seriales Capturados</strong></div>
     <div class="card-body ">
-      <strong style="font-size: 50px;" class="text-white"  >5000</strong>
+      <strong style="font-size: 50px;" class="text-white"  ><%= SerialesCapturados[0].SCapturados%></strong>
     </div>
   </div>
 </div>
@@ -58,7 +58,7 @@
   <div class="card animated bounceInLeft slow cardbg">
     <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Seriales Faltantes</strong></div>
     <div class="card-body ">
-      <strong style="font-size: 50px;" class="text-white"  >5000</strong>
+      <strong style="font-size: 50px;" class="text-white"  ><%= SerialesFaltantes%></strong>
     </div>
   </div>
 </div>
@@ -107,7 +107,7 @@
         borderColor: ['rgb(255, 255, 255)','rgb(255, 255, 255)',
                 ],
                 borderWidth: 0,
-        data: [2478,5267]
+        data: [<%= SerialesCapturados[0].SCapturados%>,<%= SerialesFaltantes%>]
       }]
     },
     options: {
@@ -125,7 +125,7 @@ new Chart(document.getElementById("pie-chart2"), {
         borderColor: ['rgb(255, 255, 255)','rgb(255, 255, 255)',
                 ],
                 borderWidth: 0,
-        data: [2478,5267]
+        data: [<%= TicketsCapturados[0].TCapturados%>,<%= TicketsFaltantes%>]
       }]
     },
     options: {

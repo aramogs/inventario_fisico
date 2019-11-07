@@ -69,7 +69,7 @@
 
   <script>
   new Chart(document.getElementById("pie-chart"), {
-    type: 'pie',
+    type: 'doughnut',
     data: {
       labels: ["Capturado", "Faltante"],
       datasets: [{
@@ -78,13 +78,13 @@
         borderColor: ['rgba(75, 192, 192, 1)','rgba(255, 206, 86, 1)',
                 ],
                 borderWidth: 1,
-        data: [2478,5267]
+        data: [<%= Capturados%>,<%= Faltantes%>]
       }]
     },
     options: {
       title: {
         display: true,
-        text: 'Avance Total'
+        text: 'Avance'
       }
     }
 });

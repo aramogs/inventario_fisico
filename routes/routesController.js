@@ -10,7 +10,20 @@ const RabbitPublisher = require('../public/js/RabbitMQ_Publisher');
 
 // Index GET
 controller.index_GET = (req, res) => {
-    res.render('index.ejs');
+    funcion.CountTicketsCapturados((err, TicketsCapturados) => {
+        funcion.CountTicketsTotales((err, TicketsTotales) => {
+        funcion.CountSerialesCapturados((err, SerialesCapturados) => {
+            funcion.CountSerialesTotales((err, SerialesTotales) => {
+                Faltantes= (SerialesTotales[0].STotales+TicketsTotales[0].TTotales)-(SerialesCapturados[0].SCapturados+TicketsCapturados[0].TCapturados)
+                Capturados = SerialesCapturados[0].SCapturados+TicketsCapturados[0].TCapturados
+
+                res.render('index.ejs', {
+                    Faltantes, Capturados
+                });
+            });
+        });
+    });
+});
 
 };
 
@@ -269,25 +282,25 @@ controller.conteo_guardar_POST = (req, res) => {
                 material = "NULL"
                 cantidad = null
 
-                 RabbitPublisher.get_label(serial, (callback) => {
+                RabbitPublisher.get_label(serial, (callback) => {
                 })
 
 
 
-                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
-                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-                            funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                    funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+                        funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
 
 
-                                res.render('conteo.ejs', {
-                                    gafete,
-                                    nombreContador,
-                                    ubicacion,
-                                    captura_grupo,
-                                    captura_actual,
-                                    serialesCapturados,
-                                    capturasPorGrupo
-                               
+                            res.render('conteo.ejs', {
+                                gafete,
+                                nombreContador,
+                                ubicacion,
+                                captura_grupo,
+                                captura_actual,
+                                serialesCapturados,
+                                capturasPorGrupo
+
                             })
                         })
                     })
@@ -631,7 +644,20 @@ controller.delete_acceso_POST = (req, res) => {
 };
 
 controller.graficas_GET = (req, res) => {
-    res.render('graficas.ejs');
+    funcion.CountTicketsCapturados((err, TicketsCapturados) => {
+        funcion.CountTicketsTotales((err, TicketsTotales) => {
+        funcion.CountSerialesCapturados((err, SerialesCapturados) => {
+            funcion.CountSerialesTotales((err, SerialesTotales) => {
+                SerialesFaltantes= SerialesTotales[0].STotales-SerialesCapturados[0].SCapturados
+                TicketsFaltantes = TicketsTotales[0].TTotales- TicketsCapturados[0].TCapturados
+
+                res.render('graficas.ejs', {
+                    TicketsCapturados, SerialesCapturados, SerialesFaltantes,TicketsFaltantes
+                });
+            });
+        });
+    });
+});
 
 };
 module.exports = controller;

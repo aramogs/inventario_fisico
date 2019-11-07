@@ -222,8 +222,8 @@ funcion.DeleteTicket= (idTicket,callback)=>{
 
 funcion.InsertTalon = (inicio,final, empleado, nombre, telefono,callback)=>{
     db.query(`
-    INSERT INTO talones (ticket_inicial, ticket_final, num_empleado, nombre_empleado, telefono)
-    VALUES ('${inicio}' , '${final}' , ${empleado}, '${nombre}' , '${telefono}')`,
+    INSERT INTO talones (ticket_inicial, ticket_final, num_empleado, nombre_empleado, telefono, totales)
+    VALUES ('${inicio}' , '${final}' , ${empleado}, '${nombre}' , '${telefono}', ${(final-inicio)+1})`,
     function (err, result, fields) {
         if (err) {
             
@@ -267,6 +267,58 @@ funcion.InsertUbicacion = (ubicacion,callback)=>{
 
 funcion.DeleteUbicacion= (idTicket,callback)=>{
     db.query(`DELETE FROM ubicaciones WHERE id=${idTicket}`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.CountTicketsCapturados= (callback)=>{
+    db.query(`SELECT COUNT (serial) AS TCapturados FROM captura WHERE captura_grupo IS NULL`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.CountSerialesCapturados= (callback)=>{
+    db.query(`SELECT COUNT (serial) AS SCapturados FROM captura WHERE captura_grupo IS NOT NULL`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.CountSerialesTotales= (callback)=>{
+    db.query(`SELECT COUNT (material_id) AS STotales FROM material WHERE storage_unit IS NOT NULL`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.CountTicketsTotales= (callback)=>{
+    db.query(`SELECT SUM (totales) AS TTotales FROM talones`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
