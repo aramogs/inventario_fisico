@@ -683,9 +683,11 @@ controller.graficas_GET = (req, res) => {
                         funcion.CountTalonesP((err, TalonesP) => {
                             SerialesFaltantes = SerialesTotales[0].STotales - SerialesCapturados[0].SCapturados
                             TicketsFaltantes = TicketsTotales[0].TTotales - TicketsCapturados[0].TCapturados
+     
+                            
 
                             res.render('graficas.ejs', {
-                                TicketsCapturados, SerialesCapturados, SerialesFaltantes, TicketsFaltantes, TalonesE, TalonesP
+                                TicketsCapturados, SerialesCapturados, SerialesFaltantes, TicketsFaltantes, TalonesE, TalonesP, SerialesTotales, TicketsTotales
                             });
                         });
                     });

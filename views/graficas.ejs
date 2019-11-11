@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="refresh" content="10" />
+  <meta http-equiv="refresh" content="10.50" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -73,9 +73,12 @@
               <div class="col-lg-9">
                 <h2 class="text-white display-4"><%= TicketsCapturados[0].TCapturados%></h2>
                 <div class="progress">
+                    <%
+                        let porcentaje = Math.round(TicketsCapturados[0].TCapturados  * 100 / TicketsTotales[0].TTotales) *100/100
+                    %>
 
-                  <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: 25%;"
-                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: <%=porcentaje%>%"
+                    aria-valuenow="<%= TicketsCapturados[0].TCapturados%>" aria-valuemin="0" aria-valuemax="<%= TicketsTotales[0].TTotales%>"></div>
                 </div>
               </div>
             </div>
@@ -96,9 +99,11 @@
               <div class="col-lg-9">
                 <h2 class="text-white display-4"><%= TicketsFaltantes%></h2>
                 <div class="progress">
-
-                  <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: 75%;"
-                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <%
+                    let porcentaje2 = Math.round(TicketsFaltantes  * 100 / TicketsTotales[0].TTotales) *100/100
+                    %>
+                  <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: <%= porcentaje2%>%;"
+                    aria-valuenow="<%= TicketsFaltantes%>" aria-valuemin="0" aria-valuemax="<%= TicketsTotales[0].TTotales%>"></div>
                 </div>
               </div>
             </div>
@@ -119,9 +124,11 @@
               <div class="col-lg-9">
                 <h2 class="text-white display-4"><%= SerialesCapturados[0].SCapturados%></h2>
                 <div class="progress">
-
-                  <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: 25%;"
-                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <%
+                    let porcentaje3 = Math.round(SerialesCapturados[0].SCapturados  * 100 / SerialesTotales[0].STotales) *100/100
+                    %>
+                  <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: <%= porcentaje3%>%;"
+                    aria-valuenow="<%= SerialesCapturados[0].SCapturados%>" aria-valuemin="0" aria-valuemax="<%=SerialesTotales[0].STotales%>"></div>
                 </div>
               </div>
             </div>
@@ -143,8 +150,11 @@
                 <h2 class="text-white display-4"><%= SerialesFaltantes%></h2>
                 <div class="progress">
 
-                  <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: 75%;"
-                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <%
+                    let porcentaje4 = Math.round(SerialesFaltantes  * 100 / SerialesTotales[0].STotales) *100/100
+                    %>
+                  <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: <%= porcentaje4%>%;"
+                    aria-valuenow="<%= SerialesFaltantes%>" aria-valuemin="0" aria-valuemax="<%=SerialesTotales[0].STotales%>"></div>
                 </div>
               </div>
             </div>
