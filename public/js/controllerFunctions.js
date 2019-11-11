@@ -339,6 +339,32 @@ funcion.UpdateStatus = (idTicket, newStatus,callback)=>{
         }
     })
 }
+
+funcion.CountTalonesE= (callback)=>{
+    db.query(`SELECT COUNT (id) AS Entregados FROM talones WHERE status="ENTREGADO" `, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.CountTalonesP= (callback)=>{
+    db.query(`SELECT COUNT (id) AS Pendientes FROM talones WHERE status="PENDIENTE" `, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
  
 /*
 funcion.empleadosInsertCaptura = (cap_id,emp_id, emp_id_jefe,cap_año,cap_mes,cap_dia,cap_captura,callback)=>{

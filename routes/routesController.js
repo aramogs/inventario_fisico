@@ -12,18 +12,18 @@ const RabbitPublisher = require('../public/js/RabbitMQ_Publisher');
 controller.index_GET = (req, res) => {
     funcion.CountTicketsCapturados((err, TicketsCapturados) => {
         funcion.CountTicketsTotales((err, TicketsTotales) => {
-        funcion.CountSerialesCapturados((err, SerialesCapturados) => {
-            funcion.CountSerialesTotales((err, SerialesTotales) => {
-                Faltantes= (SerialesTotales[0].STotales+TicketsTotales[0].TTotales)-(SerialesCapturados[0].SCapturados+TicketsCapturados[0].TCapturados)
-                Capturados = SerialesCapturados[0].SCapturados+TicketsCapturados[0].TCapturados
+            funcion.CountSerialesCapturados((err, SerialesCapturados) => {
+                funcion.CountSerialesTotales((err, SerialesTotales) => {
+                    Faltantes = (SerialesTotales[0].STotales + TicketsTotales[0].TTotales) - (SerialesCapturados[0].SCapturados + TicketsCapturados[0].TCapturados)
+                    Capturados = SerialesCapturados[0].SCapturados + TicketsCapturados[0].TCapturados
 
-                res.render('index.ejs', {
-                    Faltantes, Capturados
+                    res.render('index.ejs', {
+                        Faltantes, Capturados
+                    });
                 });
             });
         });
     });
-});
 
 };
 
@@ -517,10 +517,10 @@ controller.status_talon_POST = (req, res) => {
     idTicket = req.body.idTicket
     statusTalon = req.body.statusTalon
     let newStatus
-    if(statusTalon=="PENDIENTE"){
-        newStatus= "ENTREGADO"
-    }else{
-        newStatus= "PENDIENTE"
+    if (statusTalon == "PENDIENTE") {
+        newStatus = "ENTREGADO"
+    } else {
+        newStatus = "PENDIENTE"
     }
 
     funcion.UpdateStatus(idTicket, newStatus, (err, result) => {
@@ -677,18 +677,22 @@ controller.delete_acceso_POST = (req, res) => {
 controller.graficas_GET = (req, res) => {
     funcion.CountTicketsCapturados((err, TicketsCapturados) => {
         funcion.CountTicketsTotales((err, TicketsTotales) => {
-        funcion.CountSerialesCapturados((err, SerialesCapturados) => {
-            funcion.CountSerialesTotales((err, SerialesTotales) => {
-                SerialesFaltantes= SerialesTotales[0].STotales-SerialesCapturados[0].SCapturados
-                TicketsFaltantes = TicketsTotales[0].TTotales- TicketsCapturados[0].TCapturados
+            funcion.CountSerialesCapturados((err, SerialesCapturados) => {
+                funcion.CountSerialesTotales((err, SerialesTotales) => {
+                    funcion.CountTalonesE((err, TalonesE) => {
+                        funcion.CountTalonesP((err, TalonesP) => {
+                            SerialesFaltantes = SerialesTotales[0].STotales - SerialesCapturados[0].SCapturados
+                            TicketsFaltantes = TicketsTotales[0].TTotales - TicketsCapturados[0].TCapturados
 
-                res.render('graficas.ejs', {
-                    TicketsCapturados, SerialesCapturados, SerialesFaltantes,TicketsFaltantes
+                            res.render('graficas.ejs', {
+                                TicketsCapturados, SerialesCapturados, SerialesFaltantes, TicketsFaltantes, TalonesE, TalonesP
+                            });
+                        });
+                    });
                 });
             });
         });
     });
-});
 
 };
 module.exports = controller;
