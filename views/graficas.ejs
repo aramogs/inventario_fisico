@@ -71,7 +71,7 @@
                 <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 80px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4">25</h2>
+                <h2 class="text-white display-4"><%= TicketsCapturados[0].TCapturados%></h2>
                 <div class="progress">
 
                   <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: 25%;"
@@ -94,7 +94,7 @@
                 <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 80px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4">1975</h2>
+                <h2 class="text-white display-4"><%= TicketsFaltantes%></h2>
                 <div class="progress">
 
                   <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: 75%;"
@@ -117,7 +117,7 @@
                 <span class="fas fa-barcode text-white mb-n5" style="font-size: 80px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4">25</h2>
+                <h2 class="text-white display-4"><%= SerialesCapturados[0].SCapturados%></h2>
                 <div class="progress">
 
                   <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: 25%;"
@@ -140,7 +140,7 @@
                 <span class="fas fa-barcode text-white mb-n5" style="font-size: 80px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4">1975</h2>
+                <h2 class="text-white display-4"><%= SerialesFaltantes%></h2>
                 <div class="progress">
 
                   <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: 75%;"
@@ -208,7 +208,7 @@
           borderColor: ['rgb(255, 255, 255)', 'rgb(255, 255, 255)',
           ],
           borderWidth: 0,
-          data: [2478, 5267]
+          data: [<%= TicketsCapturados[0].TCapturados%>, <%= TicketsFaltantes%>]
         }]
       },
       options: {
@@ -226,7 +226,7 @@
           borderColor: ['rgb(255, 255, 255)', 'rgb(255, 255, 255)',
           ],
           borderWidth: 0,
-          data: [2478, 5267]
+          data: [<%= SerialesCapturados[0].SCapturados%>, <%= SerialesFaltantes%>]
         }]
       },
       options: {
