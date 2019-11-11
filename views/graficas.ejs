@@ -1,139 +1,290 @@
-<%include ./static/header.ejs %>
+<!DOCTYPE html>
+<html lang="en">
 
-<meta http-equiv="refresh" content="60" />
+<head>
 
-  <!-- End of Main Content -->
-  <!-- Vector Maps -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-<div class="container-fluid">
+  <title>Inventario Fisico</title>
+  <!-- Imagen tab -->
+  <link rel="icon" sizes="57x57" href="/img/icon.png">
+  <!-- npm Css -->
+  <link rel="stylesheet" type="text/css" href="/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="/animate.css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Custom fonts for this template-->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+  <link href="/resources/datatables/dataTables.bootstrap4.css" />
+  <link href="/resources/datatables/dataTables.bootstrap4.css" />
+
+
+  <!-- Graph ChartJs -->
+  <script src="/chart.js/dist/Chart.min.js"></script>
+  <script src="/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+
+  <!-- Custom styles for this template-->
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
 
 
 
-    <div class="card animated bounceInLeft slow  ml-n3">
+</head>
 
-        <div class="card-body ">
-            <div class="container">
-                <div class="row  animated fadeIn fast">
-                    <div class="col-lg-12">
-                        <img id="centeredImg" src="/img/tristone_logo_head.png" class="rounded mx-auto d-block text-center"
-                            alt="Tristone Flowtech">
-                    </div>
+<body id="page-top" class="sidebar-toggled">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+
+
+    <!-- End of Main Content -->
+    <!-- Vector Maps -->
+
+
+
+    <div class="jumbotron  bg-gradiant-dark">
+      <div class="container">
+
+        <h1 class="display-3 text-white text-center font-weight-bold"><span class="fas fa-box-open text-white"
+            style="font-size: 60px;"></span>Avance Inventario</h1>
+
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+
+      <div class="row mt-n5 ml-5">
+
+        <div class="col-lg-3">
+          <div class="card border-0 rounded-top">
+          </div>
+          <div class="card-body  shadow p-3 bg-gradiant-blue rounded-lg">
+            <h2 class="text-white text-center display-4"> Tickets Capturados</h2>
+
+            <div class="row">
+              <div class="col-lg-2">
+                <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 80px;"></span>
+              </div>
+              <div class="col-lg-9">
+                <h2 class="text-white display-4">25</h2>
+                <div class="progress">
+
+                  <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: 25%;"
+                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <h1 class="display-3 text-center text-white">Avance Inventario</h1>
-       
+              </div>
             </div>
-        </div>
-      </div>
-    
 
-
-
-  <div class="row mt-n5 ml-4">
-
-    <div class="col-lg-3" >
-      <div class="card animated bounceInLeft slow bg-transparent cardbg">
-        <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Tickets Capturados</strong></div>
-        <div class="card-body">
-          <strong style="font-size: 30px;" class="text-white" > <%= TicketsCapturados[0].TCapturados%></strong>
-        </div>
-      </div>
-  </div>
-  <div class="col-lg-3" >
-    <div class="card animated bounceInLeft slow cardbg">
-      <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Tickets Faltantes</strong></div>
-      <div class="card-body">
-        <strong style="font-size: 30px;" class="text-white"  ><%= TicketsFaltantes%></strong>
-      </div>
-    </div>
-</div>
-<div class="col-lg-3" >
-  <div class="card animated bounceInLeft slow cardbg">
-    <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Seriales Capturados</strong></div>
-    <div class="card-body ">
-      <strong style="font-size: 50px;" class="text-white"  ><%= SerialesCapturados[0].SCapturados%></strong>
-    </div>
-  </div>
-</div>
-<div class="col-lg-3" >
-  <div class="card animated bounceInLeft slow cardbg">
-    <div class="card-header text-white text-center cardbghd"><strong style="font-size: 20px">Seriales Faltantes</strong></div>
-    <div class="card-body ">
-      <strong style="font-size: 50px;" class="text-white"  ><%= SerialesFaltantes%></strong>
-    </div>
-  </div>
-</div>
-
-
-</div>
-
-  
-  <div class="row">
-
-    <div class="col-lg-6 mt-3">
-        <div class="card animated bounceInLeft slow bg-transparent ">
-          <div class="card-header text-white text-center cardbghd"><strong style="font-size: 30px">Captura Tickets</strong></div>
-          <div class="card-body cardbg" >
-            <canvas id="pie-chart2" width="200px" height="150px" class="animated pulse slow infinite"></canvas>
           </div>
         </div>
-    </div>
 
-    <div class="col-lg-6 mt-3">
-      <div class="card animated bounceInRight slow bg-transparent">
-        <div class="card-header text-white text-center cardbghd" ><strong style="font-size: 30px">Captura Almacen</strong></div>
-        <div class="card-body cardbg">
-          <canvas id="pie-chart" width="200px" height="150px"></canvas>
+        <div class="col-lg-3">
+          <div class="card border-0 rounded-top">
+          </div>
+          <div class="card-body  shadow p-3 bg-gradiant-blue rounded">
+            <h2 class="text-white text-center display-4"> Tickets Restantes</h2>
+
+            <div class="row">
+              <div class="col-lg-2">
+                <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 80px;"></span>
+              </div>
+              <div class="col-lg-9">
+                <h2 class="text-white display-4">1975</h2>
+                <div class="progress">
+
+                  <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: 75%;"
+                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="card border-0 rounded-top">
+          </div>
+          <div class="card-body  shadow p-3 bg-gradiant-yellow rounded-lg">
+            <h2 class="text-white text-center display-4"> Seriales Capturados</h2>
+
+            <div class="row">
+              <div class="col-lg-2">
+                <span class="fas fa-barcode text-white mb-n5" style="font-size: 80px;"></span>
+              </div>
+              <div class="col-lg-9">
+                <h2 class="text-white display-4">25</h2>
+                <div class="progress">
+
+                  <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: 25%;"
+                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="card border-0 rounded-top">
+          </div>
+          <div class="card-body  shadow p-3 bg-gradiant-yellow rounded-lg">
+            <h2 class="text-white text-center display-4"> Seriales Restantes</h2>
+
+            <div class="row">
+              <div class="col-lg-2">
+                <span class="fas fa-barcode text-white mb-n5" style="font-size: 80px;"></span>
+              </div>
+              <div class="col-lg-9">
+                <h2 class="text-white display-4">1975</h2>
+                <div class="progress">
+
+                  <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: 75%;"
+                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row ml-5 mt-5">
+        <div class="col-lg-6">
+          <div class="card bg-transparent border-0 ">
+            <card class="card-header bg-dark text-white text-center">
+              <h2 class="display-4">Progreso General</h2>
+            </card>
+            <div class="row">
+              <div class="col-lg-6 animated pulse slow infinite">
+                <canvas id="pie-chart" width="" height="500px"></canvas>
+              </div>
+              <div class="col-lg-6 animated pulse slow infinite delay-1">
+                <canvas id="pie-chart2" width="" height="500px"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card bg-transparent border-0">
+            <card class="card-header bg-dark text-white text-center">
+              <h2 class="display-4">Talones Entregados</h2>
+            </card>
+            <div class="row">
+              <div class="col-lg-12 animated pulse slow infinite delay-2 mt-5">
+                <canvas id="bar-chart-horizontal" width="" height="" ></canvas>
+              </div>
+            </div>
+            
+
+          </div>
         </div>
       </div>
+
+
+
+    </div>
   </div>
-</div>
-</div>
 
 
-  
-
-
+  <!-- <canvas id="pie-chart2" width="200px" height="150px" class="animated pulse slow infinite"></canvas> -->
   <!-- Vector map -->
-  <script src="/resources/jvectormap/jvectormap-custom.js"></script>
+  <!-- <script src="/resources/jvectormap/jvectormap-custom.js"></script> -->
 
   <script>
-  new Chart(document.getElementById("pie-chart"), {
-    type: 'doughnut',
-    data: {
-      
-      datasets: [{
-        label: "Avance",
-        backgroundColor: ['#0c3b6b', 'rgba(214, 214, 214, 0.57)'],
-        borderColor: ['rgb(255, 255, 255)','rgb(255, 255, 255)',
-                ],
-                borderWidth: 0,
-        data: [<%= SerialesCapturados[0].SCapturados%>,<%= SerialesFaltantes%>]
-      }]
-    },
-    options: {
-      
-    }
-});
+    new Chart(document.getElementById("pie-chart"), {
+      type: 'pie',
+      data: {
 
-new Chart(document.getElementById("pie-chart2"), {
-    type: 'doughnut',
-    data: {
-      
-      datasets: [{
-        label: "Avance",
-        backgroundColor: ['#0c3b6b', 'rgba(214, 214, 214, 0.57)'],
-        borderColor: ['rgb(255, 255, 255)','rgb(255, 255, 255)',
-                ],
-                borderWidth: 0,
-        data: [<%= TicketsCapturados[0].TCapturados%>,<%= TicketsFaltantes%>]
-      }]
-    },
-    options: {
-      labels: {
-                
-                fontSize:20
+        datasets: [{
+          label: "Avance",
+          backgroundColor: ['#0059ff75', '#343a40'],
+          borderColor: ['rgb(255, 255, 255)', 'rgb(255, 255, 255)',
+          ],
+          borderWidth: 0,
+          data: [2478, 5267]
+        }]
+      },
+      options: {
+        cutoutPercentage: 75
+      }
+    });
+
+    new Chart(document.getElementById("pie-chart2"), {
+      type: 'pie',
+      data: {
+
+        datasets: [{
+          label: "Avance",
+          backgroundColor: ['#eafb005b', '#343a40'],
+          borderColor: ['rgb(255, 255, 255)', 'rgb(255, 255, 255)',
+          ],
+          borderWidth: 0,
+          data: [2478, 5267]
+        }]
+      },
+      options: {
+        cutoutPercentage: 75
+      }
+    });
+
+    new Chart(document.getElementById("bar-chart-horizontal"), {
+      type: 'bar',
+      data: {
+        labels: ["Entregados", "Pendientes"],
+        datasets: [
+          {
+            label: "Population (millions)",
+            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+            borderWidth: 5,
+            data: [2478, 5267]
+          }
+        ]
+      },
+
+      options: {
+        cutoutPercentage: 75,
+        legend: { display: false },
+        title: { display: false },
+        datalabels: { display: false },
+        scaleShowLabels : false ,
+        scales: {
+          xAxes: [{
+            gridLines: {display: false},
+            ticks:  {display: false} 
+          }],
+          
+          yAxes: [{
+            gridLines: {display: false},
+            ticks:  {display: false} 
+
+          }]
+        },
+        plugins: {
+          datalabels: {
+            display: true,
+            anchor: 'end',
+
+            color:'white',
+            font: {
+              size: 40,
             }
+          },
 
-    }
-});
+
+        }
+      }
+
+    });
+
+
+
   </script>
+  <% include ./static/footer.ejs%>
