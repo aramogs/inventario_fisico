@@ -18,10 +18,8 @@ body {
 }
 
 .carousel-inner img {
-
   margin: auto;
-  
-  }
+}
 
 #logo_index {
   width: 100px
@@ -44,44 +42,53 @@ div#danger-alert {
 
 .cdelay-1 {
   animation-delay: 1.25s;
-  }
-
-
-#wrapper{
-   
-  background-image: url("/img/background.jpg"); 
-  background-size:cover
 }
 
-
-
+#wrapper {
+  background-image: url("/img/background.jpg");
+  background-size: cover
+}
 
 /* Graficas */
 
-.bg-gradiant-blue{
-  background-image: linear-gradient(315deg, #343a40 65%, #0059ff75  55%) ; 
+.bg-gradiant-blue {
+  background-image: linear-gradient(315deg, #343a40 65%, #0059ff75 55%);
 }
 
-.bg-gradiant-yellow{
-  background-image: linear-gradient(315deg, #343a40 65%, #eafb005b  55%);
+.bg-gradiant-yellow {
+  background-image: linear-gradient(315deg, #343a40 65%, #eafb005b 55%);
 }
 
-.bg-gradiant-dark{
+.bg-gradiant-dark {
   background-image: linear-gradient(to right, #383839, #343435, #303030, #2c2c2c, #282828, #252525, #222222, #1f1f1f, #1c1c1c, #181818, #151515, #111111);
 }
 
-.bg-transperant-blue{
+.bg-transperant-blue {
   background-color: #0059ff9a;
 }
-.bg-transperant-yellow{
+
+.bg-transperant-yellow {
   background-color: #eafb00b9;
 }
 
 .delay-1 {
   animation-delay: .25s;
-  }
-
-  
+}
 .delay-2 {
   animation-delay: .50s;
-  }
+}
+.delay-3 {
+  animation-delay: .75s;
+}
+.delay-4 {
+  animation-delay: 1s;
+}
+.delay-5 {
+  animation-delay: 1.25s;
+}
+.delay-6 {
+  animation-delay: 1.50s;
+}
+.delay-7 {
+  animation-delay: 1.75s;
+}
