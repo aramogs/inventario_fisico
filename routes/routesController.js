@@ -511,6 +511,37 @@ controller.delete_talon_POST = (req, res) => {
 
 };
 
+controller.status_talon_POST = (req, res) => {
+
+    gafete = req.body.gafete;
+    idTicket = req.body.idTicket
+    statusTalon = req.body.statusTalon
+    let newStatus
+    if(statusTalon=="PENDIENTE"){
+        newStatus= "ENTREGADO"
+    }else{
+        newStatus= "PENDIENTE"
+    }
+
+    funcion.UpdateStatus(idTicket, newStatus, (err, result) => {
+        funcionE.empleadosNombre(gafete, (err, nombre) => {
+            funcion.Talones((err, talones) => {
+                funcionE.empleados((err, empleados) => {
+                    if (err) throw err;
+                    res.render('talones.ejs', {
+                        gafete,
+                        nombre,
+                        talones,
+                        empleados
+                    });
+                });
+            });
+        });
+    });
+
+
+};
+
 controller.guardar_ubicacion_POST = (req, res) => {
 
     gafete = req.body.user;

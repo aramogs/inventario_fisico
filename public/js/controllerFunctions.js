@@ -329,6 +329,16 @@ funcion.CountTicketsTotales= (callback)=>{
         }
     })
 }
+
+funcion.UpdateStatus = (idTicket, newStatus,callback)=>{
+    db.query(`UPDATE talones SET status = '${newStatus}' WHERE id = ${idTicket} `, function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    })
+}
  
 /*
 funcion.empleadosInsertCaptura = (cap_id,emp_id, emp_id_jefe,cap_año,cap_mes,cap_dia,cap_captura,callback)=>{

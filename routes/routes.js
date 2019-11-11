@@ -25,6 +25,8 @@ router.post('/delete_ubicacion', routesController.delete_ubicacion_POST);
 router.post('/guardar_acceso', routesController.guardar_acceso_POST);
 router.post('/delete_acceso', routesController.delete_acceso_POST);
 router.get('/graficas', routesController.graficas_GET);
+router.post('/status_talon', routesController.status_talon_POST);
+
 
 
 
