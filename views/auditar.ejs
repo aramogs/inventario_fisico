@@ -1,0 +1,134 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+
+                    <div class=" col-lg-4">
+                        <label for=""> Gefete:</label>
+                        <input type="text" class="form-control" name="" id="" value="<%= gafete %>" readonly>
+
+                    </div>
+                    <div class=" col-lg-8">
+                        <label for=""> Nombre de auditor:</label>
+                        <input type="text" class="form-control" name="" id="" value="<%= nombreContador %>" readonly>
+
+                    </div>
+                </div>
+                <br>
+                <!-- form start -->
+
+                <form action="/auditar_ubicacion" method="POST">
+
+                    <!-- POST Data -->
+                        <input type="text"  name="gafete" id="gafete" value="<%= gafete%>" hidden>
+                        <input type="text"  name="nombreContador" id="nombreContador" value="<%= nombreContador%>" hidden>
+                    <!-- / POST Data -->
+                    
+                    <label for="">Ubicacion a auditar:</label> <label id="msgUbic"></label>
+                    <div class="input-group  col-lg-12">
+
+                        <div class="input-group-prepend ">
+                            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white" id="basic-addon1">
+                                <span class="fas fa-barcode"></span>
+                            </span>
+                        </div>
+                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="ubicacion"
+                            id="ubicacion" class="form-control" placeholder="Ubicacion" 
+                            required>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 d-none d-sm-block">
+                <div class="col-lg-12">
+                    <div>
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="/img/audit.png" alt="Warehouse Image"
+                                    class="img-fluid text-center rounded mx-auto d-block ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">Ubicaciones</div>
+                    <div class="card-body">
+
+                        <% for (let i = 0; i < ubicaciones.length; i++) { %>
+                            <% if (ubicaciones[i].ubicacion_auditada == 1) { %>
+                        <span class="badge badge-success fspan"><%= ubicaciones[i].ubicacion %></span>
+                           <% } else{%>
+                        <span class="badge badge-secondary fspan"><%= ubicaciones[i].ubicacion %></span>
+                        <% } %>
+                        <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ./static/footer.ejs%>
+
+    <script>
+        $('#ubicacion').focus()
+
+
+        ubicaciones = <%- JSON.stringify(ubicaciones) %>
+
+        ubicacion.addEventListener("keyup", function (e) {
+
+            text = $('#ubicacion').val();
+            let found = false;
+            var msg = document.getElementById("msgUbic");
+
+            for (let i = 0; i < ubicaciones.length; i++) {
+
+                if (text == ubicaciones[i].ubicacion && ubicaciones[i].ubicacion_auditada == 1) {
+
+                    $('#btnguardarU').prop("disabled", true);
+                    msg.innerHTML = 'Previamente auditado, seleccionar otra ubicacion';
+                    msg.classList.remove('text-success');
+                    msg.classList.add('text-danger');
+                    found = true;
+                    break;
+                }else if(text == ubicaciones[i].ubicacion){
+                    $('#btnguardarU').prop("disabled", false);
+                    msg.innerHTML = 'Continuar';
+                    msg.classList.remove('text-danger');
+                    msg.classList.add('text-success');
+                    found = true;
+                    break;
+                }
+
+            }
+            if (found == false) {
+
+                $('#btnguardarU').prop("disabled", true);
+                msg.innerHTML = 'Inconrrecta';
+                msg.classList.remove('text-success');
+                msg.classList.add('text-danger')
+
+            }
+        })
+    </script>

@@ -123,7 +123,7 @@ funcionE.InsertAcceso = (empleado, acc, callback) => {
 
 funcionE.DeleteAcceso = (gafete, callback) => {
 
-    dbE.query(`UPDATE del_accesos SET acc_inventario = 0 WHERE acc_id ='${gafete}'`, function (err, result, fields) {
+    dbE.query(`UPDATE del_accesos SET acc_inventario = NULL WHERE acc_id ='${gafete}'`, function (err, result, fields) {
             if (err) {
                 
                 callback(err, null);

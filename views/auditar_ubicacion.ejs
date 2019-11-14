@@ -1,0 +1,204 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 d-none d-sm-block">
+                <h2>
+                    Auditoria De Seriales Por Ubicacion
+                </h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+
+                    <div class=" col-lg-6">
+                        <label for=""> Gefete:</label>
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            value="<%= gafete %>" readonly>
+
+                    </div>
+                    <div class=" col-lg-6">
+                        <label for=""> Ubicacion:</label>
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                            value="<%= ubicacion %>" readonly>
+
+                    </div>
+                </div>
+                <br>
+                <!-- form start -->
+
+                <form action="/serial_auditado" method="POST">
+                    <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
+                        placeholder="" value="<%= gafete%>" hidden>
+                    <input type="text" class="form-control" name="nombreContador" id="nombreContador"
+                        aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
+                    <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+                        placeholder="" value="<%= ubicacion%>" hidden>
+
+                    <label for="">Serial:</label> <label id="msgSerial"></label>
+                    <div class="input-group  col-lg-12">
+
+                        <div class="input-group-prepend ">
+                            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                                id="basic-addon1"><span class="fas fa-barcode"></span></span>
+                        </div>
+                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
+                            class="form-control" placeholder="serial" aria-describedby="helpId" required>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header bg-secondary text-white text-center font-weight-bold">
+                                <h5>Terminar Auditoria</h5>
+                            </div>
+                            <div class="card-body text-center">
+                                <form action="/terminar_auditoria" method="POST">
+                                    
+                                    <input type="text" class="form-control" name="gafete" id="gafete" value="<%= gafete%>" hidden>
+                                    <input type="text" class="form-control" name="nombreContador" id="nombreContador" value="<%= nombreContador%>" hidden>
+                                    <input type="text" class="form-control" name="ubicacion" id="ubicacion" value="<%= ubicacion%>" hidden>
+
+                                    <button type="submit" name="" id="btnTerminar" class="btn btn-warning btn-lg "
+                                        disabled>
+                                        <span class="fas fa-clipboard-check" style="font-size: 40px;"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-secondary text-white">
+                                <h5 class="text-center">Contado</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class=" text-center"><%= contados %></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-header bg-secondary text-white">
+                                <h5 class="text-center">Faltante</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class=" text-center"><%= sin_contar %></h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-12">
+
+                        <% let total = contados + sin_contar %>
+                        <% let contado_porcentage = Math.round((100 * contados)/total)%>
+                        <% let sin_contar_porcentage = Math.round((100 * sin_contar)/total)%>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                role="progressbar" style="width: <%= contado_porcentage %>%;" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="<%= total%>"><%= contado_porcentage %>%</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">Serial en ubicacion:</div>
+                    <div class="card-body">
+
+                        <% for (let i = 0; i < capturas.length; i++) { %>
+                        <% if(capturas[i].serial_auditado == 1){ %>
+                        <span class="badge badge-success fspan"><%= capturas[i].serial %></span>
+                        <% }else{ %>
+                        <span class="badge badge-secondary fspan"><%= capturas[i].serial %></span>
+                        <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ./static/footer.ejs%>
+
+    <script>
+        $('#serial').focus()
+
+        capturas = <%- JSON.stringify(capturas) %>;
+        porcentaje_contado = <%- JSON.stringify(contado_porcentage) %>;
+
+        if (porcentaje_contado > 10) {
+            $('#btnTerminar').prop("disabled", false)
+            $('#btnTerminar').removeClass("btn-warning")
+            $('#btnTerminar').addClass("btn-success")
+
+
+        }
+        serial.addEventListener("keyup", function (e) {
+
+            text = $('#serial').val();
+            text = text.slice(1)
+
+
+            let found = false;
+            var msg = document.getElementById("msgSerial");
+
+            for (let i = 0; i < capturas.length; i++) {
+
+                if (text == capturas[i].serial && capturas[i].serial_auditado == 1) {
+
+                    $('#btnguardarU').prop("disabled", true);
+                    msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
+                    msg.classList.remove('text-success');
+                    msg.classList.add('text-danger');
+                    found = true;
+                    break;
+                } else if (text == capturas[i].serial) {
+
+                    $('#btnguardarU').prop("disabled", false);
+                    msg.innerHTML = 'Continuar';
+                    msg.classList.remove('text-danger');
+                    msg.classList.add('text-success');
+                    found = true;
+                    break;
+                }
+
+            }
+            if (found == false) {
+
+                $('#btnguardarU').prop("disabled", true);
+                msg.innerHTML = 'Inconrrecta';
+                msg.classList.remove('text-success');
+                msg.classList.add('text-danger')
+
+            }
+        })
+
+
+    </script>

@@ -18,7 +18,8 @@ controller.index_GET = (req, res) => {
                     Capturados = SerialesCapturados[0].SCapturados + TicketsCapturados[0].TCapturados
 
                     res.render('index.ejs', {
-                        Faltantes, Capturados
+                        Faltantes,
+                        Capturados
                     });
                 });
             });
@@ -47,7 +48,15 @@ controller.login = (req, res) => {
             });
         });
     } else if (loginId == 'acceso') {
-        funcionE.empleadosRevisarAccesso('=', 2, (err, result) => {
+        funcionE.empleadosRevisarAccesso('=', 3, (err, result) => {
+
+            res.render('login.ejs', {
+                data: loginId,
+                data2: result
+            });
+        });
+    } else if (loginId == 'auditar') {
+        funcionE.empleadosRevisarAccesso('>=', 2, (err, result) => {
 
             res.render('login.ejs', {
                 data: loginId,
@@ -282,10 +291,7 @@ controller.conteo_guardar_POST = (req, res) => {
                 material = "NULL"
                 cantidad = null
 
-                RabbitPublisher.get_label(serial, (callback) => {
-                })
-
-
+                RabbitPublisher.get_label(serial, (callback) => {})
 
                 funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
                     funcion.Select_SerialesCapturados((err, serialesCapturados) => {
@@ -611,8 +617,10 @@ controller.guardar_acceso_POST = (req, res) => {
 
     if (acceso == "CAPTURISTA") {
         acc = 1
-    } else if (acceso == "ADMINISTRADOR") {
+    } else if (acceso == "AUDITOR") {
         acc = 2
+    } else if (acceso == "ADMINISTRADOR") {
+        acc = 3
     }
 
     funcionE.InsertAcceso(empleado, acc, (err, result) => {
@@ -683,11 +691,18 @@ controller.graficas_GET = (req, res) => {
                         funcion.CountTalonesP((err, TalonesP) => {
                             SerialesFaltantes = SerialesTotales[0].STotales - SerialesCapturados[0].SCapturados
                             TicketsFaltantes = TicketsTotales[0].TTotales - TicketsCapturados[0].TCapturados
-     
-                            
+
+
 
                             res.render('graficas.ejs', {
-                                TicketsCapturados, SerialesCapturados, SerialesFaltantes, TicketsFaltantes, TalonesE, TalonesP, SerialesTotales, TicketsTotales
+                                TicketsCapturados,
+                                SerialesCapturados,
+                                SerialesFaltantes,
+                                TicketsFaltantes,
+                                TalonesE,
+                                TalonesP,
+                                SerialesTotales,
+                                TicketsTotales
                             });
                         });
                     });
@@ -697,4 +712,96 @@ controller.graficas_GET = (req, res) => {
     });
 
 };
+
+controller.auditar_POST = (req, res) => {
+    gafete = req.body.user;
+
+    funcionE.empleadosNombre(gafete, (err, nombreContador) => {
+        funcion.SelectUbicacion_Distinct((err, ubicaciones) => {
+
+            res.render('auditar.ejs', {
+                gafete,
+                nombreContador,
+                ubicaciones
+            })
+        })
+    })
+}
+
+
+controller.auditar_ubicacion_POST = (req, res) => {
+    gafete = req.body.gafete;
+    ubicacion = req.body.ubicacion
+
+    funcionE.empleadosNombre(gafete, (err, nombreContador) => {
+
+        funcion.SelectUbicacion_Equals(ubicacion, (err, capturas) => {
+            funcion.SelectSerial_Contado(ubicacion, (err, contados) => {
+                funcion.SelectSerial_SinContar(ubicacion, (err, sin_contar) => {
+                    contados = contados.length
+                    sin_contar = sin_contar.length
+
+                    res.render('auditar_ubicacion.ejs', {
+                        gafete,
+                        nombreContador,
+                        capturas,
+                        ubicacion,
+                        contados,
+                        sin_contar
+                    })
+                })
+            })
+        })
+    })
+}
+
+controller.serial_auditado_POST = (req, res) => {
+    gafete = req.body.gafete;
+    ubicacion = req.body.ubicacion
+    serial_auditado = req.body.serial
+    serial_auditado = serial_auditado.substring(1)
+    
+    funcion.Update_Serial_Auditado(serial_auditado, (err, result) => {
+
+        
+        funcionE.empleadosNombre(gafete, (err, nombreContador) => {
+
+            funcion.SelectUbicacion_Equals(ubicacion, (err, capturas) => {
+                funcion.SelectSerial_Contado(ubicacion, (err, contados) => {
+                    funcion.SelectSerial_SinContar(ubicacion, (err, sin_contar) => {
+                        contados = contados.length
+                        sin_contar = sin_contar.length
+
+                        res.render('auditar_ubicacion.ejs', {
+                            gafete,
+                            nombreContador,
+                            capturas,
+                            ubicacion,
+                            contados,
+                            sin_contar
+                        })
+                    })
+                })
+            })
+        })
+    })
+}
+
+controller.terminar_auditoria_POST = (req, res) => {
+    ubicacion = req.body.ubicacion
+    gafete = req.body.gafete
+    nombre = req.body.nombreContador
+    
+    funcion.Update_Ubicacion_Auditada(ubicacion,(err,result)=>{
+            
+        res.render('auditoria_terminada.ejs',{
+          ubicacion,
+          gafete,
+          nombre  
+        })
+        
+
+        
+    })
+}
 module.exports = controller;

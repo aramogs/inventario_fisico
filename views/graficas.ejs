@@ -49,8 +49,8 @@
     <div class="jumbotron  bg-gradiant-dark">
       <div class="container">
 
-        <h1 class="display-3 text-white text-center font-weight-bold"><span class="fas fa-box-open text-white"
-            style="font-size: 60px;"></span>Avance Inventario</h1>
+        <h1 class=" text-white text-center font-weight-bold display-4"><span><img src="/img/tristone_logo_head.png" alt="TristoneLogo"></span>Avance Inventario: <span id="date"></span></h1>
+        
 
       </div>
     </div>
@@ -64,14 +64,14 @@
           <div class="card border-0 rounded-top">
           </div>
           <div class="card-body  shadow p-3 bg-gradiant-blue rounded-lg">
-            <h2 class="text-white text-center display-4"> Tickets Capturados</h2>
+            <h2 class="text-white text-center "> Tickets Capturados</h2>
 
             <div class="row">
               <div class="col-lg-2">
-                <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 80px;"></span>
+                <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 50px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4"><%= TicketsCapturados[0].TCapturados%></h2>
+                <h2 class="text-white "><%= TicketsCapturados[0].TCapturados%></h2>
                 <div class="progress">
                     <%
                         let porcentaje = Math.round(TicketsCapturados[0].TCapturados  * 100 / TicketsTotales[0].TTotales) *100/100
@@ -90,14 +90,14 @@
           <div class="card border-0 rounded-top ">
           </div>
           <div class="card-body  shadow p-3 bg-gradiant-blue rounded">
-            <h2 class="text-white text-center display-4"> Tickets Restantes</h2>
+            <h2 class="text-white text-center "> Tickets Restantes</h2>
 
             <div class="row">
               <div class="col-lg-2">
-                <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 80px;"></span>
+                <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 50px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4"><%= TicketsFaltantes%></h2>
+                <h2 class="text-white "><%= TicketsFaltantes%></h2>
                 <div class="progress">
                     <%
                     let porcentaje2 = Math.round(TicketsFaltantes  * 100 / TicketsTotales[0].TTotales) *100/100
@@ -115,14 +115,14 @@
           <div class="card border-0 rounded-top ">
           </div>
           <div class="card-body  shadow p-3 bg-gradiant-yellow rounded-lg">
-            <h2 class="text-white text-center display-4"> Seriales Capturados</h2>
+            <h2 class="text-white text-center "> Seriales Capturados</h2>
 
             <div class="row">
               <div class="col-lg-2">
-                <span class="fas fa-barcode text-white mb-n5" style="font-size: 80px;"></span>
+                <span class="fas fa-barcode text-white mb-n5" style="font-size: 50px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4"><%= SerialesCapturados[0].SCapturados%></h2>
+                <h2 class="text-white "><%= SerialesCapturados[0].SCapturados%></h2>
                 <div class="progress">
                     <%
                     let porcentaje3 = Math.round(SerialesCapturados[0].SCapturados  * 100 / SerialesTotales[0].STotales) *100/100
@@ -140,14 +140,14 @@
           <div class="card border-0 rounded-top">
           </div>
           <div class="card-body  shadow p-3 bg-gradiant-yellow rounded-lg">
-            <h2 class="text-white text-center display-4"> Seriales Restantes</h2>
+            <h2 class="text-white text-center "> Seriales Restantes</h2>
 
             <div class="row">
               <div class="col-lg-2">
-                <span class="fas fa-barcode text-white mb-n5" style="font-size: 80px;"></span>
+                <span class="fas fa-barcode text-white mb-n5" style="font-size: 50px;"></span>
               </div>
               <div class="col-lg-9">
-                <h2 class="text-white display-4"><%= SerialesFaltantes%></h2>
+                <h2 class="text-white "><%= SerialesFaltantes%></h2>
                 <div class="progress">
 
                     <%
@@ -168,14 +168,14 @@
         <div class="col-lg-6">
           <div class="card bg-transparent border-0 ">
             <card class="card-header bg-dark text-white text-center">
-              <h2 class="display-4">Progreso General: <span class=" fa fa-ticket-alt text-primary"> </span> <span class=" fa fa-barcode text-warning"> </span></h2>
+              <h3>Progreso General: <span class=" fa fa-ticket-alt text-primary"> </span> <span class=" fa fa-barcode text-warning"> </span></h3>
             </card>
             <div class="row">
               <div class="col-lg-6 animated pulse slow infinite delay-5">
-                <canvas id="pie-chart" width="" height="500px"></canvas>
+                <canvas id="pie-chart" width="" height="400px"></canvas>
               </div>
               <div class="col-lg-6 animated pulse slow infinite delay-6">
-                <canvas id="pie-chart2" width="" height="500px"></canvas>
+                <canvas id="pie-chart2" width="" height="400px"></canvas>
               </div>
             </div>
           </div>
@@ -184,7 +184,7 @@
         <div class="col-lg-6">
           <div class="card bg-transparent border-0">
             <card class="card-header bg-dark text-white text-center">
-              <h2 class="display-4">Talones Entregados: <span class=" fa fa-check-circle text-primary"> </span> <span class=" fa fa-times-circle text-danger "> </span></h2>
+              <h3>Talones: { Entregados <span class=" fa fa-check-circle text-primary"> </span> Faltantes: <span class=" fa fa-times-circle text-danger "> </span> }</h3>
             </card>
             <div class="row">
               <div class="col-lg-12 animated pulse slow infinite delay-7 mt-5">
@@ -294,6 +294,13 @@
     });
 
 
+    var currentDate = new Date(),
+      day = currentDate.getDate(),
+      month = currentDate.getMonth() + 1,
+      year = currentDate.getFullYear(),
+      date = day + "/" + month + "/" + year;
 
+
+    document.getElementById("date").innerHTML = date;
   </script>
   <% include ./static/footer.ejs%>

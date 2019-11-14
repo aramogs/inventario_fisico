@@ -207,6 +207,85 @@ funcion.ubicacion = (callback)=>{
     })
 }
 
+funcion.SelectUbicacion_Distinct = (callback)=>{
+    db.query(`SELECT DISTINCT LEFT(ubicacion,2) AS ubicacion, ubicacion_auditada FROM captura WHERE captura_grupo > 0`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+
+funcion.SelectUbicacion_Equals = (ubicacion,callback)=>{
+    db.query(`SELECT * FROM captura WHERE LEFT(ubicacion,2) = '${ubicacion}'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectSerial_Contado = (ubicacion,callback)=>{
+    db.query(`SELECT * FROM captura WHERE LEFT(ubicacion,2) = '${ubicacion}' AND serial_auditado = 1`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectSerial_SinContar = (ubicacion,callback)=>{
+    db.query(`SELECT * FROM captura WHERE LEFT(ubicacion,2) = '${ubicacion}' AND serial_auditado IS NULL`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Update_Serial_Auditado = (serial_auditado,callback)=>{
+    db.query(`UPDATE captura SET serial_auditado = 1 WHERE serial = ${serial_auditado}`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
+    db.query(`UPDATE captura SET ubicacion_auditada = 1 WHERE LEFT(ubicacion,2) = '${ubicacion}'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.DeleteTicket= (idTicket,callback)=>{
     db.query(`DELETE FROM captura WHERE serial='${idTicket}'`, function (err, result, fields) {
         if (err) {
