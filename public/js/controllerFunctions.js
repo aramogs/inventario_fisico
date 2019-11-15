@@ -115,6 +115,32 @@ funcion.Select_GruposCapturados= (callback)=>{
     })
 }
 
+funcion.Select_Captura= (callback)=>{
+    db.query(`SELECT * FROM captura `,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Select_Material= (callback)=>{
+    db.query(`SELECT * FROM material `,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.Select_CapturaGrupo= (captura_grupo,callback)=>{
     db.query(`SELECT * FROM captura WHERE captura_grupo = '${captura_grupo}'`,function (err, result, fields) {
         if (err) {
@@ -207,8 +233,34 @@ funcion.ubicacion = (callback)=>{
     })
 }
 
-funcion.SelectUbicacion_Distinct = (callback)=>{
-    db.query(`SELECT DISTINCT LEFT(ubicacion,2) AS ubicacion, ubicacion_auditada FROM captura WHERE captura_grupo > 0`, function (err, result, fields) {
+funcion.SelectAuditoria = (callback)=>{
+    db.query(`SELECT * FROM auditoria`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectAuditoria_Auditado = (callback)=>{
+    db.query(`SELECT * FROM auditoria WHERE estado_auditoria = 1`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectAuditoria_NoAuditado = (callback)=>{
+    db.query(`SELECT * FROM auditoria WHERE estado_auditoria = 0`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -274,9 +326,28 @@ funcion.Update_Serial_Auditado = (serial_auditado,callback)=>{
 }
 
 funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
-    db.query(`UPDATE captura SET ubicacion_auditada = 1 WHERE LEFT(ubicacion,2) = '${ubicacion}'`, function (err, result, fields) {
+    db.query(`UPDATE auditoria SET estado_auditoria = 1 WHERE LEFT(id_ubicacion,2) = '${ubicacion}'`, function (err, result, fields) {
         if (err) {
           
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
+    db.query(`
+    INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
+    VALUES ('${id_ubicacion}', ${emp_id}, ${estado_auditoria})
+     ON DUPLICATE KEY UPDATE 
+     id_ubicacion = '${id_ubicacion}'
+    `,
+    function (err, result, fields) {
+        if (err) {
+            
             callback(err, null);
 
         } else {
