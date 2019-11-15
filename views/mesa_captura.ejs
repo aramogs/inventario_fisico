@@ -55,7 +55,7 @@
             <dic class="col-lg-4">
               <div class="form-group">
                 <label for="titulo">Numero Parte: </label> <label id="msgParte"></label>
-                <input type="text" class="form-control" id="parte" name="parte"
+                <input type="text" class="form-control spacing" id="parte" name="parte"
                   onkeyup="this.value = this.value.toUpperCase();" required>
               </div>
             </dic>
@@ -128,7 +128,11 @@
               </div>
             </div>
 
-
+            <dic class="col-lg-2">
+              <div class="form-group">
+                <input type="text" class="form-control" id="idTalon" name="idTalon" required hidden>
+              </div>
+            </dic>
 
           </div>
 
@@ -287,13 +291,23 @@
   $(document).ready(function () {
 
     document.getElementById("ticket").focus();
+    $('#btnguardar').prop("disabled", true);
 
   });
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   parte.addEventListener("keyup", function (e) {
 
     material = <%- JSON.stringify(materiales) %>;
+
     var msg = document.getElementById("msgParte");
+    var msgC = document.getElementById("msgCant");
+    var msgC2 = document.getElementById("msgCant2");
+    var msgU= document.getElementById("msgubicacion");
+
+ 
+
+    
+
     var id = $('#parte').val();
 
     if (id.length == 2 && (($('#parte').val()).startsWith("5V") || ($('#parte').val()).startsWith("5E") || ($('#parte').val()).startsWith("50") || ($('#parte').val()).startsWith("10"))) {
@@ -323,18 +337,27 @@
       $('#cantidad').prop("readonly", true);
       $('#cantidad2').prop("readonly", true);
       $('#ubicacion').prop("readonly", true);
+      
+          msg.innerHTML = ' Correcto';
+          msg.classList.add('text-success');
+          msgC.innerHTML = ' Correcto';
+          msgC.classList.add('text-success');
+          msgC2.innerHTML = ' Correcto';
+          msgC2.classList.add('text-success');
+          msgU.innerHTML = ' Correcto';
+          msgU.classList.add('text-success');
 
     }
 
 
-
+    let ubi =$('#ubicacion').val();
     if (id.length > 11) {
 
       for (var i = 0; i < material.length; i++) {
         if (id == material[i].material) {
 
           $('#cantidad').focus();
-          $('#btnguardar').prop("disabled", false);
+
           msg.innerHTML = ' Correcto';
           msg.classList.add('text-success');
           msg.classList.remove('text-danger');
@@ -345,20 +368,42 @@
 
         } else {
 
-          $('#btnguardar').prop("disabled", true);
           msg.innerHTML = ' No Encontrado';
           msg.classList.remove('text-success');
           msg.classList.add('text-danger');
-          $('#descripcion').text("");
+          $('#descripcion').text(".");
+          $('#unidad').text(".");
         }
       }
 
-    } else {
-      if ($('#parte').val() == "CANCELADO") {
-        $('#btnguardar').prop("disabled", false);
-      } else {
-        $('#btnguardar').prop("disabled", true);
+    }else{
+
+      if(id != "C"){
+       msg.innerHTML = '';
+          msg.classList.remove('text-success');
       }
+      if(ubi=="N/A" && id != "C"){
+        $('#cantidad').val("")
+      $('#cantidad2').val("")
+      $('#ubicacion').val("")
+      $('#cantidad').prop("readonly", false);
+      $('#cantidad2').prop("readonly", false);
+      $('#ubicacion').prop("readonly", false);
+      msgC.innerHTML = '';
+      msgC.classList.remove('text-success');
+      msgC2.innerHTML = '';
+      msgC2.classList.remove('text-success');
+      msgU.innerHTML = '';
+      msgU.classList.remove('text-success');
+      }
+    }
+
+
+    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
+    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+      $('#btnguardar').prop("disabled", false);
+    }else{
+      $('#btnguardar').prop("disabled", true);
     }
 
   });
@@ -375,21 +420,21 @@
     talones = <%- JSON.stringify(talones) %>;
 
 
-
-
+    
     if (id >= minimo && id <= maximo) {
 
       if (ticket.length == 0) {
 
-        $('#btnguardar').prop("disabled", false);
         msg.innerHTML = ' Correcto';
         msg.classList.add('text-success');
         msg.classList.remove('text-danger');
         for (var y = 0; y < talones.length; y++) {
 
+
           if (id >= talones[y].ticket_inicial && id <= talones[y].ticket_final) {
             $('#asignado').text(talones[y].nombre_empleado);
             $('#telefono').text(talones[y].telefono);
+            $('#idTalon').val(talones[y].id);
             break
           }
 
@@ -401,17 +446,16 @@
 
         if (id == ticket[i].serial) {
 
-          $('#btnguardar').prop("disabled", true);
           msg.innerHTML = ' Duplicado';
           msg.classList.remove('text-success');
           msg.classList.add('text-danger');
-          $('#asignado').text('');
-          $('#telefono').text('');
+          $('#asignado').text('.');
+          $('#telefono').text('.');
+          $('#idTalon').val("");
           break;
 
         } else {
 
-          $('#btnguardar').prop("disabled", false);
           msg.innerHTML = ' Correcto';
           msg.classList.add('text-success');
           msg.classList.remove('text-danger');
@@ -422,6 +466,7 @@
             if (id >= talones[y].ticket_inicial && id <= talones[y].ticket_final) {
               $('#asignado').text(talones[y].nombre_empleado);
               $('#telefono').text(talones[y].telefono);
+              $('#idTalon').val(talones[y].id);
               break
             }
 
@@ -432,15 +477,22 @@
       }
     } else {
 
-      $('#btnguardar').prop("disabled", true);
       msg.innerHTML = ' Incorrecto';
       msg.classList.remove('text-success');
       msg.classList.add('text-danger');
-      $('#asignado').text('');
-      $('#telefono').text('');
+      $('#asignado').text('.');
+      $('#telefono').text('.');
+      $('#idTalon').val("");
 
     }
 
+
+    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
+    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+      $('#btnguardar').prop("disabled", false);
+    }else{
+      $('#btnguardar').prop("disabled", true);
+    }
 
   });
 
@@ -460,9 +512,8 @@
 
       if (cantidad == cantidad2) {
 
-        $('#btnguardar').prop("disabled", false);
         msg.innerHTML = ' Correcto';
-        msg2.innerHTML = '';
+        msg2.innerHTML = ' Correcto';
         msg.classList.add('text-success');
         msg.classList.remove('text-danger');
         msg2.classList.add('text-success');
@@ -470,13 +521,19 @@
 
       } else {
 
-        $('#btnguardar').prop("disabled", true);
         msg.innerHTML = ' Incorrecto';
         msg.classList.remove('text-success');
         msg.classList.add('text-danger');
 
 
       }
+    }
+
+    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
+    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+      $('#btnguardar').prop("disabled", false);
+    }else{
+      $('#btnguardar').prop("disabled", true);
     }
 
   });
@@ -493,9 +550,8 @@
 
       if (cantidad == cantidad2) {
 
-        $('#btnguardar').prop("disabled", false);
         msg.innerHTML = ' Correcto';
-        msg2.innerHTML = '';
+        msg2.innerHTML = ' Correcto';
         msg.classList.add('text-success');
         msg.classList.remove('text-danger');
         msg2.classList.add('text-success');
@@ -503,7 +559,6 @@
 
       } else {
 
-        $('#btnguardar').prop("disabled", true);
         msg.innerHTML = ' Incorrecto';
         msg.classList.remove('text-success');
         msg.classList.add('text-danger');
@@ -512,12 +567,21 @@
       }
     }
 
+    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
+    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+      $('#btnguardar').prop("disabled", false);
+    }else{
+      $('#btnguardar').prop("disabled", true);
+    }
+
   });
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ubicacion.addEventListener("keyup", function (e) {
+
+    
 
     ubicaciones = <%- JSON.stringify(ubicacion) %>;
 
@@ -529,22 +593,28 @@
 
       if (id == ubicaciones[i].ubicacion) {
 
-        $('#btnguardar').prop("disabled", false);
         msg.innerHTML = ' Correcto';
         msg.classList.add('text-success');
         msg.classList.remove('text-danger');
         break;
 
       } else {
-
-        $('#btnguardar').prop("disabled", true);
+      
         msg.innerHTML = ' Incorrecta';
         msg.classList.remove('text-success');
         msg.classList.add('text-danger');
 
       }
     }
+  
 
+
+    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
+    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+      $('#btnguardar').prop("disabled", false);
+    }else{
+      $('#btnguardar').prop("disabled", true);
+    }
   });
 
 </script>

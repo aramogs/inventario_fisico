@@ -301,8 +301,8 @@ funcion.DeleteTicket= (idTicket,callback)=>{
 
 funcion.InsertTalon = (inicio,final, empleado, nombre, telefono,callback)=>{
     db.query(`
-    INSERT INTO talones (ticket_inicial, ticket_final, num_empleado, nombre_empleado, telefono, totales)
-    VALUES ('${inicio}' , '${final}' , ${empleado}, '${nombre}' , '${telefono}', ${(final-inicio)+1})`,
+    INSERT INTO talones (ticket_inicial, ticket_final, num_empleado, nombre_empleado, telefono, totales,capturados,status)
+    VALUES ('${inicio}' , '${final}' , ${empleado}, '${nombre}' , '${telefono}', ${(final-inicio)+1},0,"PENDIENTE")`,
     function (err, result, fields) {
         if (err) {
             

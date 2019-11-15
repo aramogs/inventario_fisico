@@ -43,6 +43,9 @@ div#danger-alert {
 .cdelay-1 {
   animation-delay: 1.25s;
 }
+.spacing {
+  letter-spacing: 12px;
+}
 
 #wrapper {
   background-image: url("/img/background.jpg");
