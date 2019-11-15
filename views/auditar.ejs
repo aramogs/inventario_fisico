@@ -6,6 +6,14 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12 d-none d-sm-block">
+            <h2>
+                Auditoria De Seriales Por Ubicacion
+            </h2>
+            <hr>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
@@ -22,33 +30,56 @@
 
                     </div>
                 </div>
-                <br>
-                <!-- form start -->
 
-                <form action="/auditar_ubicacion" method="POST">
+                <div class="row">
+                    <div class="col-lg-12">
 
-                    <!-- POST Data -->
-                        <input type="text"  name="gafete" id="gafete" value="<%= gafete%>" hidden>
-                        <input type="text"  name="nombreContador" id="nombreContador" value="<%= nombreContador%>" hidden>
-                    <!-- / POST Data -->
-                    
-                    <label for="">Ubicacion a auditar:</label> <label id="msgUbic"></label>
-                    <div class="input-group  col-lg-12">
 
-                        <div class="input-group-prepend ">
-                            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white" id="basic-addon1">
-                                <span class="fas fa-barcode"></span>
-                            </span>
+                        <!-- form start -->
+
+                        <form action="/auditar_ubicacion" method="POST" class="mt-4">
+
+                            <!-- POST Data -->
+                            <input type="text" name="gafete" id="gafete" value="<%= gafete%>" hidden>
+                            <input type="text" name="nombreContador" id="nombreContador" value="<%= nombreContador%>"
+                                hidden>
+                            <!-- / POST Data -->
+
+                            <label for="">Ubicacion a auditar:</label> <label id="msgUbic"></label>
+                            <div class="input-group  col-lg-12">
+
+                                <div class="input-group-prepend ">
+                                    <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                                        id="basic-addon1">
+                                        <span class="fas fa-barcode"></span>
+                                    </span>
+                                </div>
+                                <input oninput="this.value = this.value.toUpperCase()" type="text" name="ubicacion"
+                                    id="ubicacion" class="form-control" placeholder="Ubicacion" required>
+                            </div>
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <% let total = auditado + noAuditado %>
+                <% let auditado_porcentaje = Math.round((100 * auditado)/total)%>
+
+                <div class="row mt-5">
+                    <label for="">Porcentaje Auditado:</label> <label id="msgUbic"></label>
+                    <div class="col-lg-12">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                role="progressbar" style="width: <%= auditado_porcentaje%>%;"
+                                aria-valuenow="<%= auditado_porcentaje%>" aria-valuemin="0" aria-valuemax="<%=total%>>">
+                                <%= auditado_porcentaje%>%</div>
                         </div>
-                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="ubicacion"
-                            id="ubicacion" class="form-control" placeholder="Ubicacion" 
-                            required>
                     </div>
+                </div>
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
-                    </div>
-                </form>
             </div>
             <div class="col-lg-6 d-none d-sm-block">
                 <div class="col-lg-12">
@@ -72,10 +103,10 @@
                     <div class="card-body">
 
                         <% for (let i = 0; i < ubicaciones.length; i++) { %>
-                            <% if (ubicaciones[i].ubicacion_auditada == 1) { %>
-                        <span class="badge badge-success fspan"><%= ubicaciones[i].ubicacion %></span>
-                           <% } else{%>
-                        <span class="badge badge-secondary fspan"><%= ubicaciones[i].ubicacion %></span>
+                        <% if (ubicaciones[i].estado_auditoria == 1) { %>
+                        <span class="badge badge-success fspan"><%= ubicaciones[i].id_ubicacion %></span>
+                        <% } else{%>
+                        <span class="badge badge-secondary fspan"><%= ubicaciones[i].id_ubicacion %></span>
                         <% } %>
                         <% } %>
 
@@ -94,41 +125,41 @@
         $('#ubicacion').focus()
 
 
-        ubicaciones = <%- JSON.stringify(ubicaciones) %>
+        ubicaciones = <% - JSON.stringify(ubicaciones) %>
 
-        ubicacion.addEventListener("keyup", function (e) {
+            ubicacion.addEventListener("keyup", function (e) {
 
-            text = $('#ubicacion').val();
-            let found = false;
-            var msg = document.getElementById("msgUbic");
+                text = $('#ubicacion').val();
+                let found = false;
+                var msg = document.getElementById("msgUbic");
 
-            for (let i = 0; i < ubicaciones.length; i++) {
+                for (let i = 0; i < ubicaciones.length; i++) {
 
-                if (text == ubicaciones[i].ubicacion && ubicaciones[i].ubicacion_auditada == 1) {
+                    if (text == ubicaciones[i].id_ubicacion && ubicaciones[i].estado_auditoria == 1) {
+
+                        $('#btnguardarU').prop("disabled", true);
+                        msg.innerHTML = 'Previamente auditado, seleccionar otra ubicacion';
+                        msg.classList.remove('text-success');
+                        msg.classList.add('text-danger');
+                        found = true;
+                        break;
+                    } else if (text == ubicaciones[i].id_ubicacion) {
+                        $('#btnguardarU').prop("disabled", false);
+                        msg.innerHTML = 'Continuar';
+                        msg.classList.remove('text-danger');
+                        msg.classList.add('text-success');
+                        found = true;
+                        break;
+                    }
+
+                }
+                if (found == false) {
 
                     $('#btnguardarU').prop("disabled", true);
-                    msg.innerHTML = 'Previamente auditado, seleccionar otra ubicacion';
+                    msg.innerHTML = 'Inconrrecta';
                     msg.classList.remove('text-success');
-                    msg.classList.add('text-danger');
-                    found = true;
-                    break;
-                }else if(text == ubicaciones[i].ubicacion){
-                    $('#btnguardarU').prop("disabled", false);
-                    msg.innerHTML = 'Continuar';
-                    msg.classList.remove('text-danger');
-                    msg.classList.add('text-success');
-                    found = true;
-                    break;
+                    msg.classList.add('text-danger')
+
                 }
-
-            }
-            if (found == false) {
-
-                $('#btnguardarU').prop("disabled", true);
-                msg.innerHTML = 'Inconrrecta';
-                msg.classList.remove('text-success');
-                msg.classList.add('text-danger')
-
-            }
-        })
+            })
     </script>

@@ -59,7 +59,7 @@ div#danger-alert {
 }
 
 .bg-gradiant-yellow {
-  background-image: linear-gradient(315deg, #343a40 65%, #eafb005b 55%);
+  background-image: linear-gradient(315deg, #343a40 65%, #fcb5029d 55%);
 }
 
 .bg-gradiant-dark {
@@ -71,7 +71,7 @@ div#danger-alert {
 }
 
 .bg-transperant-yellow {
-  background-color: #eafb00b9;
+  background-color: #fcb5029d;
 }
 
 .delay-1 {
@@ -94,4 +94,13 @@ div#danger-alert {
 }
 .delay-7 {
   animation-delay: 1.75s;
+}
+
+.carousel-item {
+  height: 900px;
+}
+
+
+color{
+  background-color: #f3e7e77e
 }
