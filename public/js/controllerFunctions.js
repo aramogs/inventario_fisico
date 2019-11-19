@@ -180,6 +180,32 @@ funcion.Talones= (callback)=>{
     })
 }
 
+funcion.Talones_Contados= (callback)=>{
+    db.query(`SELECT COUNT(*) AS TalonesContados FROM talones WHERE totales = capturados`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Talones_NoContados= (callback)=>{
+    db.query(`SELECT Count(*) AS TalonesNoContados FROM talones WHERE totales != capturados`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.misTicketsCapturados= (gafete,callback)=>{
     db.query(`SELECT * FROM captura WHERE num_empleado= ${gafete} ORDER BY captura_id DESC`,function (err, result, fields) {
         if (err) {
@@ -492,7 +518,7 @@ funcion.UpdateStatus = (idTicket, newStatus,callback)=>{
 }
 
 funcion.CountTalonesE= (callback)=>{
-    db.query(`SELECT COUNT (id) AS Entregados FROM talones WHERE status="ENTREGADO" `, function (err, result, fields) {
+    db.query(`SELECT *  FROM talones WHERE status="ENTREGADO" `, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -505,7 +531,7 @@ funcion.CountTalonesE= (callback)=>{
 }
 
 funcion.CountTalonesP= (callback)=>{
-    db.query(`SELECT COUNT (id) AS Pendientes FROM talones WHERE status="PENDIENTE" `, function (err, result, fields) {
+    db.query(`SELECT * FROM talones WHERE status="PENDIENTE" `, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
