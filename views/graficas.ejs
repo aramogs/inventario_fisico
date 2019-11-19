@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <!-- <meta http-equiv="refresh" content="10.50" /> -->
+  <meta http-equiv="refresh" content="40" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,217 +36,346 @@
 
 
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
 
 
-    <!-- End of Main Content -->
-    <!-- Vector Maps -->
+  <!-- End of Main Content -->
+  <!-- Vector Maps -->
 
 
 
-    <div class="jumbotron  bg-gradiant-dark">
-      <div class="container">
+  <div class="jumbotron  bg-gradiant-dark" style="padding: 0">
+    <div class="container">
 
-        <h1 class=" text-white text-center font-weight-bold display-4"><span><img src="/img/tristone_logo_head.png"
-              alt="TristoneLogo"></span>Avance Inventario: <span id="date"></span></h1>
-
-
-      </div>
-    </div>
-
-
-    <div class="container-fluid">
-    
-      <div class="row">
-        <div class="col-5">
-          <div class="row mt-5">
-            <div class="col-lg-11 animated pulse slow  delay-1">
-              <div class="card border-0 rounded-top">
-              </div>
-              <div class="card-body  shadow p-3 bg-gradiant-blue rounded-lg">
-                <h2 class="text-white text-center display-3"> Tickets Capturados</h2>
-
-                <div class="row">
-                  <div class="col-lg-2">
-                    <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 90px;"></span>
-                  </div>
-                  <div class="col-lg-9">
-                    <h2 class="text-white text-center display-2"><%= TicketsCapturados[0].TCapturados%></h2>
-                    <div class="progress">
-                      <%
-                  let porcentaje = Math.round(TicketsCapturados[0].TCapturados  * 100 / TicketsTotales[0].TTotales) *100/100
-                        %>
-
-                      <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: <%=porcentaje%>%"
-                        aria-valuenow="<%= TicketsCapturados[0].TCapturados%>" aria-valuemin="0"
-                        aria-valuemax="<%= TicketsTotales[0].TTotales%>"></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-          <div class="row mt-5">
-            <div class="col-lg-11 animated pulse slow  delay-2">
-              <div class="card border-0 rounded-top ">
-              </div>
-              <div class="card-body  shadow p-3 bg-gradiant-yellow rounded">
-                <h2 class="text-white text-center display-3"> Tickets Restantes</h2>
-
-                <div class="row">
-                  <div class="col-lg-2">
-                    <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 90px;"></span>
-                  </div>
-                  <div class="col-lg-9">
-                    <h2 class="text-white text-center display-2"><%= TicketsFaltantes%></h2>
-                    <div class="progress">
-                      <%
-                    let porcentaje2 = Math.round(TicketsFaltantes  * 100 / TicketsTotales[0].TTotales) *100/100
-                    %>
-                      <div class="progress-bar bg-transperant-yellow" role="progressbar"
-                        style="width: <%= porcentaje2%>%;" aria-valuenow="<%= TicketsFaltantes%>" aria-valuemin="0"
-                        aria-valuemax="<%= TicketsTotales[0].TTotales%>"></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="col-lg-7">
-          <div class="card bg-transparent border-0 ">
-            <card class="card-header bg-dark text-white text-center">
-              <h2 class="display-4" >Progreso Tickets: <span class=" fa fa-ticket-alt text-primary"> </span> <span class=" fa fa-ticket-alt text-warning"> </span> </h3>
-            </card>
-            <div class="row">
-              <div class="col-lg-12 mt-5 animated pulse slow infinite delay-5">
-                <canvas id="pie-chart" width="auto" height=""></canvas>
-              </div>
-              <!-- <div class="col-lg-6 animated pulse slow infinite delay-6">
-                <canvas id="pie-chart2" width="" height="400px"></canvas>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    <!--  -->
-      <div class="row mt-5">
-
-        <div class="col-lg-5">
-
-       
-        <div class="row mt-5">
-          <div class="col-lg-11 animated pulse slow  delay-3">
-            <div class="card border-0 rounded-top ">
-            </div>
-            <div class="card-body  shadow p-3 bg-gradiant-blue rounded-lg">
-              <h2 class="text-white text-center display-3"> Seriales Capturados</h2>
-  
-              <div class="row">
-                <div class="col-lg-2">
-                  <span class="fas fa-barcode text-white mb-n5" style="font-size: 50px;"></span>
-                </div>
-                <div class="col-lg-9">
-                  <h2 class="text-white text-center display-2"><%= SerialesCapturados[0].SCapturados%></h2>
-                  <div class="progress">
-                    <%
-                      let porcentaje3 = Math.round(SerialesCapturados[0].SCapturados  * 100 / SerialesTotales[0].STotales) *100/100
-                      %>
-                    <div class="progress-bar bg-transperant-blue" role="progressbar" style="width: <%= porcentaje3%>%;"
-                      aria-valuenow="<%= SerialesCapturados[0].SCapturados%>" aria-valuemin="0"
-                      aria-valuemax="<%=SerialesTotales[0].STotales%>"></div>
-                  </div>
-                </div>
-              </div>
-  
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-5">
-          <div class="col-lg-11 animated pulse slow  delay-4">
-            <div class="card border-0 rounded-top">
-            </div>
-            <div class="card-body  shadow p-3 bg-gradiant-yellow rounded-lg">
-              <h2 class="text-white text-center display-3"> Seriales Restantes</h2>
-  
-              <div class="row">
-                <div class="col-lg-2">
-                  <span class="fas fa-barcode text-white mb-n5" style="font-size: 50px;"></span>
-                </div>
-                <div class="col-lg-9">
-                  <h2 class="text-white text-center display-2"><%= SerialesFaltantes%></h2>
-                  <div class="progress">
-  
-                    <%
-                      let porcentaje4 = Math.round(SerialesFaltantes  * 100 / SerialesTotales[0].STotales) *100/100
-                      %>
-                    <div class="progress-bar bg-transperant-yellow" role="progressbar" style="width: <%= porcentaje4%>%;"
-                      aria-valuenow="<%= SerialesFaltantes%>" aria-valuemin="0"
-                      aria-valuemax="<%=SerialesTotales[0].STotales%>"></div>
-                  </div>
-                </div>
-              </div>
-  
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-7">
-        <div class="card bg-transparent border-0 ">
-          <card class="card-header bg-dark text-white text-center">
-            <h2 class="display-4" >Progreso Seriales: <span class=" fa fa-ticket-alt text-primary"> </span> <span class=" fa fa-ticket-alt text-warning"> </span> </h3>
-          </card>
-          <div class="row">
-            <!-- <div class="col-lg-12 mt-5 animated pulse slow infinite delay-5">
-              <canvas id="pie-chart" width="auto" height=""></canvas>
-            </div> -->
-            <div class="col-lg-12 mt-5 animated pulse slow infinite delay-5">
-              <canvas id="pie-chart2" width="auto" height=""></canvas>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-<!--  -->
-      <div class="row ml-5 mt-5">
-
-
-        <div class="col-lg-6">
-          <div class="card bg-transparent border-0">
-            <card class="card-header bg-dark text-white text-center">
-              <h3>Talones: { Entregados <span class=" fa fa-check-circle text-primary"> </span> Faltantes: <span
-                  class=" fa fa-times-circle text-danger "> </span> }</h3>
-            </card>
-            <div class="row">
-              <div class="col-lg-12 animated pulse slow infinite delay-7 mt-5">
-                <canvas id="bar-chart-horizontal" width="" height=""></canvas>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
+      <h1 class=" text-white text-center font-weight-bold "><span><img src="/img/tristone_logo_head.png"
+            alt="TristoneLogo"></span>Avance Inventario: <span id="date"></span></h1>
 
     </div>
   </div>
 
 
-  <!-- <canvas id="pie-chart2" width="200px" height="150px" class="animated pulse slow infinite"></canvas> -->
-  <!-- Vector map -->
-  <!-- <script src="/resources/jvectormap/jvectormap-custom.js"></script> -->
+  <div class="container-fluid">
+
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="10000" data-pause="false">
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <div class="row">
+            <div class="col-5">
+              <div class="row mt-5">
+                <div class="col-lg-11 animated pulse slow  delay-1">
+                  <div class="card border-0 rounded-top">
+                  </div>
+                  <div class="card-body  shadow p-3 bg-gradiant-blue rounded-lg">
+                    <h2 class="text-white text-center display-3"> Tickets Capturados</h2>
+
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 90px;"></span>
+                      </div>
+                      <div class="col-lg-9">
+                        <h2 class="text-white text-center display-2"><%= TicketsCapturados[0].TCapturados%></h2>
+                        <div class="progress">
+                          <%
+                                let porcentaje = Math.round(TicketsCapturados[0].TCapturados  * 100 / TicketsTotales[0].TTotales) *100/100
+                                      %>
+
+                          <div class="2 bg-transperant-blue" role="progressbar"
+                            style="width: <%=porcentaje%>%" aria-valuenow="<%= TicketsCapturados[0].TCapturados%>"
+                            aria-valuemin="0" aria-valuemax="<%= TicketsTotales[0].TTotales%>"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row mt-5">
+                <div class="col-lg-11 animated pulse slow  delay-2">
+                  <div class="card border-0 rounded-top ">
+                  </div>
+                  <div class="card-body  shadow p-3 bg-gradiant-yellow rounded">
+                    <h2 class="text-white text-center display-3"> Tickets Restantes</h2>
+
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <span class="fas fa-ticket-alt text-white mb-n5" style="font-size: 90px;"></span>
+                      </div>
+                      <div class="col-lg-9">
+                        <h2 class="text-white text-center display-2"><%= TicketsFaltantes%></h2>
+                        <div class="progress">
+                          <%
+                                  let porcentaje2 = Math.round(TicketsFaltantes  * 100 / TicketsTotales[0].TTotales) *100/100
+                                  %>
+                          <div class="2 bg-transperant-yellow" role="progressbar"
+                            style="width: <%= porcentaje2%>%;" aria-valuenow="<%= TicketsFaltantes%>" aria-valuemin="0"
+                            aria-valuemax="<%= TicketsTotales[0].TTotales%>"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-7">
+              <div class="card bg-transparent border-0 ">
+                <card class="card-header bg-dark text-white text-center">
+                  <h2 class="display-4">Progreso Tickets: <span class=" fa fa-ticket-alt text-primary"> </span> <span
+                      class=" fa fa-ticket-alt text-warning"> </span> </h3>
+                </card>
+                <div class="row">
+                  <div class="col-lg-12 mt-5 animated pulse slow infinite delay-5">
+                    <canvas id="pie-chart" width="auto" height=""></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row mt-5">
+
+            <div class="col-lg-5">
+
+
+              <div class="row mt-5">
+                <div class="col-lg-11 animated pulse slow  delay-3">
+                  <div class="card border-0 rounded-top ">
+                  </div>
+                  <div class="card-body  shadow p-3 bg-gradiant-blue rounded-lg">
+                    <h2 class="text-white text-center display-3"> Seriales Capturados</h2>
+
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <span class="fas fa-barcode text-white mb-n5" style="font-size: 50px;"></span>
+                      </div>
+                      <div class="col-lg-9">
+                        <h2 class="text-white text-center display-2"><%= SerialesCapturados[0].SCapturados%></h2>
+                        <div class="progress">
+                          <%
+                                    let porcentaje3 = Math.round(SerialesCapturados[0].SCapturados  * 100 / SerialesTotales[0].STotales) *100/100
+                                    %>
+                          <div class="2 bg-transperant-blue" role="progressbar"
+                            style="width: <%= porcentaje3%>%;" aria-valuenow="<%= SerialesCapturados[0].SCapturados%>"
+                            aria-valuemin="0" aria-valuemax="<%=SerialesTotales[0].STotales%>"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-5">
+                <div class="col-lg-11 animated pulse slow  delay-4">
+                  <div class="card border-0 rounded-top">
+                  </div>
+                  <div class="card-body  shadow p-3 bg-gradiant-yellow rounded-lg">
+                    <h2 class="text-white text-center display-3"> Seriales Restantes</h2>
+
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <span class="fas fa-barcode text-white mb-n5" style="font-size: 50px;"></span>
+                      </div>
+                      <div class="col-lg-9">
+                        <h2 class="text-white text-center display-2"><%= SerialesFaltantes%></h2>
+                        <div class="progress">
+
+                          <%
+                                    let porcentaje4 = Math.round(SerialesFaltantes  * 100 / SerialesTotales[0].STotales) *100/100
+                                    %>
+                          <div class="progress-bar bg-transperant-yellow" role="progressbar"
+                            style="width: <%= porcentaje4%>%;" aria-valuenow="<%= SerialesFaltantes%>" aria-valuemin="0"
+                            aria-valuemax="<%=SerialesTotales[0].STotales%>"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="card bg-transparent border-0 ">
+                <card class="card-header bg-dark text-white text-center">
+                  <h2 class="display-4">Progreso Seriales: <span class=" fa fa-ticket-alt text-primary"> </span> <span
+                      class=" fa fa-ticket-alt text-warning"> </span> </h3>
+                </card>
+                <div class="row">
+                  <div class="col-lg-12 mt-5 animated pulse slow infinite delay-5">
+                    <canvas id="pie-chart2" width="auto" height=""></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item ">
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-4">
+  
+                <div class="col-lg-11 animated pulse slow  delay-4">
+                  <div class="card border-0 rounded-top"></div>
+                  <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
+                    <h2 class="text-white text-center display-4"> Talones Contados</h2>
+  
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
+                      </div>
+                      <div class="col-lg-9">
+                        <h2 class="text-white text-center display-3"><%= TalonesContados %></h2>
+                        <div class="progress">
+  
+                          <% TalonesTotales = TalonesContados + TalonesNoContados %>
+                          <%let porcentaje8 = Math.round(TalonesContados  * 100 / TalonesTotales) *100/100 %>
+  
+                          <div class="progress-bar bg-transperant-orange text-white text-center" role="progressbar"
+                            style="width: <%= porcentaje8%>%;" aria-valuenow="<%= TalonesContados%>"
+                            aria-valuemin="0" aria-valuemax="<%=TalonesTotales%>"><%= porcentaje8%>%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2"></div>
+              <div class="col-4">
+  
+                <div class="col-lg-11 animated pulse slow  delay-4">
+                  <div class="card border-0 rounded-top"></div>
+                  <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
+                    <h2 class="text-white text-center display-4"> Talones Sin Contar</h2>
+  
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
+                      </div>
+                      <div class="col-lg-9">
+                        <h2 class="text-white text-center display-3"><%= TalonesNoContados%></h2>
+                        <div class="progress">
+  
+                          <% TalonesTotales = TalonesContados + TalonesNoContados %>
+                          <%let porcentaje7 = Math.round(TalonesNoContados  * 100 / TalonesTotales) *100/100 %>
+  
+                          <div class="progress-bar2 bg-transperant-orange text-white text-center" role="progressbar"
+                            style="width: <%= porcentaje7%>%;" aria-valuenow="<%= TalonesNoContados%>" 
+                            aria-valuemin="0" aria-valuemax="<%=TalonesTotales%>"><%= porcentaje7%>%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-11">
+                <div class="row">
+                  <div class="col-lg-12 animated pulse slow ">
+                    <canvas id="bar-chart2" width="" height="110"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+          </div>
+      <div class="carousel-item ">
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-4">
+
+            <div class="col-lg-11 animated pulse slow  delay-4">
+              <div class="card border-0 rounded-top"></div>
+              <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
+                <h2 class="text-white text-center display-4"> Talones Entregados</h2>
+
+                <div class="row">
+                  <div class="col-lg-2">
+                    <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
+                  </div>
+                  <div class="col-lg-9">
+                    <h2 class="text-white text-center display-3"><%= TalonesE.length%></h2>
+                    <div class="progress">
+
+                      <% TalonesTotales = TalonesE.length + TalonesP.length %>
+                      <%let porcentaje5 = Math.round(TalonesE.length  * 100 / TalonesTotales) *100/100 %>
+
+                      <div class="2 bg-transperant-orange text-white text-center" role="progressbar"
+                        style="width: <%= porcentaje5%>%;" aria-valuenow="<%= TalonesE.length%>"
+                        aria-valuemin="0" aria-valuemax="<%=TalonesTotales%>"><%= porcentaje5%>%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-2"></div>
+          <div class="col-4">
+
+            <div class="col-lg-11 animated pulse slow  delay-4">
+              <div class="card border-0 rounded-top"></div>
+              <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
+                <h2 class="text-white text-center display-4"> Talones Sin Entregar</h2>
+
+                <div class="row">
+                  <div class="col-lg-2">
+                    <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
+                  </div>
+                  <div class="col-lg-9">
+                    <h2 class="text-white text-center display-3"><%= TalonesP.length%></h2>
+                    <div class="progress">
+
+                      <% TalonesTotales = TalonesE.length + TalonesP.length %>
+                      <%let porcentaje6 = Math.round(TalonesP.length  * 100 / TalonesTotales) *100/100 %>
+
+                      <div class="2 bg-transperant-orange text-white text-center" role="progressbar"
+                        style="width: <%= porcentaje6%>%;" aria-valuenow="<%= SerialesFaltantes%>" aria-valuemin="0"
+                        aria-valuemax="<%=TalonesTotales%>"><%= porcentaje6%>%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1"></div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-11">
+            <div class="row">
+              <div class="col-lg-12 animated pulse slow ">
+                <canvas id="bar-chart-horizontal" width="" height="110"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<br><br><br>
+
+
+
+
+
+<% include ./static/footer.ejs%>
+
 
   <script>
     new Chart(document.getElementById("pie-chart"), {
@@ -285,17 +414,17 @@
       }
     });
 
-    new Chart(document.getElementById("bar-chart-horizontal"), {
+    new Chart(document.getElementById("bar-chart2"), {
       type: 'bar',
       data: {
-        labels: ["Entregados", "Pendientes"],
+        labels: ["Contados", "Sin Contar"],
         datasets: [
           {
-            label: "Talones Entregados",
+            label: "Contados Pendientes",
             backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
             borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
             borderWidth: 5,
-            data: [<%=TalonesE[0].Entregados %>, <%=TalonesP[0].Pendientes %>]
+            data: [<%= TalonesContados %>, <%= TalonesNoContados %>]
           }
         ]
       },
@@ -309,12 +438,12 @@
         scales: {
           xAxes: [{
             gridLines: { display: false },
-            ticks: { display: false }
+            ticks: { display: false ,min : 0}
           }],
 
           yAxes: [{
             gridLines: { display: false },
-            ticks: { display: false }
+            ticks: { display: false, min : 0}
 
           }]
         },
@@ -326,13 +455,121 @@
 
             color: 'white',
             font: {
-              size: 40,
+              size: 30,
             }
           }
         }
       }
 
     });
+
+    TalonesP = <%- JSON.stringify(TalonesP) %>;
+
+     nombre_emp = []   
+     nombre_empleado = []
+
+    let colors = []
+    let borders = []
+    let r = 252
+    let g = 102
+    let b = 2
+    for (let i = 0; i < TalonesP.length; i++) {
+
+      r += 10 
+      g += 10 
+      b += 10
+
+      colors.push(`rgb(${r},${g},${b},0.6)`)
+      borders.push(`rgba(252, 181, 2, 0.616)`)
+
+      let wordsArray = TalonesP[i].nombre_empleado.split(" ");
+      let result = wordsArray[0] + " " + wordsArray[1];
+      nombre_emp.push(result); 
+      nombre_empleado.push(TalonesP[i].nombre_empleado)
+    }
+console.log(colors);
+
+    empleados = Array.from(new Set(nombre_empleado))
+    emp = Array.from(new Set(nombre_emp))
+
+    valores = []
+    for (let i = 0; i < empleados.length; i++) {
+      let count  = 0
+      for (let y = 0; y < TalonesP.length; y++) {
+        if (TalonesP[y].nombre_empleado == empleados[i]) {
+          count++
+        }
+        
+      }
+      valores.push(count) 
+    }
+
+    let textSize
+    let numberSize
+
+
+
+    if (emp.length <= 10) {
+      textSize = 30
+      numberSize = 40
+    }else if (emp.length <=25) {
+      textSize = 20
+      numberSize = 20
+    }else {
+      textSize = 20
+      numberSize = 15
+    }
+
+    // Bar chart
+    new Chart(document.getElementById("bar-chart-horizontal"), {
+      type: 'horizontalBar',
+      data: {
+        labels: emp,
+        datasets: [
+          {
+            label: "Population (millions)",
+            backgroundColor: colors,
+            borderColor: borders,
+            borderWidth: 2,
+            data: valores,
+          }
+        ]
+      },
+
+      options: {
+        cutoutPercentage: 75,
+        legend: { display: false },
+        title: { display: false },
+        datalabels: { display: false },
+        scaleShowLabels: false,
+        scales: {
+          xAxes: [{
+            gridLines: { display: false },
+            ticks: { display: false, min : 0 }
+          }],
+
+          yAxes: [{
+            gridLines: { display: false },
+            ticks: { display: true, fontSize:  textSize, min : 0}
+
+          }]
+        },
+        plugins: {
+          datalabels: {
+            display: true,
+            anchor: 'top',
+            clamp: true,
+
+            color: 'white',
+            font: {
+              size: numberSize,
+            }
+          }
+        }
+      }
+
+    });
+
 
 
     var currentDate = new Date(),
@@ -344,4 +581,5 @@
 
     document.getElementById("date").innerHTML = date;
   </script>
-  <% include ./static/footer.ejs%>
+
+

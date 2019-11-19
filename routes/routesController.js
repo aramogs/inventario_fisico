@@ -710,29 +710,37 @@ controller.graficas_GET = (req, res) => {
                 funcion.CountSerialesTotales((err, SerialesTotales) => {
                     funcion.CountTalonesE((err, TalonesE) => {
                         funcion.CountTalonesP((err, TalonesP) => {
-                            SerialesFaltantes = SerialesTotales[0].STotales - SerialesCapturados[0].SCapturados
-                            TicketsFaltantes = TicketsTotales[0].TTotales - TicketsCapturados[0].TCapturados
+                            funcion.Talones_Contados((err, TalonesContados) => {
+                                funcion.Talones_NoContados((err, TalonesNoContados) => {
+                                    SerialesFaltantes = SerialesTotales[0].STotales - SerialesCapturados[0].SCapturados
+                                    TicketsFaltantes = TicketsTotales[0].TTotales - TicketsCapturados[0].TCapturados
+                                    TalonesContados = TalonesContados[0].TalonesContados
+                                    TalonesNoContados = TalonesNoContados[0].TalonesNoContados
 
 
 
-                            res.render('graficas.ejs', {
-                                TicketsCapturados,
-                                SerialesCapturados,
-                                SerialesFaltantes,
-                                TicketsFaltantes,
-                                TalonesE,
-                                TalonesP,
-                                SerialesTotales,
-                                TicketsTotales
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
+                                    res.render('graficas.ejs', {
+                                        TicketsCapturados,
+                                        SerialesCapturados,
+                                        SerialesFaltantes,
+                                        TicketsFaltantes,
+                                        TalonesE,
+                                        TalonesP,
+                                        SerialesTotales,
+                                        TicketsTotales,
+                                        TalonesContados,
+                                        TalonesNoContados
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
 
-};
+}
 
 controller.auditar_POST = (req, res) => {
     gafete = req.body.user;
