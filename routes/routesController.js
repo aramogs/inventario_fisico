@@ -96,7 +96,7 @@ controller.mesa_captura_POST = (req, res) => {
                         if (err) throw err;
                         funcion.ubicacion((err, result7) => {
                             if (err) throw err;
-                            funcion.Talones((err, talones) => {
+                            funcion.TalonesEntregados((err, talones) => {
                                 if (err) throw err;
 
                                 res.render('mesa_captura.ejs', {
@@ -126,33 +126,38 @@ controller.guardar_captura_POST = (req, res) => {
     material = req.body.parte
     cantidad = req.body.cantidad
     ubicacion = req.body.ubicacion
+    idTalon = req.body.idTalon
 
     funcion.InsertCaptura(ticket, material, cantidad, ubicacion, gafete, (err, result3) => {
         if (err) throw err;
-        funcion.material((err, materiales) => {
+        funcion.IncrementCaptura(idTalon, (err, resu) => {
             if (err) throw err;
-            funcionE.empleadosNombre(gafete, (err, nombre) => {
-                if (err) throw err;
-                funcion.ticketsCapturados((err, tickets) => {
-                    if (err) throw err;
-                    funcion.MaxTickets((err, maxmin) => {
-                        if (err) throw err;
-                        funcion.misTicketsCapturados(gafete, (err, misTickets) => {
-                            if (err) throw err;
-                            funcion.ubicacion((err, ubicacion) => {
-                                if (err) throw err;
-                                funcion.Talones((err, talones) => {
-                                    if (err) throw err;
 
-                                    res.render('mesa_captura.ejs', {
-                                        gafete,
-                                        materiales,
-                                        nombre,
-                                        tickets,
-                                        maxmin,
-                                        misTickets,
-                                        ubicacion,
-                                        talones
+            funcion.material((err, materiales) => {
+                if (err) throw err;
+                funcionE.empleadosNombre(gafete, (err, nombre) => {
+                    if (err) throw err;
+                    funcion.ticketsCapturados((err, tickets) => {
+                        if (err) throw err;
+                        funcion.MaxTickets((err, maxmin) => {
+                            if (err) throw err;
+                            funcion.misTicketsCapturados(gafete, (err, misTickets) => {
+                                if (err) throw err;
+                                funcion.ubicacion((err, ubicacion) => {
+                                    if (err) throw err;
+                                    funcion.TalonesEntregados((err, talones) => {
+                                        if (err) throw err;
+
+                                        res.render('mesa_captura.ejs', {
+                                            gafete,
+                                            materiales,
+                                            nombre,
+                                            tickets,
+                                            maxmin,
+                                            misTickets,
+                                            ubicacion,
+                                            talones
+                                        });
                                     });
                                 });
                             });
@@ -292,7 +297,7 @@ controller.conteo_guardar_POST = (req, res) => {
                     material = "NULL"
                     cantidad = null
 
-                    RabbitPublisher.get_label(serial, (callback) => {})
+                    RabbitPublisher.get_label(serial, (callback) => { })
 
                     funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
                         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
@@ -353,11 +358,16 @@ controller.cancelar_multiple_POST = (req, res) => {
         funcionE.empleadosNombre(gafete, (err, nombre) => {
             funcion.misTicketsCapturadosC(gafete, (err, misTickets) => {
                 if (err) throw err;
-                res.render('cancelar_multiple.ejs', {
-                    gafete,
-                    nombre,
-                    tickets,
-                    misTickets
+                funcion.Talones((err, talones) => {
+                    if (err) throw err;
+
+                    res.render('cancelar_multiple.ejs', {
+                        gafete,
+                        nombre,
+                        tickets,
+                        misTickets,
+                        talones
+                    });
                 });
             });
         });
@@ -372,11 +382,15 @@ controller.guardar_cancelado_POST = (req, res) => {
     gafete = req.body.gafete;
     ticketI = parseInt(req.body.ticketInicial)
     ticketF = parseInt(req.body.ticketFinal)
+    idTalon= req.body.idTalonF
 
     for (var i = ticketI; i <= ticketF; i++) {
 
         funcion.InsertCaptura(i, "CANCELADO", 0, "N/A", gafete, (err, result3) => {
             if (err) throw err;
+            funcion.IncrementCaptura(idTalon, (err, resul) => {
+                if (err) throw err;
+            });
         });
     }
 

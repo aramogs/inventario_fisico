@@ -414,14 +414,16 @@
     ticket = <%- JSON.stringify(tickets) %>;
     maxmin = <%- JSON.stringify(maxmin) %>;
     var msg = document.getElementById("msgTicket");
-    var id = parseInt($('#ticket').val(), 10);
-    minimo = parseInt(maxmin[0].minimo, 10)
-    maximo = parseInt(maxmin[0].maximo, 10)
+    var id = parseInt($('#ticket').val());
+    minimo = parseInt(maxmin[0].minimo)
+    maximo = parseInt(maxmin[0].maximo)
     talones = <%- JSON.stringify(talones) %>;
 
 
     
     if (id >= minimo && id <= maximo) {
+
+
 
       if (ticket.length == 0) {
 
@@ -456,20 +458,27 @@
 
         } else {
 
-          msg.innerHTML = ' Correcto';
-          msg.classList.add('text-success');
-          msg.classList.remove('text-danger');
-
-      
+           foundTicket=false
           for (var y = 0; y < talones.length; y++) {
 
             if (id >= talones[y].ticket_inicial && id <= talones[y].ticket_final) {
               $('#asignado').text(talones[y].nombre_empleado);
               $('#telefono').text(talones[y].telefono);
               $('#idTalon').val(talones[y].id);
+              foundTicket=true
               break
             }
 
+          }
+
+          if(foundTicket==true){
+            msg.innerHTML = ' Correcto';
+            msg.classList.add('text-success');
+            msg.classList.remove('text-danger');
+          }else{
+            msg.innerHTML = ' Talon no Entregado';
+            msg.classList.remove('text-success');
+            msg.classList.add('text-danger');
           }
 
 

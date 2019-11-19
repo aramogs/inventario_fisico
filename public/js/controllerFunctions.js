@@ -180,6 +180,19 @@ funcion.Talones= (callback)=>{
     })
 }
 
+funcion.TalonesEntregados= (callback)=>{
+    db.query(`SELECT * FROM talones WHERE status='ENTREGADO'`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.misTicketsCapturados= (gafete,callback)=>{
     db.query(`SELECT * FROM captura WHERE num_empleado= ${gafete} ORDER BY captura_id DESC`,function (err, result, fields) {
         if (err) {
@@ -506,6 +519,19 @@ funcion.CountTalonesE= (callback)=>{
 
 funcion.CountTalonesP= (callback)=>{
     db.query(`SELECT COUNT (id) AS Pendientes FROM talones WHERE status="PENDIENTE" `, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.IncrementCaptura = (idTalon,callback)=>{
+    db.query(`UPDATE talones SET capturados = capturados + 1 WHERE id = ${idTalon}`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
