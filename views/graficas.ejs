@@ -226,14 +226,14 @@
                 <div class="col-lg-11 animated pulse slow  delay-4">
                   <div class="card border-0 rounded-top"></div>
                   <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
-                    <h2 class="text-white text-center display-5"> Talones Contados</h2>
+                    <h2 class="text-white text-center display-4"> Talones Contados</h2>
   
                     <div class="row">
                       <div class="col-lg-2">
                         <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
                       </div>
                       <div class="col-lg-9">
-                        <h2 class="text-white text-center display-4"><%= TalonesContados %></h2>
+                        <h2 class="text-white text-center display-3"><%= TalonesContados %></h2>
                         <div class="progress">
   
                           <% TalonesTotales = TalonesContados + TalonesNoContados %>
@@ -254,14 +254,14 @@
                 <div class="col-lg-11 animated pulse slow  delay-4">
                   <div class="card border-0 rounded-top"></div>
                   <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
-                    <h2 class="text-white text-center display-5"> Talones Sin Contar</h2>
+                    <h2 class="text-white text-center display-4"> Talones Sin Contar</h2>
   
                     <div class="row">
                       <div class="col-lg-2">
                         <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
                       </div>
                       <div class="col-lg-9">
-                        <h2 class="text-white text-center display-4"><%= TalonesNoContados%></h2>
+                        <h2 class="text-white text-center display-3"><%= TalonesNoContados%></h2>
                         <div class="progress">
   
                           <% TalonesTotales = TalonesContados + TalonesNoContados %>
@@ -298,14 +298,14 @@
             <div class="col-lg-11 animated pulse slow  delay-4">
               <div class="card border-0 rounded-top"></div>
               <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
-                <h2 class="text-white text-center display-5"> Talones Entregados</h2>
+                <h2 class="text-white text-center display-4"> Talones Entregados</h2>
 
                 <div class="row">
                   <div class="col-lg-2">
                     <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
                   </div>
                   <div class="col-lg-9">
-                    <h2 class="text-white text-center display-4"><%= TalonesE.length%></h2>
+                    <h2 class="text-white text-center display-3"><%= TalonesE.length%></h2>
                     <div class="progress">
 
                       <% TalonesTotales = TalonesE.length + TalonesP.length %>
@@ -326,14 +326,14 @@
             <div class="col-lg-11 animated pulse slow  delay-4">
               <div class="card border-0 rounded-top"></div>
               <div class="card-body  shadow p-3 bg-gradiant-orange rounded-lg">
-                <h2 class="text-white text-center display-5"> Talones Sin Entregar</h2>
+                <h2 class="text-white text-center display-4"> Talones Sin Entregar</h2>
 
                 <div class="row">
                   <div class="col-lg-2">
                     <span class="fas fa-tags text-white mb-n5" style="font-size: 50px;"></span>
                   </div>
                   <div class="col-lg-9">
-                    <h2 class="text-white text-center display-4"><%= TalonesP.length%></h2>
+                    <h2 class="text-white text-center display-3"><%= TalonesP.length%></h2>
                     <div class="progress">
 
                       <% TalonesTotales = TalonesE.length + TalonesP.length %>
@@ -376,16 +376,6 @@
 
 <% include ./static/footer.ejs%>
 
-$(document).ready(function(){
-     $("#myCarousel").carousel({
-         interval : 100,
-         pause: false
-     });
-});
-
-  <!-- <canvas id="pie-chart2" width="200px" height="150px" class="animated pulse slow infinite"></canvas> -->
-  <!-- Vector map -->
-  <!-- <script src="/resources/jvectormap/jvectormap-custom.js"></script> -->
 
   <script>
     new Chart(document.getElementById("pie-chart"), {
