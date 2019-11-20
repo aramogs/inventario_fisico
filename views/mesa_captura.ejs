@@ -356,7 +356,7 @@
       for (var i = 0; i < material.length; i++) {
         if (id == material[i].material) {
 
-          $('#cantidad').focus();
+  
 
           msg.innerHTML = ' Correcto';
           msg.classList.add('text-success');
@@ -625,5 +625,29 @@
       $('#btnguardar').prop("disabled", true);
     }
   });
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  jQuery.extend(jQuery.expr[':'], {
+    focusable: function (el, index, selector) {
+        return $(el).is('a, button, :input, [tabindex]');
+    }
+});
+
+$(document).on('keypress', 'input,select', function (e) {
+    if (e.which == 13) {
+        e.preventDefault();
+        // Get all focusable elements on the page
+        var $canfocus = $(':focusable');
+        var index = $canfocus.index(document.activeElement) + 1;
+        if (index >= $canfocus.length) index = 0;
+        $canfocus.eq(index).focus();
+    }
+
+    if( e.which == 13 && $("#btnguardar").is(":enabled")) {
+                this.form.submit();
+            }
+});
 
 </script>

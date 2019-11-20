@@ -211,16 +211,18 @@ function clicked(e) {
   
       }
 
-empleados = <%- JSON.stringify(empleados) %>;
+empleadoss = <%- JSON.stringify(empleados) %>;
 talones = <%- JSON.stringify(talones) %>;
+
 $('#empleado').on('change', function (e) {
   id = $('#empleado').val();
 
 
-  for (let i = 0; i < empleados.length; i++) {
-    if(id == empleados[i].emp_id){
+  for (let i = 0; i < empleadoss.length; i++) {
+   
+    if(id == empleadoss[i].emp_id){
 
-      $('#nombre').val(empleados[i].emp_nombre);
+      $('#nombre').val(empleadoss[i].emp_nombre);
       
     }
     
@@ -340,7 +342,6 @@ for (let i = 0; i < TalonesP.length; i++) {
  nombre_emp.push(result); 
  nombre_empleado.push(TalonesP[i].nombre_empleado)
 }
-console.log(colors);
 
 empleados = Array.from(new Set(nombre_empleado))
 emp = Array.from(new Set(nombre_emp))
