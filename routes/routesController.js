@@ -40,7 +40,7 @@ controller.login = (req, res) => {
             });
         });
     } else if (loginId == 'talones') {
-        funcionE.empleadosRevisarAccesso('=', 2, (err, result) => {
+        funcionE.empleadosRevisarAccesso('=', 3, (err, result) => {
 
             res.render('login.ejs', {
                 data: loginId,
@@ -382,7 +382,7 @@ controller.guardar_cancelado_POST = (req, res) => {
     gafete = req.body.gafete;
     ticketI = parseInt(req.body.ticketInicial)
     ticketF = parseInt(req.body.ticketFinal)
-    idTalon= req.body.idTalonF
+    idTalon = req.body.idTalonF
 
     for (var i = ticketI; i <= ticketF; i++) {
 
@@ -440,11 +440,14 @@ controller.talones_POST = (req, res) => {
         funcion.Talones((err, talones) => {
             funcionE.empleados((err, empleados) => {
                 if (err) throw err;
-                res.render('talones.ejs', {
-                    gafete,
-                    nombre,
-                    talones,
-                    empleados
+                funcion.CountTalonesP((err, TalonesP) => {
+                    res.render('talones.ejs', {
+                        gafete,
+                        nombre,
+                        talones,
+                        empleados,
+                        TalonesP
+                    });
                 });
             });
         });
@@ -500,11 +503,14 @@ controller.guardar_talon_POST = (req, res) => {
             funcion.Talones((err, talones) => {
                 funcionE.empleados((err, empleados) => {
                     if (err) throw err;
-                    res.render('talones.ejs', {
-                        gafete,
-                        nombre,
-                        talones,
-                        empleados
+                    funcion.CountTalonesP((err, TalonesP) => {
+                        res.render('talones.ejs', {
+                            gafete,
+                            nombre,
+                            talones,
+                            empleados,
+                            TalonesP
+                        });
                     });
                 });
             });
@@ -524,11 +530,14 @@ controller.delete_talon_POST = (req, res) => {
             funcion.Talones((err, talones) => {
                 funcionE.empleados((err, empleados) => {
                     if (err) throw err;
-                    res.render('talones.ejs', {
-                        gafete,
-                        nombre,
-                        talones,
-                        empleados
+                    funcion.CountTalonesP((err, TalonesP) => {
+                        res.render('talones.ejs', {
+                            gafete,
+                            nombre,
+                            talones,
+                            empleados,
+                            TalonesP
+                        });
                     });
                 });
             });
@@ -555,11 +564,14 @@ controller.status_talon_POST = (req, res) => {
             funcion.Talones((err, talones) => {
                 funcionE.empleados((err, empleados) => {
                     if (err) throw err;
-                    res.render('talones.ejs', {
-                        gafete,
-                        nombre,
-                        talones,
-                        empleados
+                    funcion.CountTalonesP((err, TalonesP) => {
+                        res.render('talones.ejs', {
+                            gafete,
+                            nombre,
+                            talones,
+                            empleados,
+                            TalonesP
+                        });
                     });
                 });
             });
@@ -581,13 +593,19 @@ controller.guardar_ubicacion_POST = (req, res) => {
                     funcion.Talones((err, talones) => {
                         funcionE.empleados((err, empleados) => {
                             if (err) throw err;
-                            res.render('accesos.ejs', {
-                                gafete,
-                                nombre,
-                                talones,
-                                empleados,
-                                ubicaciones,
-                                accesos
+                            funcion.Select_Captura((err, captura) => {
+                                funcion.Select_Material((err, material) => {
+                                    res.render('accesos.ejs', {
+                                        gafete,
+                                        nombre,
+                                        talones,
+                                        empleados,
+                                        ubicaciones,
+                                        accesos,
+                                        captura,
+                                        material
+                                    });
+                                });
                             });
                         });
                     });
@@ -611,13 +629,19 @@ controller.delete_ubicacion_POST = (req, res) => {
                     funcion.Talones((err, talones) => {
                         funcionE.empleados((err, empleados) => {
                             if (err) throw err;
-                            res.render('accesos.ejs', {
-                                gafete,
-                                nombre,
-                                talones,
-                                empleados,
-                                ubicaciones,
-                                accesos
+                            funcion.Select_Captura((err, captura) => {
+                                funcion.Select_Material((err, material) => {
+                                    res.render('accesos.ejs', {
+                                        gafete,
+                                        nombre,
+                                        talones,
+                                        empleados,
+                                        ubicaciones,
+                                        accesos,
+                                        captura,
+                                        material
+                                    });
+                                });
                             });
                         });
                     });
@@ -650,14 +674,20 @@ controller.guardar_acceso_POST = (req, res) => {
                 funcion.Talones((err, talones) => {
                     funcionE.empleados((err, empleados) => {
                         funcionE.EmpleadosAccesos((err, accesos) => {
+                            funcion.Select_Captura((err, captura) => {
+                                funcion.Select_Material((err, material) => {
 
-                            res.render('accesos.ejs', {
-                                gafete,
-                                nombre,
-                                talones,
-                                empleados,
-                                ubicaciones,
-                                accesos
+                                    res.render('accesos.ejs', {
+                                        gafete,
+                                        nombre,
+                                        talones,
+                                        empleados,
+                                        ubicaciones,
+                                        accesos,
+                                        captura,
+                                        material
+                                    });
+                                });
                             });
                         });
                     });
@@ -683,14 +713,19 @@ controller.delete_acceso_POST = (req, res) => {
                 funcion.Talones((err, talones) => {
                     funcionE.empleados((err, empleados) => {
                         funcionE.EmpleadosAccesos((err, accesos) => {
-
-                            res.render('accesos.ejs', {
-                                gafete,
-                                nombre,
-                                talones,
-                                empleados,
-                                ubicaciones,
-                                accesos
+                            funcion.Select_Captura((err, captura) => {
+                                funcion.Select_Material((err, material) => {
+                                    res.render('accesos.ejs', {
+                                        gafete,
+                                        nombre,
+                                        talones,
+                                        empleados,
+                                        ubicaciones,
+                                        accesos,
+                                        captura,
+                                        material
+                                    });
+                                });
                             });
                         });
                     });

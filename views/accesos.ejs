@@ -280,6 +280,7 @@
   empleados = <%- JSON.stringify(empleados) %>;
 
   $('#empleado').on('change', function (e) {
+    console.log("empleados")
     id = $('#empleado').val();
 
 
@@ -359,7 +360,7 @@
             <%  for(let y = 0; y < material.length; y++){   %>
                                 <% if(captura[i].material == material[y].material){ %>
                                   <% material_description = material[y].material_description %>
-                                  <% console.log(material_description) %>
+                                 
                                   <%  existe = true%>
                                   <% break %>
                                 <% } %>
@@ -374,7 +375,7 @@
             <%  for(let y = 0; y < material.length; y++){   %>
                                 <% if(captura[i].material == material[y].material){ %>
                                   <% unidad_medida = material[y].unidad_medida %>
-                                  <% console.log(unidad_medida) %>
+                            
                                   <%  existe = true%>
                                   <% break %>
                                 <% } %>
