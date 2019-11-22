@@ -45,6 +45,11 @@
               </div>
             </div>
           </div>
+
+              <div class="form-group">
+                <label for="titulo">Captura Actual: </label> <label id="msgCapturaTalon"></label>
+              </div>
+
           <div class="row">
             <dic class="col-lg-2">
               <div class="form-group">
@@ -356,7 +361,7 @@
       for (var i = 0; i < material.length; i++) {
         if (id == material[i].material) {
 
-          $('#cantidad').focus();
+  
 
           msg.innerHTML = ' Correcto';
           msg.classList.add('text-success');
@@ -418,7 +423,7 @@
     minimo = parseInt(maxmin[0].minimo)
     maximo = parseInt(maxmin[0].maximo)
     talones = <%- JSON.stringify(talones) %>;
-
+    var msgTalon = document.getElementById("msgCapturaTalon");
 
     
     if (id >= minimo && id <= maximo) {
@@ -427,9 +432,7 @@
 
       if (ticket.length == 0) {
 
-        msg.innerHTML = ' Correcto';
-        msg.classList.add('text-success');
-        msg.classList.remove('text-danger');
+        
         for (var y = 0; y < talones.length; y++) {
 
 
@@ -437,6 +440,10 @@
             $('#asignado').text(talones[y].nombre_empleado);
             $('#telefono').text(talones[y].telefono);
             $('#idTalon').val(talones[y].id);
+            msg.innerHTML = ' Correcto';
+            msg.classList.add('text-success');
+            msg.classList.remove('text-danger');
+            msgTalon.innerHTML = talones[y].capturados+1 + " / " +talones[y].totales;
             break
           }
 
@@ -454,6 +461,7 @@
           $('#asignado').text('.');
           $('#telefono').text('.');
           $('#idTalon').val("");
+          msgTalon.innerHTML = "";
           break;
 
         } else {
@@ -465,6 +473,7 @@
               $('#asignado').text(talones[y].nombre_empleado);
               $('#telefono').text(talones[y].telefono);
               $('#idTalon').val(talones[y].id);
+              msgTalon.innerHTML = talones[y].capturados+1 + " / " +talones[y].totales;
               foundTicket=true
               break
             }
@@ -479,6 +488,7 @@
             msg.innerHTML = ' Talon no Entregado';
             msg.classList.remove('text-success');
             msg.classList.add('text-danger');
+            msgTalon.innerHTML = "";
           }
 
 
@@ -492,6 +502,7 @@
       $('#asignado').text('.');
       $('#telefono').text('.');
       $('#idTalon').val("");
+      msgTalon.innerHTML = "";
 
     }
 
@@ -625,5 +636,29 @@
       $('#btnguardar').prop("disabled", true);
     }
   });
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  jQuery.extend(jQuery.expr[':'], {
+    focusable: function (el, index, selector) {
+        return $(el).is('a, button, :input, [tabindex]');
+    }
+});
+
+$(document).on('keypress', 'input,select', function (e) {
+    if (e.which == 13) {
+        e.preventDefault();
+        // Get all focusable elements on the page
+        var $canfocus = $(':focusable');
+        var index = $canfocus.index(document.activeElement) + 1;
+        if (index >= $canfocus.length) index = 0;
+        $canfocus.eq(index).focus();
+    }
+
+    if( e.which == 13 && $("#btnguardar").is(":enabled")) {
+                this.form.submit();
+            }
+});
 
 </script>

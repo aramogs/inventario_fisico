@@ -192,7 +192,7 @@ controller.delete_ticket_POST = (req, res) => {
                             if (err) throw err;
                             funcion.ubicacion((err, ubicacion) => {
                                 if (err) throw err;
-                                funcion.Talones((err, talones) => {
+                                funcion.TalonesEntregados((err, talones) => {
                                     if (err) throw err;
 
                                     res.render('mesa_captura.ejs', {
@@ -360,7 +360,7 @@ controller.cancelar_multiple_POST = (req, res) => {
         funcionE.empleadosNombre(gafete, (err, nombre) => {
             funcion.misTicketsCapturadosC(gafete, (err, misTickets) => {
                 if (err) throw err;
-                funcion.Talones((err, talones) => {
+                funcion.TalonesEntregados((err, talones) => {
                     if (err) throw err;
 
                     res.render('cancelar_multiple.ejs', {
