@@ -1,7 +1,9 @@
+const controller = {};
 //Conexion a base de datos
 const db = require('../public/db/conn');
-const controller = {};
-
+//Libreria Excel
+const Excel = require('exceljs');
+const saveAs = require('file-saver')
 //Require Funciones
 const funcion = require('../public/js/controllerFunctions');
 const funcionE = require('../public/js/empleadosFunctions');
@@ -297,7 +299,7 @@ controller.conteo_guardar_POST = (req, res) => {
                     material = "NULL"
                     cantidad = null
 
-                    RabbitPublisher.get_label(serial, (callback) => { })
+                    RabbitPublisher.get_label(serial, (callback) => {})
 
                     funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
                         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
@@ -870,9 +872,238 @@ controller.terminar_auditoria_POST = (req, res) => {
             gafete,
             nombre
         })
-
-
-
     })
+}
+
+controller.descargar_reporte_POST = (req, res) => {
+
+    funcion.Select_Captura((err, captura) => {
+        funcion.Select_Material((err, material) => {
+
+
+            //     res.download('file');
+            //     var header = "TICKET" + "\t" + "NUMERO DE PARTE" + "\t" + "CANTIDAD" + "\t" + "AREA" + "\t" + "SAPLOC" + "\t" + "DESCRIPCION" + "\t" + "UOM" + "\t" + "CAPTURISTA" + "\n";
+
+            //     let rows = []
+            //     let row = []
+            //     let test 
+            //     for (let i = 1; i < captura.length; i++) {
+
+            //         rows.push("row"+[i])
+
+
+            //         let existe = false
+            //         let storage_location
+            //         let unidad_medida = ''
+            //         let material_description = ''
+
+            //         for (let y = 0; y < material.length; y++) {
+            //             if (captura[i].material == material[y].material) {
+            //                 storage_location = material[y].storage_location
+            //                 existe = true
+            //                 break
+            //             }
+            //         }
+            //         if (existe == true) {
+            //             storage_location
+            //         } else {
+            //             storage_location = 'N/A'
+            //         }
+
+            //         for (let y = 0; y < material.length; y++) {
+            //             if (captura[i].material == material[y].material) {
+            //                 material_description = material[y].material_description
+
+            //                 existe = true
+            //                 break
+            //             }
+            //         }
+            //         if (existe == true) {
+            //             material_description
+            //         } else {
+            //             material_description = 'N/A'
+            //         }
+
+            //         for (let y = 0; y < material.length; y++) {
+            //             if (captura[i].material == material[y].material) {
+            //                 unidad_medida = material[y].unidad_medida
+
+            //                 existe = true
+            //                 break
+            //             }
+            //         }
+            //         if (existe == true) {
+            //             unidad_medida
+            //         } else {
+            //             unidad_medida = 'N/A'
+            //         }
+
+            //             row[i]  = [
+            //             captura[i].serial,
+            //             captura[i].material,
+            //             captura[i].cantidad,
+            //             captura[i].ubicacion,
+            //             storage_location,
+            //             material_description,
+            //             unidad_medida,
+            //             captura[i].num_empleado
+            //         ].join('\t')
+
+
+            //     }
+            //     for (let i = 1; i < rows.length; i++) {
+            //         test =  test  + row[i] + "\n"
+            //     }
+            //     test = header + test
+
+            //     return res.send(test);
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////EXCELJS/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+            // create workbook & add worksheet
+            var workbook = new Excel.Workbook();
+            var worksheet = workbook.addWorksheet('CAPTURA');
+
+            // add column headers
+            worksheet.columns = [
+                {   header: 'TICKET',
+                    key: 'serial'
+                },
+                {
+                    header: 'NUMERO DE PARTE',
+                    key: 'material'
+                },
+                {
+                    header: 'CANTIDAD',
+                    key: 'cantidad'
+                },
+                {
+                    header: 'AREA',
+                    key: 'ubicacion'
+                },
+                {
+                    header: 'SAPLOC',
+                    key: 'storage_location'
+                },
+                {
+                    header: 'DESCRIPCION',
+                    key: 'material_description'
+                },
+                {
+                    header: 'UOM',
+                    key: 'unidad_medida'
+                },
+                {
+                    header: 'CAPTURISTA',
+                    key: 'num_empleado'
+                }
+            ];
+
+            // // add row using keys
+            // worksheet.addRow({
+            //     album: "Taylor Swift",
+            //     year: 2006
+            // });
+
+            // // add rows the dumb way
+            // worksheet.addRow(["Fearless", 2008]);
+
+            // // add an array of rows
+            // var rows = [
+            //     ["Speak Now", 2010],
+            //     {
+            //         album: "Red",
+            //         year: 2012
+            //     }
+            // ];
+
+                let rows = []
+                let row =[]
+                for (let i = 1; i < captura.length; i++) {
+
+                    rows.push("row"+[i])
+                    let existe = false
+                    let storage_location
+                    let unidad_medida = ''
+                    let material_description = ''
+
+                    for (let y = 0; y < material.length; y++) {
+                        if (captura[i].material == material[y].material) {
+                            storage_location = material[y].storage_location
+                            existe = true
+                            break
+                        }
+                    }
+                    if (existe == true) {
+                        storage_location
+                    } else {
+                        storage_location = 0
+                    }
+
+                    for (let y = 0; y < material.length; y++) {
+                        if (captura[i].material == material[y].material) {
+                            material_description = material[y].material_description
+
+                            existe = true
+                            break
+                        }
+                    }
+                    if (existe == true) {
+                        material_description
+                    } else {
+                        material_description = 'N/A'
+                    }
+
+                    for (let y = 0; y < material.length; y++) {
+                        if (captura[i].material == material[y].material) {
+                            unidad_medida = material[y].unidad_medida
+
+                            existe = true
+                            break
+                        }
+                    }
+
+                    if (existe == true) {
+                        unidad_medida
+                    } else {
+                        unidad_medida = 'N/A'
+                    }
+
+                    row = [
+                        captura[i].serial,
+                        captura[i].material,
+                        captura[i].cantidad,
+                        captura[i].ubicacion,
+                        storage_location,
+                        material_description,
+                        unidad_medida,
+                        captura[i].num_empleado
+                    ]
+                    worksheet.addRow(row);
+                }
+
+                
+
+            
+
+            // // edit cells directly
+            // worksheet.getCell('A6').value = "1989";
+            // worksheet.getCell('B6').value = 2014;
+
+            // // save workbook to disk
+            // workbook.xlsx.writeFile('taylor_swift.xlsx').then(function() {
+            //   console.log("saved");
+            // });
+
+            res.attachment("INVENTARIO.xlsx")
+            workbook.xlsx.write(res).then(function () {
+                res.end()
+            });
+
+
+        })
+    });
+
 }
 module.exports = controller;

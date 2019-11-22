@@ -13,17 +13,15 @@
       <div class="col-lg-8 d-none d-sm-block">
         <h2>Administracion De Inventario</h2>
       </div>
-      <div class="spinner-border text-primary" role="status">
-          <span class="sr-only">Loading...</span>
-      </div>
       <div class="col-lg-4">
+    <form action="/descargar_reporte">
       <div class="excel" >
         <h5 class=" text-right">
           Descargar Excel 
-          <button type="button" name="" id="descargaExcel" class="btn btn-success"><span class="fa fa-file-excel" style="font-size: 60px;"></span></button>
+          <button type="submit" formtarget="_blank" name="" id="descargaExcel" class="btn btn-success"><span class="fa fa-file-excel" style="font-size: 60px;"></span></button>
         </h5>
       </div>
-
+    </form>
       </div>
     </div>
     <hr>
@@ -235,10 +233,7 @@
 <script>
 
 
-      window.onload = function () {
-        $(".spinner-border").fadeOut("fast");
-        $('.excel').show('slow');
-    }
+
 
   function clicked(e) {
     if (!confirm('Seguro que deseas eliminar?')) e.preventDefault();
@@ -315,97 +310,5 @@
 
 
 
-  var wb = XLSX.utils.book_new();
-        wb.Props = {
-                Title: "Inventario_Tristone_DEL",
-                Subject: "Inventario",
-                Author: "DEL_IT",
-                CreatedDate: new Date()
-        };
-        
-        wb.SheetNames.push(`Captura Inventario ${date}`);
-    
-        
-       
-          
-          
-      
-        var ws_data = [ 
-        ['TICKET' , 'NUMERO DE PARTE','CANTIDAD' , 'AREA','SAPLOC','DESCRIPCION','UOM','CAPTURISTA'],
-          <%for (let i = 0; i < captura.length; i++) {%>
-
-
-            ['<%= captura[i].serial%>' , 
-            '<%= captura[i].material%>',
-            '<%= captura[i].cantidad%>' ,
-            '<%= captura[i].ubicacion%>',
-            
-            <% let existe = false%>
-            <% let storage_location%>
-            <%  for(let y = 0; y < material.length; y++){   %>
-                                <% if(captura[i].material == material[y].material){ %>
-                                  <% storage_location = material[y].storage_location %>
-                                  <%  existe = true%>
-                                  <% break %>
-                                <% } %>
-                                <% } %>
-                                <% if(existe == true){ %>
-                                  '<%= storage_location%>',
-                                <% }else{ %>
-                                  'N/A',
-                                  <% } %>
-                                
-                                
-            <% let material_description = ''%>
-            <%  for(let y = 0; y < material.length; y++){   %>
-                                <% if(captura[i].material == material[y].material){ %>
-                                  <% material_description = material[y].material_description %>
-                                 
-                                  <%  existe = true%>
-                                  <% break %>
-                                <% } %>
-                                <% } %>
-                                <% if(existe == true){ %>
-                                  '<%= material_description%>',
-                                <% }else{ %>
-                                  'N/A',
-                                  <% } %>
-
-            <% let unidad_medida = ''%>
-            <%  for(let y = 0; y < material.length; y++){   %>
-                                <% if(captura[i].material == material[y].material){ %>
-                                  <% unidad_medida = material[y].unidad_medida %>
-                            
-                                  <%  existe = true%>
-                                  <% break %>
-                                <% } %>
-                                <% } %>
-                                <% if(existe == true){ %>
-                                  '<%= unidad_medida%>',
-                                <% }else{ %>
-                                  'N/A',
-                                  <% } %>
-
-            '<%= captura[i].num_empleado%>'],
-
-          <%}%>
-          
-        ];
-    
-        var ws = XLSX.utils.aoa_to_sheet(ws_data);
-        wb.Sheets[`Captura Inventario ${date}`] = ws;
-      
-        var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
-        function s2ab(s) {
   
-                var buf = new ArrayBuffer(s.length);
-                var view = new Uint8Array(buf);
-                for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-                return buf;
-                
-        }
-     
-        $("#descargaExcel").click(function(){
-                saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
-        });
 </script>

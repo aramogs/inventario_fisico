@@ -30,6 +30,7 @@ router.post('/auditar', routesController.auditar_POST);
 router.post('/auditar_ubicacion', routesController.auditar_ubicacion_POST);
 router.post('/serial_auditado', routesController.serial_auditado_POST);
 router.post('/terminar_auditoria', routesController.terminar_auditoria_POST);
+router.get('/descargar_reporte', routesController.descargar_reporte_POST);
 
 router.get('*', (req, res) => {
   res.send('404 Page not found');
