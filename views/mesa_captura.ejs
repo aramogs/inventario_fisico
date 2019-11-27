@@ -15,11 +15,14 @@
       <div class="col-lg-10">
         <div class="row">
           <div class="col-lg-8">
-            <label>
-              <h4>MESA CAPTURA <span>
-                  <h5><%= nombre%><h5>
-                </span></h4>
-            </label>
+            <div class="row">
+              <div class="col-12">
+                  <label>
+                      <span style="font-size: 25px;">MESA DE CAPTURA </span><span style="font-size: 15px;"><%= nombre%></span>
+                    </label>
+              </div>
+            </div>
+
           </div>
 
           <form method="POST" class="col-lg-4" style="text-align: right">
@@ -45,11 +48,13 @@
               </div>
             </div>
           </div>
-
+          <div class="row mt-n4">
+            <div class="col-3">
               <div class="form-group">
                 <label for="titulo">Captura Actual: </label> <label id="msgCapturaTalon"></label>
               </div>
-
+            </div>
+            </div>
           <div class="row">
             <dic class="col-lg-2">
               <div class="form-group">
@@ -247,7 +252,6 @@
                       class="icoWhite fas fa-trash-alt"></span></button>
                   <input type="text" name="idTicket" value="<%= misTickets[i].serial%>" hidden>
                   <input type="text" name="idGafete" value="<%= gafete%>" hidden>
-
                 </form>
 
               </td>

@@ -59,6 +59,35 @@ funcion.InsertCaptura = (serial,material, cantidad, ubicacion, gafete,callback)=
     })
 }
 
+funcion.InsertCaptura_Eliminado = (serial,material, cantidad, ubicacion, gafete,callback)=>{
+    db.query(`
+    INSERT INTO captura_eliminado (serial, material, cantidad, ubicacion, num_empleado, fecha)
+    VALUES ('${serial}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Select_CapturaId= (serial,callback)=>{
+    db.query(`SELECT * FROM captura WHERE serial = '${serial}'`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.InsertCapturaSerial = (captura_grupo, serial,material, cantidad, ubicacion, gafete,callback)=>{
     
     db.query(`
@@ -117,6 +146,19 @@ funcion.Select_GruposCapturados= (callback)=>{
 
 funcion.Select_Captura= (callback)=>{
     db.query(`SELECT * FROM captura `,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Select_Captura_Eliminado= (callback)=>{
+    db.query(`SELECT * FROM captura_eliminado `,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -558,6 +600,19 @@ funcion.CountTalonesP= (callback)=>{
 
 funcion.IncrementCaptura = (idTalon,callback)=>{
     db.query(`UPDATE talones SET capturados = capturados + 1 WHERE id = ${idTalon}`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.ReducirCaptura = (idTalon,callback)=>{
+    db.query(`UPDATE talones SET capturados = capturados - 1 WHERE id = ${idTalon}`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
