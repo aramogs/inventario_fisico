@@ -1141,7 +1141,15 @@ controller.descargar_reporte_POST = (req, res) => {
                 nameCol3E.width = 12.5
                 nameCol3F.width = 11
 
-                res.attachment("INVENTARIO.xlsx")
+                //Current Date
+                let currentDate = new Date()
+                day = currentDate.getDate()
+                month = currentDate.getMonth() + 1,
+                year = currentDate.getFullYear()
+                date = day + "_" + month + "_" + year;
+                date = `${day}_${month}_${year}`
+
+                res.attachment(`Inventario_Fisico_${date}.xlsx`)
                 workbook.xlsx.write(res).then(function () {
                     res.end()
                 });
