@@ -1133,7 +1133,7 @@ controller.descargar_reporte_POST = (req, res) => {
                 let nameCol3D = worksheet3.getColumn('D');
                 let nameCol3E = worksheet3.getColumn('E');
                 let nameCol3F = worksheet3.getColumn('F');
-                nameColA3.numFmt = '0'
+                nameCol3A.numFmt = '0'
                 nameCol3A.width = 17.5
                 nameCol3B.width = 13
                 nameCol3C.width = 12
