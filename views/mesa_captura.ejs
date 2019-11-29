@@ -17,9 +17,10 @@
           <div class="col-lg-8">
             <div class="row">
               <div class="col-12">
-                  <label>
-                      <span style="font-size: 25px;">MESA DE CAPTURA </span><span style="font-size: 15px;"><%= nombre%></span>
-                    </label>
+                <label>
+                  <span style="font-size: 25px;">MESA DE CAPTURA </span><span
+                    style="font-size: 15px;"><%= nombre%></span>
+                </label>
               </div>
             </div>
 
@@ -54,7 +55,7 @@
                 <label for="titulo">Captura Actual: </label> <label id="msgCapturaTalon"></label>
               </div>
             </div>
-            </div>
+          </div>
           <div class="row">
             <dic class="col-lg-2">
               <div class="form-group">
@@ -291,12 +292,12 @@
     if (!confirm('Seguro que deseas eliminar?')) e.preventDefault();
   }
 
-  
+
   if (window.history.replaceState) {
-          window.history.replaceState(null, null, '/');
-  
-      }
-  
+    window.history.replaceState(null, null, '/');
+
+  }
+
   $(document).ready(function () {
 
     document.getElementById("ticket").focus();
@@ -311,11 +312,11 @@
     var msg = document.getElementById("msgParte");
     var msgC = document.getElementById("msgCant");
     var msgC2 = document.getElementById("msgCant2");
-    var msgU= document.getElementById("msgubicacion");
+    var msgU = document.getElementById("msgubicacion");
 
- 
 
-    
+
+
 
     var id = $('#parte').val();
 
@@ -346,26 +347,26 @@
       $('#cantidad').prop("readonly", true);
       $('#cantidad2').prop("readonly", true);
       $('#ubicacion').prop("readonly", true);
-      
-          msg.innerHTML = ' Correcto';
-          msg.classList.add('text-success');
-          msgC.innerHTML = ' Correcto';
-          msgC.classList.add('text-success');
-          msgC2.innerHTML = ' Correcto';
-          msgC2.classList.add('text-success');
-          msgU.innerHTML = ' Correcto';
-          msgU.classList.add('text-success');
+
+      msg.innerHTML = ' Correcto';
+      msg.classList.add('text-success');
+      msgC.innerHTML = ' Correcto';
+      msgC.classList.add('text-success');
+      msgC2.innerHTML = ' Correcto';
+      msgC2.classList.add('text-success');
+      msgU.innerHTML = ' Correcto';
+      msgU.classList.add('text-success');
 
     }
 
 
-    let ubi =$('#ubicacion').val();
+    let ubi = $('#ubicacion').val();
     if (id.length > 11) {
 
       for (var i = 0; i < material.length; i++) {
         if (id == material[i].material) {
 
-  
+
 
           msg.innerHTML = ' Correcto';
           msg.classList.add('text-success');
@@ -385,33 +386,33 @@
         }
       }
 
-    }else{
+    } else {
 
-      if(id != "C"){
-       msg.innerHTML = '';
-          msg.classList.remove('text-success');
+      if (id != "C") {
+        msg.innerHTML = '';
+        msg.classList.remove('text-success');
       }
-      if(ubi=="N/A" && id != "C"){
+      if (ubi == "N/A" && id != "C") {
         $('#cantidad').val("")
-      $('#cantidad2').val("")
-      $('#ubicacion').val("")
-      $('#cantidad').prop("readonly", false);
-      $('#cantidad2').prop("readonly", false);
-      $('#ubicacion').prop("readonly", false);
-      msgC.innerHTML = '';
-      msgC.classList.remove('text-success');
-      msgC2.innerHTML = '';
-      msgC2.classList.remove('text-success');
-      msgU.innerHTML = '';
-      msgU.classList.remove('text-success');
+        $('#cantidad2').val("")
+        $('#ubicacion').val("")
+        $('#cantidad').prop("readonly", false);
+        $('#cantidad2').prop("readonly", false);
+        $('#ubicacion').prop("readonly", false);
+        msgC.innerHTML = '';
+        msgC.classList.remove('text-success');
+        msgC2.innerHTML = '';
+        msgC2.classList.remove('text-success');
+        msgU.innerHTML = '';
+        msgU.classList.remove('text-success');
       }
     }
 
 
-    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
-    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+    if ($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true &&
+      $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true) {
       $('#btnguardar').prop("disabled", false);
-    }else{
+    } else {
       $('#btnguardar').prop("disabled", true);
     }
 
@@ -429,14 +430,14 @@
     talones = <%- JSON.stringify(talones) %>;
     var msgTalon = document.getElementById("msgCapturaTalon");
 
-    
+
     if (id >= minimo && id <= maximo) {
 
 
 
       if (ticket.length == 0) {
 
-        
+
         for (var y = 0; y < talones.length; y++) {
 
 
@@ -447,11 +448,11 @@
             msg.innerHTML = ' Correcto';
             msg.classList.add('text-success');
             msg.classList.remove('text-danger');
-            msgTalon.innerHTML = talones[y].capturados+1 + " / " +talones[y].totales;
+            msgTalon.innerHTML = talones[y].capturados + 1 + " / " + talones[y].totales;
             break
           }
 
-      }
+        }
 
       }
 
@@ -470,25 +471,25 @@
 
         } else {
 
-           foundTicket=false
+          foundTicket = false
           for (var y = 0; y < talones.length; y++) {
 
             if (id >= talones[y].ticket_inicial && id <= talones[y].ticket_final) {
               $('#asignado').text(talones[y].nombre_empleado);
               $('#telefono').text(talones[y].telefono);
               $('#idTalon').val(talones[y].id);
-              msgTalon.innerHTML = talones[y].capturados+1 + " / " +talones[y].totales;
-              foundTicket=true
+              msgTalon.innerHTML = talones[y].capturados + 1 + " / " + talones[y].totales;
+              foundTicket = true
               break
             }
 
           }
 
-          if(foundTicket==true){
+          if (foundTicket == true) {
             msg.innerHTML = ' Correcto';
             msg.classList.add('text-success');
             msg.classList.remove('text-danger');
-          }else{
+          } else {
             msg.innerHTML = ' Talon no Entregado';
             msg.classList.remove('text-success');
             msg.classList.add('text-danger');
@@ -511,10 +512,10 @@
     }
 
 
-    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
-    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+    if ($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true &&
+      $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true) {
       $('#btnguardar').prop("disabled", false);
-    }else{
+    } else {
       $('#btnguardar').prop("disabled", true);
     }
 
@@ -534,30 +535,42 @@
 
     if (cantidad2 != "") {
 
-      if (cantidad == cantidad2) {
 
-        msg.innerHTML = ' Correcto';
-        msg2.innerHTML = ' Correcto';
-        msg.classList.add('text-success');
-        msg.classList.remove('text-danger');
-        msg2.classList.add('text-success');
-        msg2.classList.remove('text-danger');
+        
+        if (cantidad == cantidad2) {
 
-      } else {
+          msg.innerHTML = ' Correcto';
+          msg2.innerHTML = ' Correcto';
+          msg.classList.add('text-success');
+          msg.classList.remove('text-danger');
+          msg2.classList.add('text-success');
+          msg2.classList.remove('text-danger');
 
-        msg.innerHTML = ' Incorrecto';
-        msg.classList.remove('text-success');
-        msg.classList.add('text-danger');
+        } else {
 
+          msg.innerHTML = ' Incorrecto';
+          msg.classList.remove('text-success');
+          msg.classList.add('text-danger');
 
-      }
+        }
     }
 
-    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
-    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+    if ($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true &&
+      $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true) {
       $('#btnguardar').prop("disabled", false);
-    }else{
+    } else {
       $('#btnguardar').prop("disabled", true);
+    }
+
+    if ($('#unidad').text() == "PC" && !Number.isInteger(parseFloat($('#cantidad').val())) && $('#cantidad').val() !="" ) {
+
+          msg.innerHTML = ' Solo Enteros 1';
+         // msg2.innerHTML = ' Solo Enteros 2';
+          msg.classList.add('text-danger');
+          msg.classList.remove('text-success');
+          msg2.classList.add('text-danger');
+          msg2.classList.remove('text-success');
+      
     }
 
   });
@@ -591,13 +604,23 @@
       }
     }
 
-    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
-    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+    if ($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true &&
+      $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true) {
       $('#btnguardar').prop("disabled", false);
-    }else{
+    } else {
       $('#btnguardar').prop("disabled", true);
     }
+    if ($('#unidad').text() == "PC" && !Number.isInteger(parseFloat($('#cantidad2').val())) && $('#cantidad2').val() !="" ) {
+      console.log($('#cantidad').val());
+      
+    msg.innerHTML = ' Solo Enteros';
+    msg2.innerHTML = ' Solo Enteros';
+    msg.classList.add('text-danger');
+    msg.classList.remove('text-success');
+    msg2.classList.add('text-danger');
+    msg2.classList.remove('text-success');
 
+}
   });
 
 
@@ -605,7 +628,7 @@
 
   ubicacion.addEventListener("keyup", function (e) {
 
-    
+
 
     ubicaciones = <%- JSON.stringify(ubicacion) %>;
 
@@ -623,20 +646,20 @@
         break;
 
       } else {
-      
+
         msg.innerHTML = ' Incorrecta';
         msg.classList.remove('text-success');
         msg.classList.add('text-danger');
 
       }
     }
-  
 
 
-    if($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true && 
-    $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true ){
+
+    if ($("#msgParte").hasClass("text-success") == true && $("#msgTicket").hasClass("text-success") == true &&
+      $("#msgCant").hasClass("text-success") == true && $("#msgCant2").hasClass("text-success") == true && $("#msgubicacion").hasClass("text-success") == true) {
       $('#btnguardar').prop("disabled", false);
-    }else{
+    } else {
       $('#btnguardar').prop("disabled", true);
     }
   });
@@ -646,23 +669,23 @@
   ////////////////////////////////////////////////////////////////////////////////////////
   jQuery.extend(jQuery.expr[':'], {
     focusable: function (el, index, selector) {
-        return $(el).is('a, button, :input, [tabindex]');
+      return $(el).is('a, button, :input, [tabindex]');
     }
-});
+  });
 
-$(document).on('keypress', 'input,select', function (e) {
+  $(document).on('keypress', 'input,select', function (e) {
     if (e.which == 13) {
-        e.preventDefault();
-        // Get all focusable elements on the page
-        var $canfocus = $(':focusable');
-        var index = $canfocus.index(document.activeElement) + 1;
-        if (index >= $canfocus.length) index = 0;
-        $canfocus.eq(index).focus();
+      e.preventDefault();
+      // Get all focusable elements on the page
+      var $canfocus = $(':focusable');
+      var index = $canfocus.index(document.activeElement) + 1;
+      if (index >= $canfocus.length) index = 0;
+      $canfocus.eq(index).focus();
     }
 
-    if( e.which == 13 && $("#btnguardar").is(":enabled")) {
-                this.form.submit();
-            }
-});
+    if (e.which == 13 && $("#btnguardar").is(":enabled")) {
+      this.form.submit();
+    }
+  });
 
 </script>
