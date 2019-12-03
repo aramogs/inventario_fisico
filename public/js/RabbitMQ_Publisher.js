@@ -1,7 +1,7 @@
 let amqp = require('amqplib/callback_api');
 const RabbitMQ = {};
 RabbitMQ.get_label = (no_serial, callback) => {
-amqp.connect('amqp://localhost', function(error0, connection) {
+amqp.connect('amqp://10.56.98.104', function(error0, connection) {
   if (error0) {
     throw error0;
   }
