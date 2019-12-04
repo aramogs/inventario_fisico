@@ -35,29 +35,29 @@
                 <br>
                 <!-- form start -->
 
-                <form action="/serial_auditado" method="POST">
-                    <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
-                        placeholder="" value="<%= gafete%>" hidden>
-                    <input type="text" class="form-control" name="nombreContador" id="nombreContador"
-                        aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
-                    <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-                        placeholder="" value="<%= ubicacion%>" hidden>
+                <!-- <form action="/serial_auditado" method="POST"> -->
+                <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
+                    placeholder="" value="<%= gafete%>" hidden>
+                <input type="text" class="form-control" name="nombreContador" id="nombreContador"
+                    aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
+                <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+                    placeholder="" value="<%= ubicacion%>" hidden>
 
-                    <label for="">Serial:</label> <label id="msgSerial"></label>
-                    <div class="input-group  col-lg-12">
+                <label for="">Serial:</label> <label id="msgSerial"></label>
+                <div class="input-group  col-lg-12">
 
-                        <div class="input-group-prepend ">
-                            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
-                                id="basic-addon1"><span class="fas fa-barcode"></span></span>
-                        </div>
-                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
-                            class="form-control" placeholder="serial" aria-describedby="helpId" required>
+                    <div class="input-group-prepend ">
+                        <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                            id="basic-addon1"><span class="fas fa-barcode"></span></span>
                     </div>
+                    <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
+                        class="form-control" placeholder="serial" aria-describedby="helpId" required>
+                </div>
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
-                    </div>
-                </form>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
+                </div>
+                <!-- </form> -->
             </div>
             <div class="col-lg-6">
 
@@ -69,10 +69,13 @@
                             </div>
                             <div class="card-body text-center">
                                 <form action="/terminar_auditoria" method="POST">
-                                    
-                                    <input type="text" class="form-control" name="gafete" id="gafete" value="<%= gafete%>" hidden>
-                                    <input type="text" class="form-control" name="nombreContador" id="nombreContador" value="<%= nombreContador%>" hidden>
-                                    <input type="text" class="form-control" name="ubicacion" id="ubicacion" value="<%= ubicacion%>" hidden>
+
+                                    <input type="text" class="form-control" name="gafete" id="gafete"
+                                        value="<%= gafete%>" hidden>
+                                    <input type="text" class="form-control" name="nombreContador" id="nombreContador"
+                                        value="<%= nombreContador%>" hidden>
+                                    <input type="text" class="form-control" name="ubicacion" id="ubicacion"
+                                        value="<%= ubicacion%>" hidden>
 
                                     <button type="submit" name="" id="btnTerminar" class="btn btn-warning btn-lg "
                                         disabled>
@@ -141,64 +144,102 @@
             </div>
         </div>
 
-        <!-- /.container-fluid -->
     </div>
-    <!-- End of Main Content -->
-
-    <% include ./static/footer.ejs%>
-
-    <script>
-        $('#serial').focus()
-
-        capturas = <%- JSON.stringify(capturas) %>;
-        porcentaje_contado = <%- JSON.stringify(contado_porcentage) %>;
-
-        if (porcentaje_contado > 10) {
-            $('#btnTerminar').prop("disabled", false)
-            $('#btnTerminar').removeClass("btn-warning")
-            $('#btnTerminar').addClass("btn-success")
+</div>
 
 
+
+<% include ./static/footer.ejs%>
+
+<script>
+    $('#serial').focus()
+
+    var items = []
+
+    function guardarNumeros() {
+        serialVal = document.getElementById('serial').value;
+        items.push(serialVal.substr(1));
+        console.log(items);
+
+        return false; // stop submission
+    }
+
+
+    capturas = <%- JSON.stringify(capturas) %>;
+    porcentaje_contado = <%- JSON.stringify(contado_porcentage) %>;
+
+    if (porcentaje_contado > 10) {
+        $('#btnTerminar').prop("disabled", false)
+        $('#btnTerminar').removeClass("btn-warning")
+        $('#btnTerminar').addClass("btn-success")
+
+
+    }
+
+    $('#serial').keypress(function (e) {
+
+        if (e.which == 13) {
+            e.preventDefault()
+            serialFunction()
+            $('#serial').val("")
         }
-        serial.addEventListener("keyup", function (e) {
-
-            text = $('#serial').val();
-            text = text.slice(1)
+    })
 
 
-            let found = false;
-            var msg = document.getElementById("msgSerial");
+    console.log(document.getElementsByClassName('badge'))
 
-            for (let i = 0; i < capturas.length; i++) {
+    function serialFunction() {
 
-                if (text == capturas[i].serial && capturas[i].serial_auditado == 1) {
+        text = $('#serial').val();
+        text = text.slice(1)
 
-                    $('#btnguardarU').prop("disabled", true);
-                    msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
-                    msg.classList.remove('text-success');
-                    msg.classList.add('text-danger');
-                    found = true;
-                    break;
-                } else if (text == capturas[i].serial) {
 
-                    $('#btnguardarU').prop("disabled", false);
-                    msg.innerHTML = 'Continuar';
-                    msg.classList.remove('text-danger');
-                    msg.classList.add('text-success');
-                    found = true;
-                    break;
-                }
+        let found = false;
+        var msg = document.getElementById("msgSerial");
 
-            }
-            if (found == false) {
+        for (let i = 0; i < capturas.length; i++) {
+
+            if (text == capturas[i].serial && capturas[i].serial_auditado == 1 || text == items[i]) {
 
                 $('#btnguardarU').prop("disabled", true);
-                msg.innerHTML = 'Inconrrecta';
+                msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
                 msg.classList.remove('text-success');
-                msg.classList.add('text-danger')
+                msg.classList.add('text-danger');
+                found = true;
+                break;
+            } else if (text == capturas[i].serial) {
 
+                $('#btnguardarU').prop("disabled", false);
+                msg.innerHTML = 'Continuar';
+                msg.classList.remove('text-danger');
+                msg.classList.add('text-success');
+                found = true;
+
+
+                elements = document.getElementsByClassName('badge')
+                for (let i = 0; i < elements.length; i++) {
+                    if (elements[i].innerHTML == text) {
+                        elements[i].classList.remove('badge-secondary')
+                        elements[i].classList.add('badge-success')
+                    }
+
+                }
+
+                guardarNumeros()
+                soundOk()
+                break;
             }
-        })
+
+        }
+        if (found == false) {
+
+            $('#btnguardarU').prop("disabled", true);
+            msg.innerHTML = 'Inconrrecta';
+            msg.classList.remove('text-success');
+            msg.classList.add('text-danger')
+
+        }
+    }
 
 
-    </script>
+</script>

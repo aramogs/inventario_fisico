@@ -59,7 +59,15 @@ controller.login = (req, res) => {
         });
     } else if (loginId == 'auditar') {
         funcionE.empleadosRevisarAccesso('>=', 2, (err, result) => {
-
+            
+            res.render('login.ejs', {
+                data: loginId,
+                data2: result
+            });
+        });
+    } else     if (loginId == 'ubicacion') {
+        funcionE.empleadosRevisarAccesso('>=', 1, (err, result) => {
+            
             res.render('login.ejs', {
                 data: loginId,
                 data2: result
@@ -275,41 +283,53 @@ controller.conteo_POST = (req, res) => {
 }
 
 controller.conteo_guardar_POST = (req, res) => {
+    console.log(req.body);
+    console.log(req.body.ubicacion);
+    
+    
+    
+
+    seriales = req.body.seriales
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
-    id_ubicacion = (req.body.ubicacion).slice(0, 2)
-    serial = req.body.serial
-    serial = serial.slice(1)
+    id_ubicacion = req.body.ubicacion
+    // serial = req.body.serial
+    // serial = serial.slice(1)
     captura_grupo = req.body.captura_grupo
     estado_auditoria = 0
+
+
+for (let i = 0; i < seriales.length; i++) {
+
+    
 
     funcion.Update_Ubicacion_Captura(id_ubicacion, gafete, estado_auditoria, (err, result) => {
 
         funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
             captura_actual = Countcaptura_actual.length + 1
-            funcion.SelectSerial(serial, (err, infoNumeroParte) => {
+            funcion.SelectSerial(seriales[i], (err, infoNumeroParte) => {
                 if (infoNumeroParte.length == "") {
                     material = "NULL"
                     cantidad = null
 
-                    RabbitPublisher.get_label(serial, (callback) => {})
+                    RabbitPublisher.get_label(seriales[i], (callback) => {})
 
-                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                    funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
                         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
                             funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
 
 
-                                res.render('conteo.ejs', {
-                                    gafete,
-                                    nombreContador,
-                                    ubicacion,
-                                    captura_grupo,
-                                    captura_actual,
-                                    serialesCapturados,
-                                    capturasPorGrupo
+                                // res.render('conteo.ejs', {
+                                //     gafete,
+                                //     nombreContador,
+                                //     ubicacion,
+                                //     captura_grupo,
+                                //     captura_actual,
+                                //     serialesCapturados,
+                                //     capturasPorGrupo
 
-                                })
+                                // })
                             })
                         })
                     })
@@ -318,19 +338,19 @@ controller.conteo_guardar_POST = (req, res) => {
                     cantidad = infoNumeroParte[0].stock
 
 
-                    funcion.InsertCapturaSerial(captura_grupo, serial, material, cantidad, ubicacion, gafete, (err, result) => {
+                    funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
                         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
                             funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
 
-                                res.render('conteo.ejs', {
-                                    gafete,
-                                    nombreContador,
-                                    ubicacion,
-                                    captura_grupo,
-                                    captura_actual,
-                                    serialesCapturados,
-                                    capturasPorGrupo
-                                })
+                                // res.render('conteo.ejs', {
+                                //     gafete,
+                                //     nombreContador,
+                                //     ubicacion,
+                                //     captura_grupo,
+                                //     captura_actual,
+                                //     serialesCapturados,
+                                //     capturasPorGrupo
+                                // })
                             })
                         })
                     })
@@ -340,6 +360,7 @@ controller.conteo_guardar_POST = (req, res) => {
 
         })
     })
+}
 }
 
 
@@ -774,10 +795,12 @@ controller.graficas_GET = (req, res) => {
 }
 
 controller.auditar_POST = (req, res) => {
+    
     gafete = req.body.user;
 
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
         funcion.SelectAuditoria((err, ubicaciones) => {
+            
             funcion.SelectAuditoria_Auditado((err, auditado) => {
                 funcion.SelectAuditoria_NoAuditado((err, noAuditado) => {
                     auditado = auditado.length

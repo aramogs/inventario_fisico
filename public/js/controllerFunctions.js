@@ -315,7 +315,7 @@ funcion.ubicacion = (callback)=>{
 }
 
 funcion.SelectAuditoria = (callback)=>{
-    db.query(`SELECT * FROM auditoria`, function (err, result, fields) {
+    db.query(`SELECT DISTINCT LEFT(id_ubicacion,2) AS distinct_ubicacion,estado_auditoria  FROM auditoria`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -422,7 +422,7 @@ funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
 funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
     db.query(`
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
-    VALUES ('${id_ubicacion}', ${emp_id}, ${estado_auditoria})
+    VALUES ('${id_ubicacion}', ${emp_id}, LEFT(${estado_auditoria},2))
      ON DUPLICATE KEY UPDATE 
      id_ubicacion = '${id_ubicacion}'
     `,

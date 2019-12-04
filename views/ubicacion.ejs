@@ -27,7 +27,7 @@
                 <br>
                 <!-- form start -->
 
-                <form action="/conteo" method="POST">
+                <form  action="/conteo"  method="POST">
                     <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
                         placeholder="" value="<%= gafete%>" hidden>
                     <input type="text" class="form-control" name="nombreContador" id="nombreContador"
@@ -71,5 +71,8 @@
     <% include ./static/footer.ejs%>
 
     <script>
-        $('#ubicacion').focus()
+                $(document).ready(function() {
+                    soundOk()
+                    $('#ubicacion').focus()
+        });
     </script>
