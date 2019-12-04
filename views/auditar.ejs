@@ -104,9 +104,9 @@
 
                         <% for (let i = 0; i < ubicaciones.length; i++) { %>
                         <% if (ubicaciones[i].estado_auditoria == 1) { %>
-                        <span class="badge badge-success fspan"><%= ubicaciones[i].id_ubicacion %></span>
+                        <span class="badge badge-success fspan"><%= ubicaciones[i].distinct_ubicacion %></span>
                         <% } else{%>
-                        <span class="badge badge-secondary fspan"><%= ubicaciones[i].id_ubicacion %></span>
+                        <span class="badge badge-secondary fspan"><%= ubicaciones[i].distinct_ubicacion %></span>
                         <% } %>
                         <% } %>
 
@@ -122,10 +122,11 @@
     <% include ./static/footer.ejs%>
 
     <script>
-        $('#ubicacion').focus()
-
-
-        ubicaciones = <%- JSON.stringify(ubicaciones) %>
+        $(document).ready(function () {
+            soundOk()
+            $('#ubicacion').focus()
+        });
+        ubicaciones = <%-JSON.stringify(ubicaciones) %>
 
             ubicacion.addEventListener("keyup", function (e) {
 
@@ -135,7 +136,7 @@
 
                 for (let i = 0; i < ubicaciones.length; i++) {
 
-                    if (text == ubicaciones[i].id_ubicacion && ubicaciones[i].estado_auditoria == 1) {
+                    if (text == ubicaciones[i].distinct_ubicacion && ubicaciones[i].estado_auditoria == 1) {
 
                         $('#btnguardarU').prop("disabled", true);
                         msg.innerHTML = 'Previamente auditado, seleccionar otra ubicacion';
@@ -143,7 +144,7 @@
                         msg.classList.add('text-danger');
                         found = true;
                         break;
-                    } else if (text == ubicaciones[i].id_ubicacion) {
+                    } else if (text == ubicaciones[i].distinct_ubicacion) {
                         $('#btnguardarU').prop("disabled", false);
                         msg.innerHTML = 'Continuar';
                         msg.classList.remove('text-danger');

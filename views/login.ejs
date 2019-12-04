@@ -1,6 +1,6 @@
-<%include ./static/header.ejs %>
-<%include ./static/sidebar.ejs%>
-<%include ./static/navbar.ejs%>
+<% include ./static/header %>
+<% include ./static/sidebar %>
+<% include ./static/navbar %>
 
 <div class="col-md-10 col-lg-10-2 col-xl-11">
 
@@ -17,14 +17,16 @@
       <div class="col-lg-6">
         <div class="input-group mb-3">
           <div class="input-group-prepend ">
-            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white " id="basic-addon1"><span class="fas fa-unlock-alt"></span></span>
+            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"  id="basic-addon1"><span class="fas fa-unlock-alt"></span></span>
           </div>
           <input type="password" placeholder="Contraseña" id="user" class="form-control rounded" name="user" required>
         </div>
       </div>
     </div>
+
     <div class="row animated fadeIn fast">
       <div class="col-lg-6">
+
         <div class="box-footer">
           <button id="login_button" type="submit" class="btn btn-primary btn-lg btn-block" disabled>Iniciar
             Sesion</button>
@@ -37,41 +39,64 @@
 
   </form>
 </div>
-<% include ./static/footer.ejs%>
+<% include ./static/footer %>
+</div>
+</body>
+
+</html>
 
 <script>
-
-// A $( document ).ready() block.
-$( document ).ready(function() {
-    $('#user').focus();
-});
+  document.getElementById("user").focus();
 
   user.addEventListener("keyup", function (e) {
-
     accesos = <%- JSON.stringify(data2) %>;
-    var id = $('#user').val();
-      for (var i = 0; i < accesos.length; i++) {
-        if (id == accesos[i].acc_id) {
 
-          $('#login_button').prop("disabled", false);
-          setTimeout(function () {
-            $("#danger-alert").hide()
+    
+    var escaneado = $('#user').val();
+    let gafete;
+    if (escaneado.length == 9) {
+
+      if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] != 0) {
+        gafete = escaneado.substring(2, 8);
+        $('#user').val(gafete);
+
+      } else if (escaneado[0] == 1 && escaneado[1] == 2 && escaneado[2] == 0) {
+        gafete = escaneado.substring(3, 8);
+        $('#user').val(gafete);
+      }
+
+    } else {
+      gafete = escaneado
+      $('#user').val(gafete);
+    }
+
+    for (var i = 0; i < accesos.length; i++) {
+  
+      if (gafete == accesos[i].acc_id) {
         
-            
-            }, 500);
-            break;
+        
+        $('#login_button').prop("disabled", false);
+        $('#login_button').click();
+        break;
 
-          } else {
-            $('#login_button').prop("disabled", true)
-            setTimeout(function () {
-            
-              $("#danger-alert").show()
-            }, 500);
+      } else {
 
+        $('#login_button').prop("disabled", true);
+
+        if (gafete.length > 5) {
+          $("#danger-alert").show()
+          setTimeout(function () {
+            $("#danger-alert").slideUp(1000);
+          }, 1000);
         }
 
-      }
-    });
 
-  
+      }
+    }
+
+
+
+
+
+  });
 </script>
