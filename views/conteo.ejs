@@ -42,37 +42,37 @@
           <div class="col-lg-12">
 
 
-              <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
-                value="<%= gafete%>" hidden>
-              <input type="text" class="form-control" name="nombreContador" id="nombreContador"
-                aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
-              <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-                placeholder="" value="<%= ubicacion%>" hidden>
-              <input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
-                placeholder="" value="<%= captura_grupo%>" hidden>
+            <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
+              value="<%= gafete%>" hidden>
+            <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
+              placeholder="" value="<%= nombreContador%>" hidden>
+            <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+              placeholder="" value="<%= ubicacion%>" hidden>
+            <input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
+              placeholder="" value="<%= captura_grupo%>" hidden>
 
-              <label>
-                <label>Serial:
-                  <span class="badge badge-warning " id="serialWarning" hidden>
-                    <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                    </span>
-                    <span id="serialWarning2" style="font-size: 15px ; color:black" hidden>
-                      Incorrecto
-                    </span>
+            <label>
+              <label>Serial:
+                <span class="badge badge-warning " id="serialWarning" hidden>
+                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
                   </span>
-                </label>
+                  <span id="serialWarning2" style="font-size: 15px ; color:black" hidden>
+                    Incorrecto
+                  </span>
+                </span>
               </label>
+            </label>
 
-              <div class="input-group  col-lg-12">
+            <div class="input-group  col-lg-12">
 
-                <div class="input-group-prepend ">
-                  <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
-                    id="basic-addon1"><span class="fas fa-barcode"></span></span>
-                </div>
-                <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
-                  class="form-control" placeholder="Serial" aria-describedby="helpId" required>
-
+              <div class="input-group-prepend ">
+                <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                  id="basic-addon1"><span class="fas fa-barcode"></span></span>
               </div>
+              <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
+                class="form-control" placeholder="Serial" aria-describedby="helpId" required>
+
+            </div>
 
           </div>
         </div>
@@ -189,14 +189,19 @@
   <% include ./static/footer.ejs%>
 
   <script>
-    
+
     function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
 
     $(document).ready(function () {
       $(document).on("keydown", disableF5);
+      $('#serial').focus()
       soundOk()
     });
 
+    /////////////////////////////// Modal ////////////////////////////////////////////////
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
 
     function increaseValue() {
       var value = parseInt(document.getElementById('contadorSeriales').value, 10);
@@ -213,27 +218,9 @@
       document.getElementById('contadorSeriales').value = value;
     }
 
-    var items = [];
-
-    function guardarNumeros() {
-      serialVal = document.getElementById('serial').value;
-      items.push(serialVal.substr(1));
-      console.log(items);
-
-      let addSpan = `<span class="badge badge-success fspan">${serialVal.substr(1)}</span> `
-      $('#cardCapturado').append(addSpan)
+    /////////////////////////////// Modal ////////////////////////////////////////////////
 
 
-      return false; // stop submission
-    }
-
-
-
-    $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-    })
-
-    $('#serial').focus()
 
 
     // var submitting = false;
@@ -256,6 +243,18 @@
       }
     })
 
+    var items = [];
+
+    function guardarNumeros() {
+      serialVal = document.getElementById('serial').value;
+      items.push(serialVal.substr(1));
+      console.log(items);
+
+      let addSpan = `<span class="badge badge-success fspan">${serialVal.substr(1)}</span> `
+      $('#cardCapturado').append(addSpan)
+      return false; // stop submission
+    }
+
     serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
 
 
@@ -263,13 +262,11 @@
     function serialFunction() {
       let serial = $('#serial').val();
       let encontrado = false;
-      if (serial.charAt(0) == "S") {
+      if (serial.charAt(0) == "S"  ) {
 
         for (let i = 0; i < serialesCapturados.length; i++) {
 
-
-          if (serial.substr(1) == serialesCapturados[i].serial || serial.substr(1) == items[i]) {
-
+          if (serial.substr(1) == serialesCapturados[i].serial) {
 
             encontrado = true;
             soundWrong()
@@ -279,6 +276,19 @@
             $('#serial').val('')
             break;
           }
+        }
+        for (let y = 0; y < items.length; y++) {
+          if (serial.substr(1) == items[y]) {
+
+            encontrado = true;
+            soundWrong()
+            $('#serialWarning').removeAttr('hidden')
+            $('#serialWarning2').text('Serial Duplicado')
+            $('#serialWarning2').removeAttr('hidden')
+            $('#serial').val('')
+            break;
+          }
+
         }
         if (encontrado == false) {
           guardarNumeros()
@@ -295,12 +305,10 @@
         $('#serialWarning2').text('Incorrecto')
         $('#serialWarning2').removeAttr('hidden')
         $('#serial').val('')
-
-
       }
 
     }
-    
+
 
     var timer2 = null;
     btnCapturar.addEventListener("click", function (e) {
@@ -319,25 +327,25 @@
         $('#contadorWarning').prop('hidden', true)
         $('#contadorWarning2').prop('hidden', true)
 
-         soundOk()
-         $.post("/conteo_guardar", {
-        'seriales[]': items,
-        'gafete': <%= gafete%>,
-        'nombreContador': '<%= nombreContador%>',
-        'ubicacion':  '<%= ubicacion%>',
-        'captura_grupo': '<%= captura_grupo%>'
+        soundOk()
+        $.post("/conteo_guardar", {
+          'seriales[]': items,
+          'gafete': <%= gafete%>,
+          'nombreContador': '<%= nombreContador%>',
+          'ubicacion': '<%= ubicacion%>',
+          'captura_grupo': '<%= captura_grupo%>'
 
          });
-         window.location.href = '/login/ubicacion';
-        
+      window.location.href = '/login_conteo/ubicacion';
 
-      } else {
 
-        $('#contadorWarning').removeAttr('hidden')
-        $('#contadorWarning2').removeAttr('hidden')
-        soundWrong()
+    } else {
 
-      }
+      $('#contadorWarning').removeAttr('hidden')
+      $('#contadorWarning2').removeAttr('hidden')
+      soundWrong()
+
+    }
 
     }
 
@@ -352,7 +360,7 @@
 
     document.getElementById("date").innerHTML = date;
 
- 
 
-    
+
+
   </script>
