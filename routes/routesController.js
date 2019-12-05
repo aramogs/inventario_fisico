@@ -59,21 +59,14 @@ controller.login = (req, res) => {
         });
     } else if (loginId == 'auditar') {
         funcionE.empleadosRevisarAccesso('>=', 2, (err, result) => {
+            console.log(result);
             
             res.render('login.ejs', {
                 data: loginId,
                 data2: result
             });
         });
-    } else     if (loginId == 'ubicacion') {
-        funcionE.empleadosRevisarAccesso('>=', 1, (err, result) => {
-            
-            res.render('login.ejs', {
-                data: loginId,
-                data2: result
-            });
-        });
-    }
+    } 
 }
 
 controller.login_conteo = (req, res) => {
@@ -283,12 +276,6 @@ controller.conteo_POST = (req, res) => {
 }
 
 controller.conteo_guardar_POST = (req, res) => {
-    console.log(req.body);
-    console.log(req.body.ubicacion);
-    
-    
-    
-
     seriales = req.body.seriales
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
