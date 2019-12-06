@@ -127,13 +127,15 @@
             $('#ubicacion').focus()
         });
         ubicaciones = <%-JSON.stringify(ubicaciones) %>
-
+        console.log(ubicaciones);
             ubicacion.addEventListener("keyup", function (e) {
 
                 text = $('#ubicacion').val();
                 let found = false;
                 var msg = document.getElementById("msgUbic");
 
+               
+                
                 for (let i = 0; i < ubicaciones.length; i++) {
 
                     if (text == ubicaciones[i].distinct_ubicacion && ubicaciones[i].estado_auditoria == 1) {
