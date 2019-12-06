@@ -59,14 +59,13 @@ controller.login = (req, res) => {
         });
     } else if (loginId == 'auditar') {
         funcionE.empleadosRevisarAccesso('>=', 2, (err, result) => {
-            console.log(result);
-            
+
             res.render('login.ejs', {
                 data: loginId,
                 data2: result
             });
         });
-    } 
+    }
 }
 
 controller.login_conteo = (req, res) => {
@@ -287,67 +286,67 @@ controller.conteo_guardar_POST = (req, res) => {
     estado_auditoria = 0
 
 
-for (let i = 0; i < seriales.length; i++) {
-
-    
-
-    funcion.Update_Ubicacion_Captura(id_ubicacion, gafete, estado_auditoria, (err, result) => {
-
-        funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
-            captura_actual = Countcaptura_actual.length + 1
-            funcion.SelectSerial(seriales[i], (err, infoNumeroParte) => {
-                if (infoNumeroParte.length == "") {
-                    material = "NULL"
-                    cantidad = null
-
-                    RabbitPublisher.get_label(seriales[i], (callback) => {})
-
-                    funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
-                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-                            funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+    for (let i = 0; i < seriales.length; i++) {
 
 
-                                // res.render('conteo.ejs', {
-                                //     gafete,
-                                //     nombreContador,
-                                //     ubicacion,
-                                //     captura_grupo,
-                                //     captura_actual,
-                                //     serialesCapturados,
-                                //     capturasPorGrupo
 
-                                // })
+        funcion.Update_Ubicacion_Captura(id_ubicacion, gafete, estado_auditoria, (err, result) => {
+
+            funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
+                captura_actual = Countcaptura_actual.length + 1
+                funcion.SelectSerial(seriales[i], (err, infoNumeroParte) => {
+                    if (infoNumeroParte.length == "") {
+                        material = "NULL"
+                        cantidad = null
+
+                        RabbitPublisher.get_label(seriales[i], (callback) => {})
+
+                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
+                            funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+                                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+
+
+                                    // res.render('conteo.ejs', {
+                                    //     gafete,
+                                    //     nombreContador,
+                                    //     ubicacion,
+                                    //     captura_grupo,
+                                    //     captura_actual,
+                                    //     serialesCapturados,
+                                    //     capturasPorGrupo
+
+                                    // })
+                                })
                             })
                         })
-                    })
-                } else {
-                    material = infoNumeroParte[0].material
-                    cantidad = infoNumeroParte[0].stock
+                    } else {
+                        material = infoNumeroParte[0].material
+                        cantidad = infoNumeroParte[0].stock
 
 
-                    funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
-                        funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-                            funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
+                            funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+                                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
 
-                                // res.render('conteo.ejs', {
-                                //     gafete,
-                                //     nombreContador,
-                                //     ubicacion,
-                                //     captura_grupo,
-                                //     captura_actual,
-                                //     serialesCapturados,
-                                //     capturasPorGrupo
-                                // })
+                                    // res.render('conteo.ejs', {
+                                    //     gafete,
+                                    //     nombreContador,
+                                    //     ubicacion,
+                                    //     captura_grupo,
+                                    //     captura_actual,
+                                    //     serialesCapturados,
+                                    //     capturasPorGrupo
+                                    // })
+                                })
                             })
                         })
-                    })
-                }
+                    }
+
+                })
 
             })
-
         })
-    })
-}
+    }
 }
 
 
@@ -782,12 +781,12 @@ controller.graficas_GET = (req, res) => {
 }
 
 controller.auditar_POST = (req, res) => {
-    
+
     gafete = req.body.user;
 
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
         funcion.SelectAuditoria((err, ubicaciones) => {
-            
+
             funcion.SelectAuditoria_Auditado((err, auditado) => {
                 funcion.SelectAuditoria_NoAuditado((err, noAuditado) => {
                     auditado = auditado.length
@@ -865,16 +864,27 @@ controller.serial_auditado_POST = (req, res) => {
 }
 
 controller.terminar_auditoria_POST = (req, res) => {
+
     ubicacion = req.body.ubicacion
     gafete = req.body.gafete
-    nombre = req.body.nombreContador
+    seriales = req.body.seriales
 
-    funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => {
 
-        res.render('auditoria_terminada.ejs', {
-            ubicacion,
-            gafete,
-            nombre
+    for (let i = 0; i < seriales.length; i++) {
+        funcion.Update_Serial_Auditado(seriales[i], (err, result) => {
+        
+    })
+}
+
+    funcionE.empleadosNombre(gafete, (err, nombre) => {
+        funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => {
+
+            res.render('auditoria_terminada.ejs', {
+                ubicacion,
+                gafete,
+                nombre
+            
+            })
         })
     })
 }
@@ -1155,7 +1165,7 @@ controller.descargar_reporte_POST = (req, res) => {
                 let currentDate = new Date()
                 day = currentDate.getDate()
                 month = currentDate.getMonth() + 1,
-                year = currentDate.getFullYear()
+                    year = currentDate.getFullYear()
                 date = day + "_" + month + "_" + year;
                 date = `${day}_${month}_${year}`
 
