@@ -35,29 +35,29 @@
                 <br>
                 <!-- form start -->
 
-                <form action="/serial_auditado" method="POST">
-                    <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
-                        placeholder="" value="<%= gafete%>" hidden>
-                    <input type="text" class="form-control" name="nombreContador" id="nombreContador"
-                        aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
-                    <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-                        placeholder="" value="<%= ubicacion%>" hidden>
 
-                    <label for="">Serial:</label> <label id="msgSerial"></label>
-                    <div class="input-group  col-lg-12">
+                <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
+                    placeholder="" value="<%= gafete%>" hidden>
+                <input type="text" class="form-control" name="nombreContador" id="nombreContador"
+                    aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
+                <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+                    placeholder="" value="<%= ubicacion%>" hidden>
 
-                        <div class="input-group-prepend ">
-                            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
-                                id="basic-addon1"><span class="fas fa-barcode"></span></span>
-                        </div>
-                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
-                            class="form-control" placeholder="serial" aria-describedby="helpId" required>
+                <label for="">Serial:</label> <label id="msgSerial"></label>
+                <div class="input-group  col-lg-12">
+
+                    <div class="input-group-prepend ">
+                        <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                            id="basic-addon1"><span class="fas fa-barcode"></span></span>
                     </div>
+                    <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
+                        class="form-control" placeholder="serial" aria-describedby="helpId" required>
+                </div>
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
-                    </div>
-                </form>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="btnguardarU" hidden>Guardar</button>
+                </div>
+
             </div>
             <div class="col-lg-6">
 
@@ -90,7 +90,7 @@
                                 <h5 class="text-center">Contado</h5>
                             </div>
                             <div class="card-body">
-                                <h4 class=" text-center"></h4>
+                                <h4 class=" text-center" id="contado"></h4>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                                 <h5 class="text-center">Faltante</h5>
                             </div>
                             <div class="card-body">
-                                <h4 class=" text-center"></h4>
+                                <h4 class=" text-center" id="faltante"></h4>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                 role="progressbar" style="width: %;" aria-valuenow="25" aria-valuemin="0"
-                                aria-valuemax="">%</div>
+                                aria-valuemax=""></div>
 
                         </div>
                     </div>
@@ -121,7 +121,6 @@
 
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-lg-12 mt-4">
@@ -149,26 +148,13 @@
 
     <script>
         $('#serial').focus()
-
+        let items = [];
         let elements = document.getElementsByClassName('badge')
         let contados = <%- JSON.stringify(contados) %>;
         let sin_contar = <%- JSON.stringify(sin_contar) %>;
         let total = (contados + sin_contar);
-        let porcentaje_contado = Math.round((100 * contados) / total);
-
         let capturas = <%- JSON.stringify(capturas) %>;
-        let items = [];
 
-function porcentaje() {
-    
-
-        if (porcentaje_contado > 10) {
-            $('#btnTerminar').prop("disabled", false)
-            $('#btnTerminar').removeClass("btn-warning")
-            $('#btnTerminar').addClass("btn-success")
-
-        }
-    }
 
         $('#serial').keypress(function (e) {
             if (e.which == 13) {
@@ -178,68 +164,131 @@ function porcentaje() {
             }
         })
 
-        function guardarNumeros() {
-            serialVal = document.getElementById('serial').value;
-            items.push(serialVal.substr(1))           
+        function porcentaje() {
+            contado = contados + items.length
+            faltante = total - contado
+            porcentaje_contado = Math.round((100 * (contados + items.length)) / total);
+            if (porcentaje_contado > 10) {
+                $('#btnTerminar').prop("disabled", false)
+                $('#btnTerminar').removeClass("btn-warning")
+                $('#btnTerminar').addClass("btn-success")
+            }
 
+
+            $('#faltante').html(faltante)
+            $('#contado').html(contado)
+            $('.progress-bar').css('width', porcentaje_contado + '%').attr('aria-valuenow', porcentaje_contado).html(porcentaje_contado + "%");
         }
 
+        function guardarNumeros() {
+            serialVal = document.getElementById('serial').value;
+            items.push(serialVal.substr(1))
 
+        }
 
 
         function serialFunction() {
 
             text = $('#serial').val();
-            text = text.slice(1)
-            
-
+            // text = text.slice(1)
             let found = false;
             var msg = document.getElementById("msgSerial");
+            
 
-            for (let i = 0; i < capturas.length; i++) {
-       
+            if (text.charAt(0) == "S" && Number.isInteger(parseInt(text.substr(1)))) {
+                
+                for (let i = 0; i < capturas.length; i++) {
+                    if (text.substr(1) == capturas[i].serial && capturas[i].serial_auditado == 1) {
+                        soundWrong()
+                        $('#btnguardarU').prop("disabled", true);
+                        msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
+                        msg.classList.remove('text-success');
+                        msg.classList.add('text-danger');
+                        found = true;
+                        break;
+                    }
+
+                }
+                for (let i = 0; i < items.length; i++) {
+                    if (text.substr(1) == items[i]) {
+                        console.log("1");
                         
-                if (text == capturas[i].serial && capturas[i].serial_auditado == 1 || text == 9) {
-
-                    $('#btnguardarU').prop("disabled", true);
-                    msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
-                    msg.classList.remove('text-success');
-                    msg.classList.add('text-danger');
-                    found = true;
-                    break;
-                } else if (text == capturas[i].serial ) {
-
-                    $('#btnguardarU').prop("disabled", false);
-                    msg.innerHTML = 'Continuar';
-                    msg.classList.remove('text-danger');
-                    msg.classList.add('text-success');
-                    found = true;
+                        soundWrong()
+                        $('#btnguardarU').prop("disabled", true);
+                        msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
+                        msg.classList.remove('text-success');
+                        msg.classList.add('text-danger');
+                        found = true;
+                        break;
+                    }
+                }
+                if (found == false) {
                     
-                    soundOk()
-                    guardarNumeros()
-                    porcentaje()
-                    for (let y = 0; y < elements.length; y++) {
-                        if (elements[i].innerHTML == text) {
-                            elements[i].classList.remove('badge-secondary')
-                            elements[i].classList.add('badge-success')
-                            capturas++
+                for (let i = 0; i < capturas.length; i++) {
+                    if (text.substr(1) == capturas[i].serial) {
+                        console.log("2");
+                        
+                        $('#btnguardarU').prop("disabled", false);
+                        msg.innerHTML = 'Auditado correctamente';
+                        msg.classList.remove('text-danger');
+                        msg.classList.add('text-success');
+                        found = true;
+
+                        soundOk()
+                        guardarNumeros()
+                        porcentaje()
+
+                        for (let y = 0; y < elements.length; y++) {
+                            if (elements[i].innerHTML == text.substr(1)) {
+                                elements[i].classList.remove('badge-secondary')
+                                elements[i].classList.add('badge-success')
+                            }
 
                         }
-
+                        break;
                     }
-                    break;
+                }
+            }
+
+                if (found == false) {
+                    soundWrong()
+                    $('#btnguardarU').prop("disabled", true);
+                    msg.innerHTML = 'Incorrecta';
+                    msg.classList.remove('text-success');
+                    msg.classList.add('text-danger')
+
                 }
 
-            }
-            if (found == false) {
 
+            } else {
+                soundWrong()
                 $('#btnguardarU').prop("disabled", true);
-                msg.innerHTML = 'Inconrrecta';
+                msg.innerHTML = 'Incorrecta';
                 msg.classList.remove('text-success');
                 msg.classList.add('text-danger')
-
             }
+             
         }
+
+
+
+        // gafete = req.body.gafete;
+        // ubicacion = req.body.ubicacion
+        // serial_auditado = req.body.serial
+        // serial_auditado = serial_auditado.substring(1)
+
+        $('#btnTerminar').click(function () {
+            soundOk()
+            $.post("/terminar_auditoria", {
+                'gafete': <%= gafete%>,
+                'ubicacion': '<%= ubicacion%>',
+                'seriales[]': items,
+         });
+        window.location.href = '/login/auditar';
+        })
+
+
+
         porcentaje()
 
     </script>

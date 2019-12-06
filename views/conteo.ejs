@@ -248,7 +248,7 @@
     function guardarNumeros() {
       serialVal = document.getElementById('serial').value;
       items.push(serialVal.substr(1));
-      console.log(items);
+
 
       let addSpan = `<span class="badge badge-success fspan">${serialVal.substr(1)}</span> `
       $('#cardCapturado').append(addSpan)
@@ -262,7 +262,9 @@
     function serialFunction() {
       let serial = $('#serial').val();
       let encontrado = false;
-      if (serial.charAt(0) == "S"  ) {
+
+      
+      if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1))) ) {
 
         for (let i = 0; i < serialesCapturados.length; i++) {
 
