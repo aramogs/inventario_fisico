@@ -3,6 +3,7 @@ const funcion = {};
 
 
 const db = require('../db/conn');
+const db_b10 = require('../db/conn_b10');
 
 funcion.material= (callback)=>{
     db.query(`SELECT material, material_description, unidad_medida FROM material`,function (err, result, fields) {
@@ -623,7 +624,89 @@ funcion.ReducirCaptura = (idTalon,callback)=>{
         }
     })
 }
+
+
+//////////////////////////////////////TEMPORAL AUDITORIA VULCANIZADO//////////////////////////////
  
+funcion.SelectAllStations_VULC = (callback)=>{
+    db_b10.query(`SELECT * FROM station_conf WHERE  LEFT(ubicacion,1) = "P" ORDER BY ubicacion ASC`, function(err,result){
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectEtiquetasVULC = (callback)=>{
+    db_b10.query(`SELECT * FROM etiquetas_semi WHERE plataforma = "VULC" AND fecha >= '2019/12/09'`,function(err,result){
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        } 
+    })
+}
+
+funcion.SelectLinea_Equals = (linea,callback)=>{
+    db_b10.query(`SELECT * FROM etiquetas_semi WHERE linea = ${linea} AND fecha >='2019/12/09' ORDER BY id ASC`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+
+funcion.SelectSerial_Contado_Vulc = (linea,callback)=>{
+    db_b10.query(`SELECT * FROM etiquetas_semi WHERE linea = ${linea} AND no_serie_auditado IS NOT NULL AND fecha >='2019/12/09'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectSerial_SinContar_Vulc = (linea,callback)=>{
+    db_b10.query(`SELECT * FROM etiquetas_semi WHERE linea = ${linea} AND no_serie_auditado IS NULL AND fecha >='2019/12/09'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Update_Serial_Auditado_VULC = (emp_id,serial_auditado,callback)=>{
+    db_b10.query(`UPDATE etiquetas_semi SET no_serie_auditado = ${emp_id} WHERE id = ${serial_auditado}`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 /*
 funcion.empleadosInsertCaptura = (cap_id,emp_id, emp_id_jefe,cap_año,cap_mes,cap_dia,cap_captura,callback)=>{
     db.query(`

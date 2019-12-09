@@ -65,6 +65,14 @@ controller.login = (req, res) => {
                 data2: result
             });
         });
+    } else if (loginId == 'auditar_temp') {
+        funcionE.empleadosRevisarAccesso('>=', 2, (err, result) => {
+
+            res.render('login.ejs', {
+                data: loginId,
+                data2: result
+            });
+        });
     }
 }
 
@@ -872,9 +880,9 @@ controller.terminar_auditoria_POST = (req, res) => {
 
     for (let i = 0; i < seriales.length; i++) {
         funcion.Update_Serial_Auditado(seriales[i], (err, result) => {
-        
-    })
-}
+
+        })
+    }
 
     funcionE.empleadosNombre(gafete, (err, nombre) => {
         funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => {
@@ -883,11 +891,86 @@ controller.terminar_auditoria_POST = (req, res) => {
                 ubicacion,
                 gafete,
                 nombre
-            
+
             })
         })
     })
 }
+
+//////////////////////////////////////TEMPORAL AUDITORIA VULCANIZADO//////////////////////////////
+
+controller.auditar_temp_POST = (req, res) => {
+    gafete = req.body.user;
+
+
+    funcionE.empleadosNombre(gafete, (err, nombreContador) => {
+        funcion.SelectAllStations_VULC((err, ubicaciones) => {
+            funcion.SelectAuditoria_Auditado((err, auditado) => {
+                funcion.SelectAuditoria_NoAuditado((err, noAuditado) => {
+                    funcion.SelectEtiquetasVULC((err,etiquetas_semi)=>{
+                           
+                    auditado = auditado.length
+                    noAuditado = noAuditado.length
+                    res.render('auditar_temp.ejs', {
+                        gafete,
+                        nombreContador,
+                        ubicaciones,
+                        auditado,
+                        noAuditado,
+                        etiquetas_semi
+                    })
+                    })
+                })
+            })
+        })
+    })
+
+}
+
+controller.auditar_ubicacion_temp_POST = (req, res) => {
+    gafete = req.body.gafete;
+    ubicacion = req.body.ubicacion
+    linea = parseInt(req.body.linea)
+
+
+    funcion.SelectLinea_Equals(linea, (err, capturas) => {
+        funcion.SelectSerial_Contado_Vulc(linea, (err, contados) => {
+            funcion.SelectSerial_SinContar_Vulc(linea, (err, sin_contar) => {
+         
+
+                contados = contados.length
+                sin_contar = sin_contar.length
+
+                res.render('auditar_ubicacion_temp.ejs', {
+                    gafete,
+                    capturas,
+                    ubicacion,
+                    linea,
+                    contados,
+                    sin_contar
+                })
+            })
+        })
+    })
+}
+
+controller.terminar_auditoria_temp_POST = (req, res) => {
+
+    linea = req.body.linea
+    gafete = req.body.gafete
+    seriales = req.body.seriales
+
+
+    for (let i = 0; i < seriales.length; i++) {
+        funcion.Update_Serial_Auditado_VULC(gafete,seriales[i], (err, result) => {   
+        
+                     
+        })
+    }
+
+}
+
+//////////////////////////////////////TEMPORAL AUDITORIA VULCANIZADO//////////////////////////////
 
 controller.descargar_reporte_POST = (req, res) => {
 
@@ -1123,7 +1206,7 @@ controller.descargar_reporte_POST = (req, res) => {
                 let nameColG = worksheet.getColumn('G');
                 let nameColH = worksheet.getColumn('H');
                 nameColA.numFmt = '0'
-                nameColA.width = 9
+                nameColA.width = 10
                 nameColB.width = 21
                 nameColC.width = 12
                 nameColD.width = 8.5
