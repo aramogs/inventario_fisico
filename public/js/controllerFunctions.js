@@ -695,7 +695,7 @@ funcion.SelectSerial_SinContar_Vulc = (linea,callback)=>{
 }
 
 funcion.Update_Serial_Auditado_VULC = (emp_id,serial_auditado,callback)=>{
-    db_b10.query(`UPDATE etiquetas_semi SET no_serie_auditado = ${emp_id} WHERE id = ${serial_auditado}`, function (err, result, fields) {
+    db_b10.query(`UPDATE etiquetas_semi SET no_serie_auditado = ${emp_id} WHERE no_serie = ${serial_auditado}`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
