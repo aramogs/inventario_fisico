@@ -1,0 +1,143 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12 d-none d-sm-block">
+            <h2>
+                Auditoria De Seriales Por Ubicacion
+            </h2>
+            <hr>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+
+                    <div class=" col-lg-4">
+                        <label for=""> Gefete:</label>
+                        <input type="text" class="form-control" name="" id="" value="<%= gafete %>" readonly>
+
+                    </div>
+                    <div class=" col-lg-8">
+                        <label for=""> Nombre de auditor:</label>
+                        <input type="text" class="form-control" name="" id="" value="<%= nombreContador %>" readonly>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">Porcentaje Auditado por POT</div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <% for (let i = 0; i < ubicaciones.length; i++) { %>
+
+                            <div class="col-lg-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form action="/auditar_ubicacion_temp" method="POST">
+                                            <div class="row">
+
+
+                                                <input type="text" name="gafete" value="<%= gafete %>" hidden>
+                                                <input type="text" name="linea"
+                                                    value="<%= ubicaciones[i].no_estacion %>" hidden>
+
+                                                <button type="submit"
+                                                    class="btn btn-outline-primary btn-sm btn-block mb-1"
+                                                    name="ubicacion" value="<%= ubicaciones[i].ubicacion %>">
+                                                    Auditar: <%= ubicaciones[i].ubicacion %></button>
+
+                                                <% let total = 0 %>
+                                                <% let auditado = 0 %>
+                                             
+                                                <% for (let y = 0; y < etiquetas_semi.length; y++) { %>
+
+                                                   <% if (ubicaciones[i].no_estacion == etiquetas_semi[y].linea && etiquetas_semi[y].no_serie_auditado != null) { %>
+                                                    <%   auditado++%>
+                                                    <%  }%>
+
+                                                <% if (ubicaciones[i].no_estacion == etiquetas_semi[y].linea) { %>
+                                                <% total++%>
+                                                <% } %>
+                                                <% } %>
+
+                                                <% let auditado_porcentaje = Math.round((100 * auditado)/total)%>
+
+                                                <% if (!isFinite(auditado_porcentaje)){ %>
+                                                   <% auditado_porcentaje = 0%>
+                                                <%} %>
+
+                                                <div class="col-lg-12">
+                                                    <div class="progress">
+                                                        
+                                                        
+                                                        <% if (auditado_porcentaje == 0) { %>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger text-center"
+                                                            role="progressbar"
+                                                            style="width: 100%;"
+                                                            aria-valuenow="0%>" aria-valuemin="0"
+                                                            aria-valuemax="100">
+                                                            <%= auditado_porcentaje%>%</div>
+                                                        <%}else if (auditado_porcentaje <= 50) { %>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                                                            role="progressbar"
+                                                            style="width: <%= auditado_porcentaje%>%;"
+                                                            aria-valuenow="<%= auditado_porcentaje%>" aria-valuemin="0"
+                                                            aria-valuemax="<%=total%>>">
+                                                            <%= auditado_porcentaje%>%</div>
+                                                        <%}else if(auditado_porcentaje <=85){ %>
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                                            role="progressbar"
+                                                            style="width: <%= auditado_porcentaje%>%;"
+                                                            aria-valuenow="<%= auditado_porcentaje%>" aria-valuemin="0"
+                                                            aria-valuemax="<%=total%>>">
+                                                            <%= auditado_porcentaje%>%</div>
+                                                            <%}else{ %>
+                                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                            role="progressbar"
+                                                            style="width: <%= auditado_porcentaje%>%;"
+                                                            aria-valuenow="<%= auditado_porcentaje%>" aria-valuemin="0"
+                                                            aria-valuemax="<%=total%>>">
+                                                            <%= auditado_porcentaje%>%</div>
+                                                            <%} %>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% } %>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ./static/footer.ejs%>
+
+    <script>
+
+    </script>
