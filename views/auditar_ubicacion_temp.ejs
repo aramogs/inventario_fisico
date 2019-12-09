@@ -126,9 +126,9 @@
 
                         <% for (let i = 0; i < capturas.length; i++) { %>
                         <% if(capturas[i].no_serie_auditado != null){ %>
-                        <span class="badge badge-success fspan"><%= capturas[i].id %></span>
+                        <span class="badge badge-success fspan"><%= capturas[i].no_serie %></span>
                         <% }else{ %>
-                        <span class="badge badge-secondary fspan"><%= capturas[i].id %></span>
+                        <span class="badge badge-secondary fspan"><%= capturas[i].no_serie %></span>
                         <% } %>
                         <% } %>
                     </div>
@@ -194,7 +194,7 @@
             if (text.charAt(0) == "S" && Number.isInteger(parseInt(text.substr(1)))) {
 
                 for (let i = 0; i < capturas.length; i++) {
-                    if (text.substr(1) == capturas[i].id && capturas[i].no_serie_auditado != null) {
+                    if (text.substr(1) == capturas[i].no_serie && capturas[i].no_serie_auditado != null) {
                         soundWrong()
                         $('#btnguardarU').prop("disabled", true);
                         msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
@@ -221,7 +221,7 @@
                 if (found == false) {
 
                     for (let i = 0; i < capturas.length; i++) {
-                        if (text.substr(1) == capturas[i].id) {
+                        if (text.substr(1) == capturas[i].no_serie) {
                            
 
                             $('#btnguardarU').prop("disabled", false);

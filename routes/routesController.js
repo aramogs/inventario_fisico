@@ -963,7 +963,9 @@ controller.terminar_auditoria_temp_POST = (req, res) => {
 
     for (let i = 0; i < seriales.length; i++) {
         funcion.Update_Serial_Auditado_VULC(gafete,seriales[i], (err, result) => {   
-        
+            console.log(err);
+            console.log(result);
+            
                      
         })
     }
