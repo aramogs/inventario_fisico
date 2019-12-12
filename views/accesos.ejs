@@ -150,6 +150,7 @@
             <table class="table table-hover table-sm" id="myTable2">
               <thead>
                 <th> <span class="text-primary"></span> Eliminar</th>
+                <th> <span class="text-primary"></span> ID</th>
                 <th> <span class="text-primary"></span> Nombre</th>
                 <th><span class="text-primary"></span> Acceso</th>
               </thead>
@@ -164,8 +165,9 @@
                         onclick="clicked(event)"><span class="icoWhite fas fa-trash-alt"></span></button>
                       <input type="text" name="idGafete" value="<%= accesos[i].acc_id%>" hidden>
                     </form>
-
+                  
                   </td>
+                  <td width='10%'><%= accesos[i].emp_id%></td>
                   <td width='10%'><%= accesos[i].emp_nombre%></td>
                   <% if (accesos[i].acc_inventario==1) {%>
                   <td width='10%'>CAPTURISTA</td>
@@ -275,7 +277,7 @@
   empleados = <%- JSON.stringify(empleados) %>;
 
   $('#empleado').on('change', function (e) {
-    console.log("empleados")
+    
     id = $('#empleado').val();
 
 
