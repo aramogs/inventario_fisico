@@ -164,7 +164,7 @@
             contado = contados + items.length
             faltante = total - contado
             porcentaje_contado = Math.round((100 * (contados + items.length)) / total);
-            if (porcentaje_contado > 85) {
+            if (porcentaje_contado > 10) {
                 $('#btnTerminar').prop("disabled", false)
                 $('#btnTerminar').removeClass("btn-warning")
                 $('#btnTerminar').addClass("btn-success")
