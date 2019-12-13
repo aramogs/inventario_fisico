@@ -291,6 +291,11 @@ controller.conteo_guardar_POST = (req, res) => {
     // serial = req.body.serial
     // serial = serial.slice(1)
     captura_grupo = req.body.captura_grupo
+
+    gafete2 = captura_grupo.split("-",1)
+    
+    
+    
     estado_auditoria = 0
 
 
@@ -298,7 +303,7 @@ controller.conteo_guardar_POST = (req, res) => {
 
 
 
-        funcion.Update_Ubicacion_Captura(id_ubicacion, gafete, estado_auditoria, (err, result) => {
+        funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => {
 
             funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
                 captura_actual = Countcaptura_actual.length + 1
@@ -309,7 +314,7 @@ controller.conteo_guardar_POST = (req, res) => {
 
                         RabbitPublisher.get_label(seriales[i], (callback) => {})
 
-                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
+                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
                             funcion.Select_SerialesCapturados((err, serialesCapturados) => {
                                 funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
 
@@ -332,7 +337,7 @@ controller.conteo_guardar_POST = (req, res) => {
                         cantidad = infoNumeroParte[0].stock
 
 
-                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete, (err, result) => {
+                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
                             funcion.Select_SerialesCapturados((err, serialesCapturados) => {
                                 funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
 
