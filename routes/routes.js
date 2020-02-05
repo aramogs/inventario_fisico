@@ -31,6 +31,7 @@ router.post('/auditar_ubicacion', routesController.auditar_ubicacion_POST);
 router.post('/serial_auditado', routesController.serial_auditado_POST);
 router.post('/terminar_auditoria', routesController.terminar_auditoria_POST);
 router.get('/descargar_reporte', routesController.descargar_reporte_POST);
+router.get('/insertar_masivo',routesController.insertar_masivo);
 
 //////////////////////////////////////TEMPORAL AUDITORIA VULCANIZADO//////////////////////////////
 router.post('/auditar_temp', routesController.auditar_temp_POST);
