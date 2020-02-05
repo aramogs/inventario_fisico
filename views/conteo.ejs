@@ -256,9 +256,10 @@
     }
 
     serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
+    storage_units = <%- JSON.stringify(storage_units) %>;
 
-
-
+    console.table(storage_units);
+    
     function serialFunction() {
       let serial = $('#serial').val();
       let encontrado = false;

@@ -18,6 +18,20 @@ funcion.material= (callback)=>{
     })
 }
 
+
+funcion.Material_StUnit= (callback)=>{
+    db.query(`SELECT storage_unit FROM material`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.SelectSerial= (serial,callback)=>{
     db.query(`SELECT material, stock FROM material WHERE storage_unit = ${serial}`,function (err, result, fields) {
         if (err) {
