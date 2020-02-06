@@ -17,7 +17,6 @@ router.post('/cancelar_multiple', routesController.cancelar_multiple_POST)
 router.post('/guardar_cancelado', routesController.guardar_cancelado_POST);
 router.post('/talones', routesController.talones_POST);
 router.post('/acceso', routesController.acceso_POST);
-router.post('/', routesController.talones_POST);
 router.post('/guardar_talon', routesController.guardar_talon_POST);
 router.post('/delete_talon', routesController.delete_talon_POST);
 router.post('/guardar_ubicacion', routesController.guardar_ubicacion_POST);

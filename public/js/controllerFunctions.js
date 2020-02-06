@@ -103,11 +103,11 @@ funcion.Select_CapturaId= (serial,callback)=>{
     })
 }
 
-funcion.InsertCapturaSerial = (captura_grupo, serial,material, cantidad, ubicacion, gafete,callback)=>{
+funcion.InsertCapturaSerial = (captura_grupo, serial, ubicacion, gafete,callback)=>{
     
     db.query(`
-    INSERT INTO captura (captura_grupo, serial, material, cantidad, ubicacion, num_empleado, fecha)
-    VALUES ('${captura_grupo}','${serial}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
+    INSERT INTO captura (captura_grupo, serial, ubicacion, num_empleado, fecha)
+    VALUES ('${captura_grupo}','${serial}' ,   '${ubicacion}' , ${gafete} ,NOW())`,
     function (err, result, fields) {
         if (err) {
             

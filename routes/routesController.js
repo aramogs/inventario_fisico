@@ -288,6 +288,7 @@ controller.conteo_POST = (req, res) => {
 }
 
 controller.conteo_guardar_POST = (req, res) => {
+ 
     seriales = req.body.seriales
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
@@ -299,20 +300,30 @@ controller.conteo_guardar_POST = (req, res) => {
 
     gafete2 = captura_grupo.split("-", 1)
     estado_auditoria = 0
+    serialesObsoletos= req.body.serialesObsoletos
 
 
-
+    if(seriales != undefined){
     for (let i = 0; i < seriales.length; i++) {
-        let material = null
-        let cantidad = null
 
 
-        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
+        funcion.InsertCapturaSerial(captura_grupo, seriales[i], ubicacion, gafete2[0], (err, result) => {
 
-
+            //console.log(result.length)
         })
 
     }
+    }
+
+   if(serialesObsoletos==undefined){
+    res.redirect('/login_conteo/ubicacion');
+    console.log(res)
+   }else{
+
+    res.render('conteo_obsoleto.ejs', {
+        
+    });
+   }
 
 
     //     for (let i = 0; i < seriales.length; i++) {
@@ -392,6 +403,7 @@ controller.conteo_guardar_POST = (req, res) => {
     //         })
 
     // }
+
 
 }
 
