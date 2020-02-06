@@ -156,19 +156,51 @@
         </div>
       </div>
 
+      <div class="col-lg-2 d-none d-sm-block">
+        <div class="col-lg-12">
+          <div>
+            <div class="card">
+              <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
+              
+              <div class="card-body">
+                <img src="/img/warning.jpg" alt="Warehouse Image" class="img-fluid">
+                
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+        
+      </div>
+
       <div class="col-lg-4 d-none d-sm-block">
         <div class="col-lg-12">
           <div>
             <div class="card">
               <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
+              
               <div class="card-body">
-                <img src="/img/warehouse.jpg" alt="Warehouse Image" class="img-fluid">
+                <h4>Separar Material con Serial Obsoleto</h4>
+                <h5>1. Escanear Serial</h5>
+                <h5>2. Escanear Numero de Parte</h5>
+                <h5>3. Escanear Cantidad</h5> 
+                <h5>Para Soporte contacte a personal de materiales</h5> 
+     
+                </label>
+                
               </div>
             </div>
           </div>
+          
 
         </div>
+        
       </div>
+      
+
+
+      
     </div>
 
     <!-- Collapse -->
@@ -207,21 +239,22 @@
       let CapturaPartes= [];
       let CapturaCantidades= [];
     $(document).ready(function () {
-
+     
       let serialesObsoletosArray
       document.getElementById("serial").focus();
       if (serialesObsoletos.includes(",")) {
         
         let serialesObsoletosArray = serialesObsoletos.split(',');
         for (let i = 0; i < serialesObsoletosArray.length; i++) {
-          let addSpan = `<span class="badge badge-danger fspan">${serialesObsoletosArray[i]}</span> `
+          let addSpan = `<span class="badge badge-danger fspan" id="id${serialesObsoletosArray[i]}">${serialesObsoletosArray[i]}</span> `
           $('#cardCapturado').append(addSpan)
         }
       }else{
-        let addSpan = `<span class="badge badge-danger fspan">${serialesObsoletos}</span> `
+        let addSpan = `<span class="badge badge-danger fspan id="id${serialesObsoletos}">${serialesObsoletos}</span> `
           $('#cardCapturado').append(addSpan)
       }
 
+      soundOk();
     });
 
 
@@ -273,9 +306,11 @@
            $('#inputSeriales').val(CapturaSeriales)
             $('#serialWarning').prop('hidden',true)
             $('#serialWarning2').prop('hidden',true)
+            $(`#id${serial.substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
 
             $('#divSerial').prop('hidden',true)
             $('#divParte').removeAttr('hidden')
+       
             document.getElementById("parte").focus();
 
             break;
