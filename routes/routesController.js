@@ -223,11 +223,39 @@ controller.ubicacion_POST = (req, res) => {
     gafete = req.body.user;
 
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
-
-        res.render('ubicacion.ejs', {
-            gafete,
-            nombreContador
+       
+            res.render('ubicacion.ejs', {
+                gafete,
+                nombreContador,
+            })
         })
+}
+
+controller.ubicacion_rack_POST = (req,res)=>{
+    ubicacion = req.params.id
+    gafete = req.body.gafete
+    nombreContador = req.body.nombreContador
+    funcion.Ubicaciones_Conteo_Rack(ubicacion,(err, racks) => {
+        res.render('ubicacion_rack.ejs',{
+            gafete,
+            nombreContador,
+            racks
+        })
+        
+    })
+}
+
+controller.ubicacion_storageBin_POST = (req,res)=>{
+    rack = req.params.id
+    gafete = req.body.gafete
+    nombreContador = req.body.nombreContador
+    funcion.Ubicaciones_Conteo_StorageBin(rack,(err, bins) => {
+        res.render('ubicacion_storageBin.ejs',{
+            gafete,
+            nombreContador,
+            bins
+        })
+        
     })
 }
 
@@ -308,10 +336,10 @@ controller.conteo_guardar_POST = (req, res) => {
 
 
         funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
+            console.log(result.insertId);
 
 
         })
-
     }
 
 

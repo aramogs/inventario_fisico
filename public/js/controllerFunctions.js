@@ -32,6 +32,32 @@ funcion.Material_StUnit= (callback)=>{
     })
 }
 
+funcion.Ubicaciones_Conteo_Rack= (ubicacion,callback)=>{
+    db.query(`SELECT DISTINCT rack AS racks FROM ubicaciones_conteo WHERE storage_location = '${ubicacion}' ORDER BY rack ASC`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Ubicaciones_Conteo_StorageBin= (rack,callback)=>{
+    db.query(`SELECT DISTINCT storage_bin AS bins FROM ubicaciones_conteo WHERE rack = '${rack}' ORDER BY storage_bin ASC`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.SelectSerial= (serial,callback)=>{
     db.query(`SELECT material, stock FROM material WHERE storage_unit = ${serial}`,function (err, result, fields) {
         if (err) {
