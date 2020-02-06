@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-2 mt-3">
+      <div class="col-lg-2">
 
         <div class="card">
           <div class="card-header bg-secondary text-white text-center font-weight-bold"> Terminar Captura</div>
@@ -95,18 +95,19 @@
                 <input type="text" class="form-control" name="captura_actual" id="captura_actual"
                   aria-describedby="helpId" placeholder="" value="<%= captura_actual%>" hidden>
 
-                  <div class="card" id="serialesObsoletosRow" hidden>
-                    <div class="card-header bg-danger text-white text-center font-weight-bold"> Apartar Seriales Obsoletos</div>
-                    <div class="card-body text-center">
-                      <div class="row" >
-                        <div class="col-lg-12 text-center">
-                          <div id="spanObsoletos">
-                            <!-- Se hace append desde Jquery -->
-                          </div>
+                <div class="card" id="serialesObsoletosRow" hidden>
+                  <div class="card-header bg-danger text-white text-center font-weight-bold"> Apartar Seriales Obsoletos
+                  </div>
+                  <div class="card-body text-center">
+                    <div class="row">
+                      <div class="col-lg-12 text-center">
+                        <div id="spanObsoletos">
+                          <!-- Se hace append desde Jquery -->
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
 
 
 
@@ -124,16 +125,16 @@
 
 
                 <div class="row">
-                  
+
                   <div class="col-lg-6 col- text-center">
                     <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><span
                         class="fas fa-minus-circle text-warning" style="font-size: 65px"></span></div>
-                  </div> 
+                  </div>
                   <div class="col-lg-6  col- text-center">
                     <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><span
                         class="fas fa-plus-circle text-success" style="font-size: 65px"></span></div>
                   </div>
-              
+
                 </div>
                 <br>
                 <div class="row">
@@ -143,8 +144,6 @@
                     </div>
                   </div>
                 </div>
-
-
               </div>
 
               <form action="/conteo_guardar" method="POST">
@@ -199,11 +198,7 @@
         <div class="accordion" id="accordionExample">
 
           <div class="card-body" id="cardCapturado">
-
-
-
-
-
+            <!-- Seriales Capturados agregados por Jquery -->
           </div>
 
         </div>
@@ -227,6 +222,20 @@
       soundOk()
     });
 
+    serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
+    storage_units = <%- JSON.stringify(storage_units) %>;
+    let items = [];
+    let itemsObsoletos = [];
+
+    let currentDate = new Date(),
+      day = currentDate.getDate(),
+      month = currentDate.getMonth() + 1,
+      year = currentDate.getFullYear(),
+      date = day + "/" + month + "/" + year;
+
+    document.getElementById("date").innerHTML = date;
+
+
     /////////////////////////////// Modal ////////////////////////////////////////////////
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
@@ -247,20 +256,23 @@
       document.getElementById('contadorSeriales').value = value;
     }
 
+    modalCaptura.addEventListener("click", function (e) {
+
+      if (itemsObsoletos.length != 0) {
+
+        $('#serialesObsoletosRow').removeAttr('hidden')
+        for (let i = 0; i < itemsObsoletos.length; i++) {
+          $("#spanObsoletos").append(`<span class="badge badge-danger"> ${itemsObsoletos[i]} </span>`);
+          $("#spanObsoletos").append(` `);
+        }
+      }
+    });
+    //Si el modal se cierra borra todos los append de la funcion de arriba
+    $('#exampleModal').on('hidden.bs.modal', function () {
+      $("#spanObsoletos").empty()
+    })
+
     /////////////////////////////// Modal ////////////////////////////////////////////////
-
-
-
-
-    // let submitting = false;
-    // $("#submitSerial").submit(function (event) {
-    //   if (submitting) {
-    //     event.preventDefault();
-    //     return;
-    //   }
-    //   submitting = true;
-    // });
-
 
 
     $('#serial').keypress(function (e) {
@@ -272,12 +284,9 @@
       }
     })
 
-    let items = [];
-    let itemsObsoletos = [];
 
 
     function guardarNumeros(tipo) {
-
 
       let color
       serialVal = document.getElementById('serial').value;
@@ -298,11 +307,6 @@
 
       return false; // stop submission
     }
-
-
-    serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
-    storage_units = <%- JSON.stringify(storage_units) %>;
-
 
 
     function serialFunction() {
@@ -385,27 +389,8 @@
     }
 
 
-
-
-    modalCaptura.addEventListener("click", function (e) {
-
-      if (itemsObsoletos.length != 0) {
-
-        $('#serialesObsoletosRow').removeAttr('hidden')
-        for (let i = 0; i < itemsObsoletos.length; i++) {
-          $("#spanObsoletos").append(`<span class="badge badge-danger"> ${itemsObsoletos[i]} </span>`);
-          $("#spanObsoletos").append(` `);
-        }
-      }
-    });
-    //Si el modal se cierra borra todos los append de la funcion de arriba
-    $('#exampleModal').on('hidden.bs.modal', function () {
-      $("#spanObsoletos").empty()
-    })
-
-
     btnCapturar.addEventListener("click", function (e) {
-      
+
       let cantidad = $('#contadorSeriales').val();
 
       if (cantidad == (items.length + itemsObsoletos.length)) {
@@ -414,12 +399,12 @@
         $('#contadorWarning2').prop('hidden', true)
         soundOk()
         console.log("bien");
-        
+
       } else {
         e.preventDefault()
         console.log("mal");
-        
-        
+
+
         $('#contadorWarning').removeAttr('hidden')
         $('#contadorWarning2').removeAttr('hidden')
         soundWrong()
@@ -429,14 +414,7 @@
 
 
 
-    let currentDate = new Date(),
-      day = currentDate.getDate(),
-      month = currentDate.getMonth() + 1,
-      year = currentDate.getFullYear(),
-      date = day + "/" + month + "/" + year;
 
-
-    document.getElementById("date").innerHTML = date;
 
 
 
