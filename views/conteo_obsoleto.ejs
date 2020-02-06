@@ -102,7 +102,7 @@
               <div class="modal-body text-center">
 
                 <input type="text" class="form-control" name="captura_actual" id="captura_actual"
-                  aria-describedby="helpId" placeholder="" value="<%= captura_actual%>" hidden>
+                  aria-describedby="helpId" placeholder="" value="" hidden>
 
                 <label>
                   <label>Seriales Contados:
@@ -196,153 +196,6 @@
 
   <script>
 
-    function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
-
-    $(document).ready(function () {
-      $(document).on("keydown", disableF5);
-      $('#serial').focus()
-      soundOk()
-    });
-
-    /////////////////////////////// Modal ////////////////////////////////////////////////
-    $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-    })
-
-    function increaseValue() {
-      var value = parseInt(document.getElementById('contadorSeriales').value, 10);
-      value = isNaN(value) ? 0 : value;
-      value++;
-      document.getElementById('contadorSeriales').value = value;
-    }
-
-    function decreaseValue() {
-      var value = parseInt(document.getElementById('contadorSeriales').value, 10);
-      value = isNaN(value) ? 0 : value;
-      value < 1 ? value = 1 : '';
-      value--;
-      document.getElementById('contadorSeriales').value = value;
-    }
-
-    /////////////////////////////// Modal ////////////////////////////////////////////////
-
-
-
-
-    // var submitting = false;
-    // $("#submitSerial").submit(function (event) {
-    //   if (submitting) {
-    //     event.preventDefault();
-    //     return;
-    //   }
-    //   submitting = true;
-    // });
-
-
-
-    $('#serial').keypress(function (e) {
-
-      if (e.which == 13) {
-        e.preventDefault()
-        serialFunction()
-        $('#serial').val("")
-      }
-    })
-
-    var items = [];
-    var itemsObsoletos = [];
-
-    function guardarNumeros(tipo) {
-     
-      
-      let color
-      serialVal = document.getElementById('serial').value;
-      if(tipo=='activo'){
-      items.push(serialVal.substr(1));
-      color='success'
-
-      }else{
-        itemsObsoletos.push(serialVal.substr(1));
-        color='danger'
-      }
-
-
-      let addSpan = `<span class="badge badge-${color} fspan">${serialVal.substr(1)}</span> `
-      $('#cardCapturado').append(addSpan)
-      return false; // stop submission
-    }
-
-
-    serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
-    storage_units = <%- JSON.stringify(storage_units) %>;
-
-    console.table(storage_units);
-    
-    function serialFunction() {
-      let serial = $('#serial').val();
-      let encontrado = false;
-
-      
-      if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1))) ) {
-
-        for (let i = 0; i < serialesCapturados.length; i++) {
-
-          if (serial.substr(1) == serialesCapturados[i].serial) {
-
-            encontrado = true;
-            soundWrong()
-            $('#serialWarning').removeAttr('hidden')
-            $('#serialWarning2').text('Serial Duplicado')
-            $('#serialWarning2').removeAttr('hidden')
-            $('#serial').val('')
-            break;
-          }
-        }
-        for (let y = 0; y < items.length; y++) {
-          if (serial.substr(1) == items[y]) {
-
-            encontrado = true;
-            soundWrong()
-            $('#serialWarning').removeAttr('hidden')
-            $('#serialWarning2').text('Serial Duplicado')
-            $('#serialWarning2').removeAttr('hidden')
-            $('#serial').val('')
-            break;
-          }
-
-        }
-        if (encontrado == false) {
-          let SerialExistente= false
-          for (let y = 0; y < storage_units.length; y++) {
-
-            if (serial.substr(1) == storage_units[y].storage_unit) {
-              SerialExistente= true
-              break
-            }
-        }
-
-        
-        if(SerialExistente==true){
-          guardarNumeros('activo')
-        }else{
-          guardarNumeros('obsoleto')
-        }
-          
-          soundOk()
-          //$('form#submitSerial').submit();
-          $('#serialWarning').prop('hidden', true)
-          $('#serialWarning2').prop('hidden', true)
-        }
-
-      } else {
-        soundWrong()
-        $('#serialWarning').removeAttr('hidden')
-        $('#serialWarning2').text('Incorrecto')
-        $('#serialWarning2').removeAttr('hidden')
-        $('#serial').val('')
-      }
-
-    }
 
 
     var timer2 = null;
@@ -353,13 +206,7 @@
 
     });
 
-    modalCaptura.addEventListener("click", function (e) {
 
-      $("#SpanApartar").text(itemsObsoletos);
-    
-    });
-
-    //cantidad_actual = <%- JSON.stringify(captura_actual) %>;
     function contadorSerialesFunction() {
       var cantidad = $('#contadorSeriales').val();
 
@@ -382,7 +229,7 @@
  
 
 
-         window.location.href = '/login_conteo/ubicacion';
+         //window.location.href = '/login_conteo/ubicacion';
 
 
 
@@ -395,18 +242,6 @@
     }
 
     }
-
-
-
-    var currentDate = new Date(),
-      day = currentDate.getDate(),
-      month = currentDate.getMonth() + 1,
-      year = currentDate.getFullYear(),
-      date = day + "/" + month + "/" + year;
-
-
-    document.getElementById("date").innerHTML = date;
-
 
 
 

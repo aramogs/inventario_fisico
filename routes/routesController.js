@@ -346,90 +346,20 @@ controller.conteo_guardar_POST = (req, res) => {
     res.redirect('/login_conteo/ubicacion');
     console.log(res)
    }else{
-
+    console.log("obsoletoooos")
     res.render('conteo_obsoleto.ejs', {
         
+        gafete,
+        nombreContador,
+        ubicacion,
+        id_ubicacion, 
+        serialesObsoletos,
+        captura_grupo
     });
    }
 
 
-    //     for (let i = 0; i < seriales.length; i++) {
 
-    //         funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => {
-
-    //             funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
-    //                 captura_actual = Countcaptura_actual.length + 1
-    //                 funcion.SelectSerial(seriales[i], (err, infoNumeroParte) => {
-    //                     if (infoNumeroParte.length == "") {
-    //                         material = "NULL"
-    //                         cantidad = null
-    //                         console.log(seriales[i]);
-    //                         console.log(type(seriales[i]));
-
-
-    //                         RabbitPublisher.get_label(seriales[i], (callback) => { })
-
-    //                         funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
-    //                             funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-    //                                 funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-
-
-    //                                     // res.render('conteo.ejs', {
-    //                                     //     gafete,
-    //                                     //     nombreContador,
-    //                                     //     ubicacion,
-    //                                     //     captura_grupo,
-    //                                     //     captura_actual,
-    //                                     //     serialesCapturados,
-    //                                     //     capturasPorGrupo
-
-    //                                     // })
-    //                                 })
-    //                             })
-    //                         })
-    //                     } else {
-    //                         material = infoNumeroParte[0].material
-    //                         cantidad = infoNumeroParte[0].stock
-
-
-    //                         funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
-
-    //                             funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-    //                                 funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-
-
-    //                                         if (seriales.length != capturasPorGrupo.length) {
-
-    //                                             for (let i = 0; i < seriales.length; i++) {
-    //                                                 if (seriales[i] == capturasPorGrupo.length[i].serial) {
-    //                                                     console.log(capturasPorGrupo.length[i].serial);
-
-    //                                                 }
-
-    //                                             }
-
-    //                                         }
-
-    //                                     // res.render('conteo.ejs', {
-    //                                     //     gafete,
-    //                                     //     nombreContador,
-    //                                     //     ubicacion,
-    //                                     //     captura_grupo,
-    //                                     //     captura_actual,
-    //                                     //     serialesCapturados,
-    //                                     //     capturasPorGrupo
-    //                                     // })
-    //                                 })
-    //                             })
-    //                         })
-    //                     }
-
-    //                 })
-
-    //             })
-    //         })
-
-    // }
 
 
 }
