@@ -250,7 +250,7 @@
           $('#cardCapturado').append(addSpan)
         }
       }else{
-        let addSpan = `<span class="badge badge-danger fspan id="id${serialesObsoletos}">${serialesObsoletos}</span> `
+        let addSpan = `<span class="badge badge-danger fspan" id="id${serialesObsoletos}">${serialesObsoletos}</span> `
           $('#cardCapturado').append(addSpan)
       }
 
@@ -307,6 +307,7 @@
             $('#serialWarning').prop('hidden',true)
             $('#serialWarning2').prop('hidden',true)
             $(`#id${serial.substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
+            console.log(CapturaSeriales)
 
             $('#divSerial').prop('hidden',true)
             $('#divParte').removeAttr('hidden')
