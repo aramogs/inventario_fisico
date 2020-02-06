@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-lg-12 d-none d-sm-block">
         <h2>
-          Captura De Seriales Por Ubicación
+          Captura De Seriales Obsoletos
         </h2>
         <hr>
       </div>
@@ -51,6 +51,8 @@
             <input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
               placeholder="" value="<%= captura_grupo%>" hidden>
 
+            <br>
+            <div id="divSerial" >
             <label>
               <label>Serial:
                 <span class="badge badge-warning " id="serialWarning" hidden>
@@ -73,84 +75,83 @@
                 class="form-control" placeholder="Serial" aria-describedby="helpId" required>
 
             </div>
-
           </div>
-        </div>
-      </div>
-      <div class="col-lg-2 mt-3">
 
-        <div class="card">
-          <div class="card-header bg-secondary text-white text-center font-weight-bold"> Terminar Captura</div>
-          <div class="card-body text-center">
+        
+            <div id="divParte" hidden>
+            <label>
+              <label>Parte:
+                <span class="badge badge-warning " id="parteWarning" hidden>
+                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
+                  </span>
+                  <span id="parteWarning2" style="font-size: 15px ; color:black" hidden>
+                    Incorrecto
+                  </span>
+                </span>
+              </label>
+            </label>
 
-            <button type="button" name="modalCaptura" id="modalCaptura" class="btn btn-primary btn-lg  " data-toggle="modal"
-              data-target="#exampleModal"><span class="fas fa-clipboard-check" style="font-size: 50px;"></span></button>
-          </div>
-        </div>
+            <div class="input-group  col-lg-12">
 
-        <!-- Modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content  ">
-              <div class="modal-header">
-                <h4 class="modal-title ">Captura No: <span
-                    class="badge border-bottom-primary"><%= captura_grupo%></span> </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+              <div class="input-group-prepend ">
+                <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                  id="basic-addon1"><span class="fas fa-barcode"></span></span>
               </div>
-              <div class="modal-body text-center">
+              <input oninput="this.value = this.value.toUpperCase()" type="text" name="parte" id="parte"
+                class="form-control" placeholder="Parte" aria-describedby="helpId" required>
 
-                <input type="text" class="form-control" name="captura_actual" id="captura_actual"
-                  aria-describedby="helpId" placeholder="" value="" hidden>
-
-                <label>
-                  <label>Seriales Contados:
-                    <span class="badge badge-warning " id="contadorWarning" hidden>
-                      <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                      </span>
-                      <span id="contadorWarning2" style="font-size: 15px ; color:black" hidden>
-                        Cantidad Incorrecta
-                      </span>
-                    </span>
-                  </label>
-                </label>
-
-                <div class="row">
-
-                  <div class="col-lg-4 text-center">
-                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><span
-                        class="fas fa-minus-circle text-danger" style="font-size: 65px"></span></div>
-                  </div>
-                  <div class="col-lg-3 text-center">
-                    <div class="">
-
-                      <input type="number" class="form-control" name="contadorSeriales" id="contadorSeriales" value="0">
-                    </div>
-                  </div>
-                  <div class="col-lg-4 text-center">
-                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><span
-                        class="fas fa-plus-circle text-success" style="font-size: 65px"></span></div>
-                  </div>
-
-                </div>
-                <br>
-                <h4 class="modal-title text-danger">Apartar Seriales Obsoletos <span
-                  class="badge border-bottom-primary" id="SpanApartar"></span> </h4>
-              </div>
-              
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
-              </div>
-
-              
             </div>
           </div>
-        </div>
-        <!--/ Modal -->
+          <div id="divCantidad" hidden>
+       
+            <label>
+              <label>Cantidad:
+                <span class="badge badge-warning " id="cantidadWarning" hidden>
+                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
+                  </span>
+                  <span id="cantidadWarning2" style="font-size: 15px ; color:black" hidden>
+                    Incorrecto
+                  </span>
+                </span>
+              </label>
+            </label>
 
+            <div class="input-group  col-lg-12">
+
+              <div class="input-group-prepend ">
+                <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                  id="basic-addon1"><span class="fas fa-barcode"></span></span>
+              </div>
+              <input oninput="this.value = this.value.toUpperCase()" type="text" name="cantidad" id="cantidad"
+                class="form-control" placeholder="Cantidad" aria-describedby="helpId" required>
+
+            </div>
+
+          </div>
+
+        
+          <form action="/conteo_guardar" method="post">
+
+            <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" aria-describedby="helpId" placeholder=""
+                  value="" >
+                  <input type="text" class="form-control" name="inputPartes" id="inputPartes" aria-describedby="helpId" placeholder=""
+                  value="" >
+                  <input type="text" class="form-control" name="inputCantidades" id="inputCantidades" aria-describedby="helpId" placeholder=""
+                  value="" >
+
+            <div class="modal-footer" id="divbtnGuardar" hidden>
+              <button  type="submit" class="btn btn-success btn-block" id="btnGuardar">Guardar</button>
+            </div>
+          
+          
+          </form>
+
+
+
+        </div>
+        </div>
       </div>
+
       <div class="col-lg-4 d-none d-sm-block">
         <div class="col-lg-12">
           <div>
@@ -167,6 +168,7 @@
     </div>
 
     <!-- Collapse -->
+    <br>
     <div class="col-lg-12 mt-2 ">
 
       <div class="card shadow mb-4 shadow-lg">
@@ -195,53 +197,179 @@
   <% include ./static/footer.ejs%>
 
   <script>
+      serialesObsoletos = <%- JSON.stringify(serialesObsoletos) %>;
+      let serialesObsoletosArray = serialesObsoletos.split(',');
+      let CapturaSeriales= [];
+      let CapturaPartes= [];
+      let CapturaCantidades= [];
+    $(document).ready(function () {
 
-
-
-    var timer2 = null;
-    btnCapturar.addEventListener("click", function (e) {
-
-      clearTimeout(timer2);
-      timer2 = setTimeout(contadorSerialesFunction, 100)
+      let serialesObsoletosArray
+      document.getElementById("serial").focus();
+      if (serialesObsoletos.includes(",")) {
+        
+        let serialesObsoletosArray = serialesObsoletos.split(',');
+        for (let i = 0; i < serialesObsoletosArray.length; i++) {
+          let addSpan = `<span class="badge badge-danger fspan">${serialesObsoletosArray[i]}</span> `
+          $('#cardCapturado').append(addSpan)
+        }
+      }else{
+        let addSpan = `<span class="badge badge-danger fspan">${serialesObsoletos}</span> `
+          $('#cardCapturado').append(addSpan)
+      }
 
     });
 
 
-    function contadorSerialesFunction() {
-      var cantidad = $('#contadorSeriales').val();
+    $('#serial').keypress(function (e) {
 
-      if (cantidad == (items.length+itemsObsoletos.length)) {
+        if (e.which == 13) {
+          e.preventDefault()
+          serialFunction()
+          $('#serial').val("")
+        }
+    })
 
-        $('#contadorWarning').prop('hidden', true)
-        $('#contadorWarning2').prop('hidden', true)
+    $('#parte').keypress(function (e) {
 
-        soundOk()
+      if (e.which == 13) {
+        e.preventDefault()
+        parteFunction()
+        $('#parte').val("")
+      }
+      })
 
-        $.post("/conteo_guardar", {
-          'seriales[]': items,
-          'gafete': '<%= gafete%>',
-          'nombreContador': '<%= nombreContador%>',
-          'ubicacion': '<%= ubicacion%>',
-          'captura_grupo': '<%= captura_grupo%>',
-          'serialesObsoletos[]': itemsObsoletos,
+      $('#cantidad').keypress(function (e) {
 
-         });
+      if (e.which == 13) {
+        e.preventDefault()
+        cantidadFunction()
+        $('#cantidad').val("")
+      }
+      })
+
+
+
+    function serialFunction() {
+      let serial = $('#serial').val();
+      let encontrado = false;
+
+      
+      if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1))) ) {
+
+        for (let i = 0; i < serialesObsoletos.length; i++) {
+
+          if (serial.substr(1) == serialesObsoletosArray[i]) {
+
+            encontrado = true;
+            CapturaSeriales.push(serialesObsoletosArray[i])
+            serialesObsoletosArray.splice(i,1)
+            soundOk()
+
+           $('#inputSeriales').val(CapturaSeriales)
+            $('#serialWarning').prop('hidden',true)
+            $('#serialWarning2').prop('hidden',true)
+
+            $('#divSerial').prop('hidden',true)
+            $('#divParte').removeAttr('hidden')
+
+            break;
+          }
+        }
+        if(encontrado==false){
+          soundWrong()
+        $('#serialWarning').removeAttr('hidden')
+        $('#serialWarning2').text('Incorrecto')
+        $('#serialWarning2').removeAttr('hidden')
+        $('#serial').val('')
+        }
+        
+
+      } else {
+        soundWrong()
+        $('#serialWarning').removeAttr('hidden')
+        $('#serialWarning2').text('Incorrecto')
+        $('#serialWarning2').removeAttr('hidden')
+        $('#serial').val('')
+      }
+
+    }
+
+
+
+
+    function parteFunction() {
+      let parte = $('#parte').val();
+
+
+      
+      if (parte.charAt(0) == "P") {
+
+            CapturaPartes.push(parte.substr(1))
+            soundOk()
+         
+            $('#parteWarning').prop('hidden',true)
+            $('#parteWarning2').prop('hidden',true)
+
+            $('#divParte').prop('hidden',true)
+            $('#divCantidad').removeAttr('hidden')
+
+      } else {
+        soundWrong()
+        $('#parteWarning').removeAttr('hidden')
+        $('#parteWarning2').text('Incorrecto')
+        $('#parteWarning2').removeAttr('hidden')
+        $('#parte').val('')
+      }
+
+    }
+
+
+
+    function cantidadFunction() {
+      let cantidad = $('#cantidad').val();
+
+      if (cantidad.charAt(0) == "Q") {
+
+            CapturaCantidades.push(cantidad.substr(1))
+            soundOk()
+         
+            $('#cantidadWarning').prop('hidden',true)
+            $('#cantidadWarning2').prop('hidden',true)
+
+            $('#divCantidad').prop('hidden',true)
+            $('#divSerial').removeAttr('hidden')
+
+            console.log(CapturaSeriales)
+      console.log(CapturaPartes)
+      console.log(CapturaCantidades)
+
+      } else {
+        soundWrong()
+        $('#cantidadWarning').removeAttr('hidden')
+        $('#cantidadWarning2').text('Incorrecto')
+        $('#cantidadWarning2').removeAttr('hidden')
+        $('#cantidad').val('')
+      }
+
+      
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
-
-
-         //window.location.href = '/login_conteo/ubicacion';
-
-
-
-    } else {
-
-      $('#contadorWarning').removeAttr('hidden')
-      $('#contadorWarning2').removeAttr('hidden')
-      soundWrong()
-
-    }
-
-    }
 
 
 
