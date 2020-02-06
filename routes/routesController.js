@@ -319,6 +319,7 @@ controller.conteo_guardar_POST = (req, res) => {
  
     seriales = req.body.seriales
     gafete = req.body.gafete;
+    console.log(gafete);
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
     id_ubicacion = req.body.ubicacion
@@ -326,6 +327,8 @@ controller.conteo_guardar_POST = (req, res) => {
     // serial = serial.slice(1)
     captura_grupo = req.body.captura_grupo
 
+    
+    
     gafete2 = captura_grupo.split("-", 1)
     estado_auditoria = 0
     serialesObsoletos= req.body.serialesObsoletos
@@ -343,8 +346,7 @@ controller.conteo_guardar_POST = (req, res) => {
     }
 
    if(serialesObsoletos==undefined){
-    res.redirect('/login_conteo/ubicacion');
-    console.log(res)
+    return res.redirect('/login_conteo/ubicacion');
    }else{
 
     res.render('conteo_obsoleto.ejs', {

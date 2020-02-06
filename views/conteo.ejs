@@ -41,16 +41,6 @@
         <div class="row">
           <div class="col-lg-12">
 
-
-            <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
-              value="<%= gafete%>" hidden>
-            <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
-              placeholder="" value="<%= nombreContador%>" hidden>
-            <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-              placeholder="" value="<%= ubicacion%>" hidden>
-            <input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
-              placeholder="" value="<%= captura_grupo%>" hidden>
-
             <label>
               <label>Serial:
                 <span class="badge badge-warning " id="serialWarning" hidden>
@@ -139,11 +129,21 @@
                   class="badge border-bottom-primary" id="SpanApartar"></span> </h4>
               </div>
               
+<form action="/conteo_guardar" method="post">
 
+  <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
+  value="" >
+  <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
+  placeholder="" value="<%= nombreContador%>" hidden>
+<input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+  placeholder="" value="<%= ubicacion%>" hidden>
+<input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
+  placeholder="" value="<%= captura_grupo%>" hidden>
+  
               <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
+                <button  type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
               </div>
-
+</form>
               
             </div>
           </div>
@@ -210,14 +210,14 @@
     })
 
     function increaseValue() {
-      var value = parseInt(document.getElementById('contadorSeriales').value, 10);
+      let value = parseInt(document.getElementById('contadorSeriales').value, 10);
       value = isNaN(value) ? 0 : value;
       value++;
       document.getElementById('contadorSeriales').value = value;
     }
 
     function decreaseValue() {
-      var value = parseInt(document.getElementById('contadorSeriales').value, 10);
+      let value = parseInt(document.getElementById('contadorSeriales').value, 10);
       value = isNaN(value) ? 0 : value;
       value < 1 ? value = 1 : '';
       value--;
@@ -229,7 +229,7 @@
 
 
 
-    // var submitting = false;
+    // let submitting = false;
     // $("#submitSerial").submit(function (event) {
     //   if (submitting) {
     //     event.preventDefault();
@@ -249,8 +249,8 @@
       }
     })
 
-    var items = [];
-    var itemsObsoletos = [];
+    let items = [];
+    let itemsObsoletos = [];
 
     function guardarNumeros(tipo) {
      
@@ -266,9 +266,13 @@
         color='danger'
       }
 
+      $('#gafete').val(`${items}`)
+      console.log(items);
 
       let addSpan = `<span class="badge badge-${color} fspan">${serialVal.substr(1)}</span> `
       $('#cardCapturado').append(addSpan)
+  
+      
       return false; // stop submission
     }
 
@@ -276,7 +280,7 @@
     serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
     storage_units = <%- JSON.stringify(storage_units) %>;
 
-    console.table(storage_units);
+
     
     function serialFunction() {
       let serial = $('#serial').val();
@@ -345,7 +349,7 @@
     }
 
 
-    var timer2 = null;
+    let timer2 = null;
     btnCapturar.addEventListener("click", function (e) {
 
       clearTimeout(timer2);
@@ -361,7 +365,7 @@
 
     //cantidad_actual = <%- JSON.stringify(captura_actual) %>;
     function contadorSerialesFunction() {
-      var cantidad = $('#contadorSeriales').val();
+      let cantidad = $('#contadorSeriales').val();
 
       if (cantidad == (items.length+itemsObsoletos.length)) {
 
@@ -370,15 +374,15 @@
 
         soundOk()
 
-        $.post("/conteo_guardar", {
-          'seriales[]': items,
-          'gafete': '<%= gafete%>',
-          'nombreContador': '<%= nombreContador%>',
-          'ubicacion': '<%= ubicacion%>',
-          'captura_grupo': '<%= captura_grupo%>',
-          'serialesObsoletos[]': itemsObsoletos,
+        // $.post("/conteo_guardar", {
+        //   'seriales[]': items,
+        //   'gafete': '<%= gafete%>',
+        //   'nombreContador': '<%= nombreContador%>',
+        //   'ubicacion': '<%= ubicacion%>',
+        //   'captura_grupo': '<%= captura_grupo%>',
+        //   'serialesObsoletos[]': itemsObsoletos,
 
-         });
+        //  });
  
 
 
@@ -398,7 +402,7 @@
 
 
 
-    var currentDate = new Date(),
+    let currentDate = new Date(),
       day = currentDate.getDate(),
       month = currentDate.getMonth() + 1,
       year = currentDate.getFullYear(),
