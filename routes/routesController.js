@@ -271,6 +271,7 @@ controller.conteo_POST = (req, res) => {
             if (gruposCapturados == "") {
                 captura_grupo = `${gafete}-${+1}`
                 captura_actual = ""
+                funcion.Material_StUnit((err, storage_units) => {
                 funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
                     res.render('conteo.ejs', {
                         gafete,
@@ -279,7 +280,9 @@ controller.conteo_POST = (req, res) => {
                         captura_grupo,
                         captura_actual,
                         serialesCapturados,
-                        capturasPorGrupo
+                        capturasPorGrupo,
+                        storage_units
+                    })
                     })
                 })
             } else {
