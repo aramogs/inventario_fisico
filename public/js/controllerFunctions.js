@@ -480,9 +480,9 @@ funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
 funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
     db.query(`
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
-    VALUES ('${id_ubicacion}', ${emp_id}, LEFT(${estado_auditoria},2))
+    VALUES (LEFT('${id_ubicacion}',2), ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
-     id_ubicacion = '${id_ubicacion}'
+     id_ubicacion = LEFT('${id_ubicacion}',2)
     `,
     function (err, result, fields) {
         if (err) {
