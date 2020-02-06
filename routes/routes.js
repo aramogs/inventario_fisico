@@ -10,6 +10,8 @@ router.get('/login_conteo/:id', routesController.login_conteo);
 router.post('/mesa_captura', routesController.mesa_captura_POST);
 router.post('/guardar_captura', routesController.guardar_captura_POST);
 router.post('/ubicacion', routesController.ubicacion_POST);
+router.post('/ubicacion/:id', routesController.ubicacion_rack_POST);
+router.post('/storageBin/:id', routesController.ubicacion_storageBin_POST);
 router.post('/conteo', routesController.conteo_POST);
 router.post('/conteo_guardar', routesController.conteo_guardar_POST)
 router.post('/delete_ticket', routesController.delete_ticket_POST);
