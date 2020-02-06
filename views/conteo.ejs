@@ -94,6 +94,16 @@
                 <input type="text" class="form-control" name="captura_actual" id="captura_actual"
                   aria-describedby="helpId" placeholder="" value="<%= captura_actual%>" hidden>
 
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <h4 class="modal-title text-danger">Apartar Seriales Obsoletos</h4>
+                      <div id="spanObsoletos">
+                        
+                      </div>
+                      
+                    </div>
+                  </div>
+
                 <label>
                   <label>Seriales Contados:
                     <span class="badge badge-warning " id="contadorWarning" hidden>
@@ -105,6 +115,7 @@
                     </span>
                   </label>
                 </label>
+
 
                 <div class="row">
 
@@ -124,9 +135,8 @@
                   </div>
 
                 </div>
-                <br>
-                <h4 class="modal-title text-danger">Apartar Seriales Obsoletos <span
-                  class="badge border-bottom-primary" id="SpanApartar"></span> </h4>
+             
+
               </div>
               
                 <form action="/conteo_guardar" method="post">
@@ -259,6 +269,7 @@
     let items = [];
     let itemsObsoletos = [];
 
+  
     function guardarNumeros(tipo) {
      
       
@@ -274,10 +285,7 @@
         $('#serialesObsoletos').val(`${itemsObsoletos}`)
       }
 
-      
-      
-      
-
+      $('#gafete').val(`${items}`)
       let addSpan = `<span class="badge badge-${color} fspan">${serialVal.substr(1)}</span> `
       $('#cardCapturado').append(addSpan)
   
@@ -371,7 +379,13 @@
 
     modalCaptura.addEventListener("click", function (e) {
 
-      $("#SpanApartar").text(itemsObsoletos);
+      for (let i = 0; i < itemsObsoletos.length; i++) {
+        
+        $("#spanObsoletos").append(`<span class="badge badge-danger"> ${itemsObsoletos[i] } </span>`);
+      }
+  
+
+      
     
     });
 
