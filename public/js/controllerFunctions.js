@@ -146,6 +146,23 @@ funcion.InsertCapturaSerial = (captura_grupo, serial, ubicacion, gafete,callback
     })
 }
 
+funcion.InsertCapturaSerialObsoleto = (captura_grupo, serial, material, cantidad, ubicacion, gafete,callback)=>{
+    
+    db.query(`
+    INSERT INTO captura (captura_grupo, serial,material,cantidad, ubicacion, num_empleado, fecha, serial_obsoleto)
+    VALUES ('${captura_grupo}','${serial}','${material}',${cantidad},'${ubicacion}' , ${gafete} ,NOW(),1)`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.ticketsCapturados= (callback)=>{
     db.query(`SELECT serial FROM captura WHERE captura_grupo IS NULL`,function (err, result, fields) {
         if (err) {

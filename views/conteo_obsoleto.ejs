@@ -130,14 +130,18 @@
           </div>
 
         
-          <form action="/conteo_guardar" method="post">
+          <form action="/conteoObsoleto_guardar" method="post">
 
             <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" aria-describedby="helpId" placeholder=""
-                  value="" >
+                  value="" hidden>
                   <input type="text" class="form-control" name="inputPartes" id="inputPartes" aria-describedby="helpId" placeholder=""
-                  value="" >
+                  value="" hidden>
                   <input type="text" class="form-control" name="inputCantidades" id="inputCantidades" aria-describedby="helpId" placeholder=""
-                  value="" >
+                  value="" hidden>
+                  <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
+                  aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
+                  <input type="text" class="form-control" name="ubicacion" id="captura_grupo"
+                  aria-describedby="helpId" placeholder="" value="<%= ubicacion%>" hidden>
 
             <div class="modal-footer" id="divbtnGuardar" hidden>
               <button  type="submit" class="btn btn-success btn-block" id="btnGuardar">Guardar</button>
@@ -272,6 +276,7 @@
 
             $('#divSerial').prop('hidden',true)
             $('#divParte').removeAttr('hidden')
+            document.getElementById("parte").focus();
 
             break;
           }
@@ -308,11 +313,13 @@
             CapturaPartes.push(parte.substr(1))
             soundOk()
          
+            $('#inputPartes').val(CapturaPartes)
             $('#parteWarning').prop('hidden',true)
             $('#parteWarning2').prop('hidden',true)
 
             $('#divParte').prop('hidden',true)
             $('#divCantidad').removeAttr('hidden')
+            document.getElementById("cantidad").focus();
 
       } else {
         soundWrong()
@@ -334,15 +341,19 @@
             CapturaCantidades.push(cantidad.substr(1))
             soundOk()
          
+            $('#inputCantidades').val(CapturaCantidades)
             $('#cantidadWarning').prop('hidden',true)
             $('#cantidadWarning2').prop('hidden',true)
 
             $('#divCantidad').prop('hidden',true)
-            $('#divSerial').removeAttr('hidden')
 
-            console.log(CapturaSeriales)
-      console.log(CapturaPartes)
-      console.log(CapturaCantidades)
+            if(serialesObsoletosArray.length==0){
+              $('#divbtnGuardar').removeAttr('hidden')
+            }else{
+            $('#divSerial').removeAttr('hidden')
+            document.getElementById("serial").focus();
+            }
+
 
       } else {
         soundWrong()

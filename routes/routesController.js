@@ -362,8 +362,42 @@ controller.conteo_guardar_POST = (req, res) => {
         });
     }
 
+}
 
 
+
+controller.conteoObsoleto_guardar_POST = (req, res) => {
+
+    seriales = req.body.inputSeriales
+    partes=req.body.inputPartes
+    cantidades= req.body.inputCantidades
+    gafete = req.body.gafete;
+    ubicacion = req.body.ubicacion
+    captura_grupo = req.body.captura_grupo
+
+    gafete2 = captura_grupo.split("-", 1)
+
+
+    if (seriales.includes(",")) {
+
+        let serialesArray = seriales.split(',');
+        let partesArray = partes.split(',');
+        let cantidadesArray = cantidades.split(',');
+        for (let i = 0; i < serialesArray.length; i++) {
+
+            funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesArray[i],partesArray[i],cantidadesArray[i], ubicacion, gafete2[0], (err, result) => {
+            })
+
+        }
+    } else {
+
+        funcion.InsertCapturaSerialObsoleto(captura_grupo, seriales,partes, cantidades, ubicacion, gafete2[0], (err, result) => {
+        })
+
+    }
+
+
+    res.redirect('/login_conteo/ubicacion');
 
 
 }
