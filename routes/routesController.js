@@ -223,39 +223,39 @@ controller.ubicacion_POST = (req, res) => {
     gafete = req.body.user;
 
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
-       
-            res.render('ubicacion.ejs', {
-                gafete,
-                nombreContador,
-            })
+
+        res.render('ubicacion.ejs', {
+            gafete,
+            nombreContador,
         })
+    })
 }
 
-controller.ubicacion_rack_POST = (req,res)=>{
+controller.ubicacion_rack_POST = (req, res) => {
     ubicacion = req.params.id
     gafete = req.body.gafete
     nombreContador = req.body.nombreContador
-    funcion.Ubicaciones_Conteo_Rack(ubicacion,(err, racks) => {
-        res.render('ubicacion_rack.ejs',{
+    funcion.Ubicaciones_Conteo_Rack(ubicacion, (err, racks) => {
+        res.render('ubicacion_rack.ejs', {
             gafete,
             nombreContador,
             racks
         })
-        
+
     })
 }
 
-controller.ubicacion_storageBin_POST = (req,res)=>{
+controller.ubicacion_storageBin_POST = (req, res) => {
     rack = req.params.id
     gafete = req.body.gafete
     nombreContador = req.body.nombreContador
-    funcion.Ubicaciones_Conteo_StorageBin(rack,(err, bins) => {
-        res.render('ubicacion_storageBin.ejs',{
+    funcion.Ubicaciones_Conteo_StorageBin(rack, (err, bins) => {
+        res.render('ubicacion_storageBin.ejs', {
             gafete,
             nombreContador,
             bins
         })
-        
+
     })
 }
 
@@ -316,49 +316,48 @@ controller.conteo_POST = (req, res) => {
 }
 
 controller.conteo_guardar_POST = (req, res) => {
- 
+
     seriales = req.body.seriales
     gafete = req.body.gafete;
-    console.log(gafete);
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
     id_ubicacion = req.body.ubicacion
-    // serial = req.body.serial
-    // serial = serial.slice(1)
     captura_grupo = req.body.captura_grupo
-
-    
-    
     gafete2 = captura_grupo.split("-", 1)
     estado_auditoria = 0
-    serialesObsoletos= req.body.serialesObsoletos
+    serialesObsoletos = req.body.serialesObsoletos
 
+    if (seriales.includes(",")) {
 
-    if(seriales != undefined){
-    for (let i = 0; i < seriales.length; i++) {
+        let serialesArray = seriales.split(',');
+        for (let i = 0; i < serialesArray.length; i++) {
 
+            funcion.InsertCapturaSerial(captura_grupo, serialesArray[i], ubicacion, gafete2[0], (err, result) => {
+            })
 
-        funcion.InsertCapturaSerial(captura_grupo, seriales[i], ubicacion, gafete2[0], (err, result) => {
+        }
+    } else {
 
-            //console.log(result.length)
+        funcion.InsertCapturaSerial(captura_grupo, seriales, ubicacion, gafete2[0], (err, result) => {
         })
-    }
+
     }
 
-   if(serialesObsoletos==undefined){
-    return res.redirect('/login_conteo/ubicacion');
-   }else{
-    console.log("obsoletoooos")
-    res.render('conteo_obsoleto.ejs', {
-        
-        gafete,
-        nombreContador,
-        ubicacion,
-        id_ubicacion, 
-        serialesObsoletos,
-        captura_grupo
-    });
-   }
+
+    if (serialesObsoletos == "") {
+        return res.redirect('/login_conteo/ubicacion');
+    } else {
+
+        res.render('conteo_obsoleto.ejs', {
+
+            gafete,
+            nombreContador,
+            ubicacion,
+            id_ubicacion,
+            serialesObsoletos,
+            captura_grupo
+        });
+    }
 
 
 

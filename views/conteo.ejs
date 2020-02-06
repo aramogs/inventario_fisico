@@ -129,21 +129,26 @@
                   class="badge border-bottom-primary" id="SpanApartar"></span> </h4>
               </div>
               
-<form action="/conteo_guardar" method="post">
+                <form action="/conteo_guardar" method="post">
 
-  <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
-  value="" >
-  <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
-  placeholder="" value="<%= nombreContador%>" hidden>
-<input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-  placeholder="" value="<%= ubicacion%>" hidden>
-<input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
-  placeholder="" value="<%= captura_grupo%>" hidden>
-  
-              <div class="modal-footer">
-                <button  type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
-              </div>
-</form>
+                  <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
+                  value="<%=gafete%>" hidden>
+                  
+                  <input type="text" class="form-control" name="seriales" id="seriales" aria-describedby="helpId" placeholder=""
+                  value="" hidden>
+                  <input type="text" class="form-control" name="serialesObsoletos" id="serialesObsoletos" aria-describedby="helpId" placeholder=""
+                  value="" hidden >
+                  <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
+                  placeholder="" value="<%= nombreContador%>" hidden>
+                <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+                  placeholder="" value="<%= ubicacion%>" hidden>
+                <input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
+                  placeholder="" value="<%= captura_grupo%>" hidden>
+                  
+                              <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
+                              </div>
+                </form>
               
             </div>
           </div>
@@ -214,6 +219,7 @@
       value = isNaN(value) ? 0 : value;
       value++;
       document.getElementById('contadorSeriales').value = value;
+      contadorSerialesFunction()
     }
 
     function decreaseValue() {
@@ -222,6 +228,7 @@
       value < 1 ? value = 1 : '';
       value--;
       document.getElementById('contadorSeriales').value = value;
+      contadorSerialesFunction()
     }
 
     /////////////////////////////// Modal ////////////////////////////////////////////////
@@ -260,14 +267,16 @@
       if(tipo=='activo'){
       items.push(serialVal.substr(1));
       color='success'
-
+      $('#seriales').val(`${items}`)
       }else{
         itemsObsoletos.push(serialVal.substr(1));
         color='danger'
+        $('#serialesObsoletos').val(`${itemsObsoletos}`)
       }
 
-      $('#gafete').val(`${items}`)
-      console.log(items);
+      
+      
+      
 
       let addSpan = `<span class="badge badge-${color} fspan">${serialVal.substr(1)}</span> `
       $('#cardCapturado').append(addSpan)
@@ -349,11 +358,14 @@
     }
 
 
-    let timer2 = null;
-    btnCapturar.addEventListener("click", function (e) {
+    contadorSeriales.addEventListener("change", function (e) {
 
-      clearTimeout(timer2);
-      timer2 = setTimeout(contadorSerialesFunction, 100)
+      contadorSerialesFunction()
+
+    });
+    contadorSeriales.addEventListener("keyup", function (e) {
+
+        contadorSerialesFunction()
 
     });
 
@@ -371,6 +383,7 @@
 
         $('#contadorWarning').prop('hidden', true)
         $('#contadorWarning2').prop('hidden', true)
+        $('#btnCapturar').prop('disabled', false)
 
         soundOk()
 
@@ -395,6 +408,7 @@
 
       $('#contadorWarning').removeAttr('hidden')
       $('#contadorWarning2').removeAttr('hidden')
+      $('#btnCapturar').prop('disabled', true)
       soundWrong()
 
     }
