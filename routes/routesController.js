@@ -330,11 +330,20 @@ controller.conteo_guardar_POST = (req, res) => {
     estado_auditoria = 0
     serialesObsoletos = req.body.serialesObsoletos
 
+    
+
+    funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => {
+        console.log(result);
+        console.log(err);
+        
+    });
+
     if (seriales.includes(",")) {
 
         let serialesArray = seriales.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
+            
             funcion.InsertCapturaSerial(captura_grupo, serialesArray[i], ubicacion, gafete2[0], (err, result) => {
             })
 
