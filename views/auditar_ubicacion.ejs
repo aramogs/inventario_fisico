@@ -21,13 +21,13 @@
 
                     <div class=" col-lg-6">
                         <label for=""> Gefete:</label>
-                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                        <input type="text" class="form-control" name="" id="ga" aria-describedby="helpId" placeholder=""
                             value="<%= gafete %>" readonly>
 
                     </div>
                     <div class=" col-lg-6">
                         <label for=""> Ubicacion:</label>
-                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+                        <input type="text" class="form-control" name="" id="ub" aria-describedby="helpId" placeholder=""
                             value="<%= ubicacion %>" readonly>
 
                     </div>
@@ -36,12 +36,12 @@
                 <!-- form start -->
 
 
-                <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
+                <!-- <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
                     placeholder="" value="<%= gafete%>" hidden>
                 <input type="text" class="form-control" name="nombreContador" id="nombreContador"
                     aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
                 <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-                    placeholder="" value="<%= ubicacion%>" hidden>
+                    placeholder="" value="<%= ubicacion%>" hidden> -->
 
                 <label for="">Serial:</label> <label id="msgSerial"></label>
                 <div class="input-group  col-lg-12">
@@ -97,10 +97,10 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="card-header bg-secondary text-white">
-                                <h5 class="text-center">Faltante</h5>
+                                <h5 class="text-center">Total</h5>
                             </div>
                             <div class="card-body">
-                                <h4 class=" text-center" id="faltante"></h4>
+                                <h4 class=" text-center" id="total"></h4>
                             </div>
                         </div>
                     </div>
@@ -130,9 +130,9 @@
 
                         <% for (let i = 0; i < capturas.length; i++) { %>
                         <% if(capturas[i].serial_auditado == 1){ %>
-                        <span class="badge badge-success fspan"><%= capturas[i].serial %></span>
+                       <h6 style="display:inline; "></h6><span class="badge badge-success fspan"><%=capturas[i].serial%></span></h6>
                         <% }else{ %>
-                        <span class="badge badge-secondary fspan"><%= capturas[i].serial %></span>
+                        <h6 style="display:inline; "><span class="badge badge-secondary fspan"><%=capturas[i].serial%></span></h6>
                         <% } %>
                         <% } %>
                     </div>
@@ -149,7 +149,7 @@
     <script>
         $('#serial').focus()
         let items = [];
-        let elements = document.getElementsByClassName('badge')
+        let elements = document.getElementsByClassName('badge')        
         let contados = <%- JSON.stringify(contados) %>;
         let sin_contar = <%- JSON.stringify(sin_contar) %>;
         let total = (contados + sin_contar);
@@ -166,7 +166,6 @@
 
         function porcentaje() {
             contado = contados + items.length
-            faltante = total - contado
             porcentaje_contado = Math.round((100 * (contados + items.length)) / total);
             if (porcentaje_contado > 10) {
                 $('#btnTerminar').prop("disabled", false)
@@ -175,7 +174,7 @@
             }
 
 
-            $('#faltante').html(faltante)
+            $('#total').html(total)
             $('#contado').html(contado)
             $('.progress-bar').css('width', porcentaje_contado + '%').attr('aria-valuenow', porcentaje_contado).html(porcentaje_contado + "%");
         }
@@ -210,9 +209,7 @@
 
                 }
                 for (let i = 0; i < items.length; i++) {
-                    if (text.substr(1) == items[i]) {
-                        console.log("1");
-                        
+                    if (text.substr(1) == items[i]) {                        
                         soundWrong()
                         $('#btnguardarU').prop("disabled", true);
                         msg.innerHTML = 'Previamente auditado, seleccionar otro serial';
@@ -225,9 +222,7 @@
                 if (found == false) {
                     
                 for (let i = 0; i < capturas.length; i++) {
-                    if (text.substr(1) == capturas[i].serial) {
-                        console.log("2");
-                        
+                    if (text.substr(1) == capturas[i].serial) {                        
                         $('#btnguardarU').prop("disabled", false);
                         msg.innerHTML = 'Auditado correctamente';
                         msg.classList.remove('text-danger');
