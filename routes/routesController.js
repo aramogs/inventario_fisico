@@ -468,7 +468,7 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
             })
 
         }
-    } else {
+    } else if(seriales !="") {
 
         funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
             if (err != null || result.affectedRows==0) {
