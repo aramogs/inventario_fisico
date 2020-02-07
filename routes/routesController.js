@@ -372,6 +372,39 @@ controller.conteo_guardar_POST = (req, res) => {
 
     }
 
+
+    if (serialesObsoletos.includes(",")) {
+
+        let serialesObsoletosArray = serialesObsoletos.split(',');
+        for (let i = 0; i < serialesObsoletosArray.length; i++) {
+
+
+            funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletosArray[i], ubicacion, gafete2[0], (err, result) => {
+                if (err != null) {
+                    errores = "true"
+           
+                }
+
+            })
+
+        }
+    } else if(serialesObsoletos !="") {
+
+        funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletos,  ubicacion, gafete2[0], (err, result) => {
+            if (err != null) {
+                errores = "true"
+               
+                
+            }
+        })
+
+    }
+
+
+
+
+
+
     var delay = 500;
 
     setTimeout(function () {
@@ -419,10 +452,13 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
         let cantidadesArray = cantidades.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
-            funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesArray[i], partesArray[i], cantidadesArray[i], ubicacion, gafete2[0], (err, result) => {
-                if (err != null) {
+            funcion.UpdateSerialObsoleto(serialesArray[i], partesArray[i], cantidadesArray[i], (err, result) => {
+         
+                if (err != null || result.affectedRows==0) {
                     errores = true
                     res.redirect('/error');
+                    
+                  
                 }
 
 
@@ -431,21 +467,21 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
         }
     } else {
 
-        funcion.InsertCapturaSerialObsoleto(captura_grupo, seriales, partes, cantidades, ubicacion, gafete2[0], (err, result) => {
-            if (err != null) {
+        funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
+            if (err != null || result.affectedRows==0) {
                 errores = true
                 res.redirect('/error');
             }
         })
 
     }
-    var delay = 500;
 
-   
+    var delay = 500;
     setTimeout(function () {
         if (errores == false && errorAnterior=="false") {
             res.redirect('/login_conteo/ubicacion');
-        }else if(errorAnterior=="true" && error==false){
+        }else if(errorAnterior=="true" && errores==false){
+       
             res.redirect('/error');
         }
 

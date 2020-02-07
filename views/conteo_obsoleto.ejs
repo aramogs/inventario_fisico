@@ -77,8 +77,8 @@
             </div>
           </div>
 
-        
-            <div id="divParte" hidden>
+          <br>
+            <div id="divParte">
             <label>
               <label>Parte:
                 <span class="badge badge-warning " id="parteWarning" hidden>
@@ -98,12 +98,13 @@
                   id="basic-addon1"><span class="fas fa-barcode"></span></span>
               </div>
               <input oninput="this.value = this.value.toUpperCase()" type="text" name="parte" id="parte"
-                class="form-control" placeholder="Parte" aria-describedby="helpId" required>
+                class="form-control" placeholder="Parte" aria-describedby="helpId" required readonly>
 
             </div>
           </div>
-          <div id="divCantidad" hidden>
+          <div id="divCantidad">
        
+            <br>
             <label>
               <label>Cantidad:
                 <span class="badge badge-warning " id="cantidadWarning" hidden>
@@ -123,7 +124,7 @@
                   id="basic-addon1"><span class="fas fa-barcode"></span></span>
               </div>
               <input oninput="this.value = this.value.toUpperCase()" type="text" name="cantidad" id="cantidad"
-                class="form-control" placeholder="Cantidad" aria-describedby="helpId" required>
+                class="form-control" placeholder="Cantidad" aria-describedby="helpId" required readonly>
 
             </div>
 
@@ -265,7 +266,7 @@
         if (e.which == 13) {
           e.preventDefault()
           serialFunction()
-          $('#serial').val("")
+          
         }
     })
 
@@ -274,7 +275,7 @@
       if (e.which == 13) {
         e.preventDefault()
         parteFunction()
-        $('#parte').val("")
+      
       }
       })
 
@@ -284,6 +285,8 @@
         e.preventDefault()
         cantidadFunction()
         $('#cantidad').val("")
+        $('#serial').val("")
+        $('#parte').val("")
       }
       })
 
@@ -309,11 +312,11 @@
             $('#serialWarning').prop('hidden',true)
             $('#serialWarning2').prop('hidden',true)
             $(`#id${serial.substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
-            console.log(CapturaSeriales)
+    
 
-            $('#divSerial').prop('hidden',true)
-            $('#divParte').removeAttr('hidden')
-       
+            $('#serial').prop('readonly',true)
+            $('#parte').removeAttr('readonly')
+          
             document.getElementById("parte").focus();
 
             break;
@@ -355,8 +358,8 @@
             $('#parteWarning').prop('hidden',true)
             $('#parteWarning2').prop('hidden',true)
 
-            $('#divParte').prop('hidden',true)
-            $('#divCantidad').removeAttr('hidden')
+            $('#parte').prop('readonly',true)
+            $('#cantidad').removeAttr('readonly')
             document.getElementById("cantidad").focus();
 
       } else {
@@ -383,12 +386,12 @@
             $('#cantidadWarning').prop('hidden',true)
             $('#cantidadWarning2').prop('hidden',true)
 
-            $('#divCantidad').prop('hidden',true)
+            $('#cantidad').prop('readonly',true)
 
             if(serialesObsoletosArray.length==0){
               $('#divbtnGuardar').removeAttr('hidden')
             }else{
-            $('#divSerial').removeAttr('hidden')
+            $('#serial').removeAttr('readonly')
             document.getElementById("serial").focus();
             }
 
