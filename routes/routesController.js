@@ -341,15 +341,14 @@ controller.conteo_guardar_POST = (req, res) => {
 
 
 
-    funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => {
-
-    });
+    funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
 
     if (seriales.includes(",")) {
 
         let serialesArray = seriales.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
+            
 
             funcion.InsertCapturaSerial(captura_grupo, serialesArray[i], ubicacion, gafete2[0], (err, result) => {
                 if (err != null) {
@@ -377,7 +376,11 @@ controller.conteo_guardar_POST = (req, res) => {
 
         let serialesObsoletosArray = serialesObsoletos.split(',');
         for (let i = 0; i < serialesObsoletosArray.length; i++) {
-
+          
+          
+            
+            RabbitPublisher.get_label(serialesObsoletosArray[i], (callback) => {})
+            
 
             funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletosArray[i], ubicacion, gafete2[0], (err, result) => {
                 if (err != null) {
@@ -389,7 +392,7 @@ controller.conteo_guardar_POST = (req, res) => {
 
         }
     } else if(serialesObsoletos !="") {
-
+        RabbitPublisher.get_label(serialesObsoletos, (callback) => {})
         funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletos,  ubicacion, gafete2[0], (err, result) => {
             if (err != null) {
                 errores = "true"
