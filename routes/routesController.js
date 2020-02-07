@@ -447,6 +447,7 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
 
     gafete2 = captura_grupo.split("-", 1)
 
+
     if (seriales.includes(",")) {
 
         let serialesArray = seriales.split(',');
@@ -467,7 +468,7 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
             })
 
         }
-    } else if(seriales != "") {
+    } else {
 
         funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
             if (err != null || result.affectedRows==0) {

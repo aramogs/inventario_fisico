@@ -146,11 +146,11 @@ funcion.InsertCapturaSerial = (captura_grupo, serial, ubicacion, gafete,callback
     })
 }
 
-funcion.InsertCapturaSerialObsoleto = (captura_grupo, serial, ubicacion, gafete,callback)=>{
+funcion.InsertCapturaSerialObsoleto = (captura_grupo, serial, material, cantidad, ubicacion, gafete,callback)=>{
     
     db.query(`
-    INSERT INTO captura (captura_grupo, serial, ubicacion, num_empleado, fecha, serial_obsoleto)
-    VALUES ('${captura_grupo}','${serial}','${ubicacion}' , ${gafete} ,NOW(),1)`,
+    INSERT INTO captura (captura_grupo, serial,material,cantidad, ubicacion, num_empleado, fecha, serial_obsoleto)
+    VALUES ('${captura_grupo}','${serial}','${material}',${cantidad},'${ubicacion}' , ${gafete} ,NOW(),1)`,
     function (err, result, fields) {
         if (err) {
             
@@ -161,24 +161,6 @@ funcion.InsertCapturaSerialObsoleto = (captura_grupo, serial, ubicacion, gafete,
             callback(null, result);
         }
     })
-}
-
-funcion.UpdateSerialObsoleto = (serial, parte, cantidad,callback)=>{
-    
-    db.query(`UPDATE captura SET material = '${parte}',
-     cantidad=${cantidad}
-     WHERE serial = '${serial}'`, function (err, result, fields) {
-        if (err) {
-          
-            callback(err, null);
-
-        } else {
-
-            callback(null, result);
-        }
-    })
-
-
 }
 
 funcion.ticketsCapturados= (callback)=>{
@@ -500,7 +482,7 @@ funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, call
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
     VALUES (LEFT('${id_ubicacion}',2), ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
-     estado_auditoria = ${estado_auditoria}
+     id_ubicacion = LEFT('${id_ubicacion}',2)
     `,
     function (err, result, fields) {
         if (err) {

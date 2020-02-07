@@ -335,11 +335,11 @@
         
         let serialesObsoletosArray = serialesObsoletos.split(',');
         for (let i = 0; i < serialesObsoletosArray.length; i++) {
-          let addSpan = `<span class="badge badge-danger fspan" id="id${serialesObsoletosArray[i]}">${serialesObsoletosArray[i]}</span> `
+          let addSpan = `<h6 style="display:inline; "><span class="badge badge-danger fspan" id="id${serialesObsoletosArray[i]}">${serialesObsoletosArray[i]}</span></h6> `
           $('#cardCapturado').append(addSpan)
         }
       }else{
-        let addSpan = `<span class="badge badge-danger fspan" id="id${serialesObsoletos}">${serialesObsoletos}</span> `
+        let addSpan = `<h6 style="display:inline; "><span class="badge badge-danger fspan" id="id${serialesObsoletos}">${serialesObsoletos}</span></h6> `
           $('#cardCapturado').append(addSpan)
       }
 

@@ -161,6 +161,8 @@
                   placeholder="" value="<%= ubicacion%>" hidden>
                 <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
                   aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
+                  <input type="text" class="form-control" name="rack" id="rack"
+                  aria-describedby="helpId" placeholder="" value="<%= rack%>" hidden>
 
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
@@ -262,7 +264,7 @@
 
         $('#serialesObsoletosRow').removeAttr('hidden')
         for (let i = 0; i < itemsObsoletos.length; i++) {
-          $("#spanObsoletos").append(`<span class="badge badge-danger"> ${itemsObsoletos[i]} </span>`);
+          $("#spanObsoletos").append(`<h6 style="display:inline; "><span class="badge badge-danger"> ${itemsObsoletos[i]} </span></h6>`);
           $("#spanObsoletos").append(` `);
         }
       }
@@ -301,7 +303,7 @@
       }
 
       $('#gafete').val(`${items}`)
-      let addSpan = `<span class="badge badge-${color} fspan">${serialVal.substr(1)}</span> `
+      let addSpan = `<h6 style="display:inline; "><span class="badge badge-${color} fspan">${serialVal.substr(1)}</span></h6> `
       $('#cardCapturado').append(addSpan)
 
 
