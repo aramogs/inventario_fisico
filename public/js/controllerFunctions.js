@@ -482,7 +482,7 @@ funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, call
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
     VALUES (LEFT('${id_ubicacion}',2), ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
-     id_ubicacion = LEFT('${id_ubicacion}',2)
+     estado_auditoria = ${estado_auditoria}
     `,
     function (err, result, fields) {
         if (err) {
