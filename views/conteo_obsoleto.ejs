@@ -131,7 +131,7 @@
           </div>
 
         
-          <form action="/conteoObsoleto_guardar" method="post">
+          <!-- <form action="/conteoObsoleto_guardar" method="post">
 
             <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" aria-describedby="helpId" placeholder=""
                   value="" hidden>
@@ -151,7 +151,7 @@
             </div>
           
           
-          </form>
+          </form> -->
 
 
 
@@ -159,7 +159,7 @@
         </div>
       </div>
 
-      <div class="col-lg-2 d-none d-sm-block">
+      <!-- <div class="col-lg-2 d-none d-sm-block">
         <div class="col-lg-12">
           <div>
             <div class="card">
@@ -175,8 +175,44 @@
 
         </div>
         
-      </div>
+      </div> -->
+      
+  <div class="col-lg-2 d-none d-sm-block">
+        <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-secondary text-white text-center font-weight-bold" id="tituloGuardar">Terminar Captura Incompleta</div>
+        <div class="card-body text-center">
 
+          <form action="/conteoObsoleto_guardar" method="post">
+          
+              <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" aria-describedby="helpId" placeholder=""
+                  value="" hidden>
+                  <input type="text" class="form-control" name="inputPartes" id="inputPartes" aria-describedby="helpId" placeholder=""
+                  value="" hidden>
+                  <input type="text" class="form-control" name="inputCantidades" id="inputCantidades" aria-describedby="helpId" placeholder=""
+                  value="" hidden>
+                  <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
+                  aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
+                  <input type="text" class="form-control" name="ubicacion" id="captura_grupo"
+                  aria-describedby="helpId" placeholder="" value="<%= ubicacion%>" hidden>
+                  <input type="text" class="form-control" name="error" id="error"
+                  aria-describedby="helpId" placeholder="" value="<%= errores%>" hidden>
+
+                  <div id="divbtnGuardar" hidden>
+                   <button type="submit" name="btnGuardar" id="btnGuardar" class="btn btn-success btn-lg" ><span class="fas fa-clipboard-check"
+                  style="font-size: 125px;"></span></button>
+                </div>
+                <div id="divbtnGuardar2" >
+                   <button type="submit" name="btnGuardar" id="btnGuardar" class="btn btn-sm"> <img src="/img/warning.jpg" alt="Warehouse Image" class="img-fluid"></button> 
+                  </div>
+            </form>
+        </div>
+      </div>
+    </div>
+        
+  </div> 
+
+      
       <div class="col-lg-4 d-none d-sm-block">
         <div class="col-lg-12">
           <div>
@@ -200,6 +236,56 @@
         </div>
         
       </div>
+
+<!-- 
+      <div class="col-lg-4">
+          <div class="card">
+  
+            <div class="card-body">
+              <table class="table table-sm ">
+                <thead>
+                  <tr>
+         
+                    <th style="border-top: none; text-align: center" >
+                      <h3>Instrucciones</h3>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+  
+                  <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">C</span></td>
+                    <td> Cancelado</td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">5V</span></td>
+                    <td style="border-top: none"> 5V000</td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: none"> <span class="badge badge-secondary fspan">5E</span></td>
+                    <td style="border-top: none"> 5E000</td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">50</span></td>
+                    <td style="border-top: none"> 50000</td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">10</span></td>
+                    <td style="border-top: none"> 10000</td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">1M0 </span></td>
+                    <td style="border-top: none"> 1M0000</td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: none"><span class="badge badge-secondary fspan">7 </span></td>
+                    <td style="border-top: none"> 70000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> -->
       
 
 
@@ -262,7 +348,7 @@
 
 
     $('#serial').keypress(function (e) {
-
+      
         if (e.which == 13) {
           e.preventDefault()
           serialFunction()
@@ -311,7 +397,7 @@
            $('#inputSeriales').val(CapturaSeriales)
             $('#serialWarning').prop('hidden',true)
             $('#serialWarning2').prop('hidden',true)
-            $(`#id${serial.substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
+            //$(`#id${serial.substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
     
 
             $('#serial').prop('readonly',true)
@@ -385,10 +471,13 @@
             $('#inputCantidades').val(CapturaCantidades)
             $('#cantidadWarning').prop('hidden',true)
             $('#cantidadWarning2').prop('hidden',true)
-
             $('#cantidad').prop('readonly',true)
 
+            $(`#id${($('#serial').val()).substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
+
             if(serialesObsoletosArray.length==0){
+              $('#tituloGuardar').text("Terminar Captura")
+              $('#divbtnGuardar2').prop('hidden',true)
               $('#divbtnGuardar').removeAttr('hidden')
             }else{
             $('#serial').removeAttr('readonly')
