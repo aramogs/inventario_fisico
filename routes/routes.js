@@ -33,6 +33,7 @@ router.post('/auditar_ubicacion', routesController.auditar_ubicacion_POST);
 router.post('/serial_auditado', routesController.serial_auditado_POST);
 router.post('/terminar_auditoria', routesController.terminar_auditoria_POST);
 router.get('/descargar_reporte', routesController.descargar_reporte_POST);
+router.get('/error', routesController.error_POST);
 
 
 //////////////////////////////////////TEMPORAL AUDITORIA VULCANIZADO//////////////////////////////

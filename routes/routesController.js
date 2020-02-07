@@ -91,6 +91,14 @@ controller.login_conteo = (req, res) => {
     }
 }
 
+controller.error_POST = (req, res) => {
+
+    res.render('error.ejs', {
+
+    });
+
+}
+
 
 controller.mesa_captura_POST = (req, res) => {
     gafete = req.body.user;
@@ -272,17 +280,17 @@ controller.conteo_POST = (req, res) => {
                 captura_grupo = `${gafete}-${+1}`
                 captura_actual = ""
                 funcion.Material_StUnit((err, storage_units) => {
-                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-                    res.render('conteo.ejs', {
-                        gafete,
-                        nombreContador,
-                        ubicacion,
-                        captura_grupo,
-                        captura_actual,
-                        serialesCapturados,
-                        capturasPorGrupo,
-                        storage_units
-                    })
+                    funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                        res.render('conteo.ejs', {
+                            gafete,
+                            nombreContador,
+                            ubicacion,
+                            captura_grupo,
+                            captura_actual,
+                            serialesCapturados,
+                            capturasPorGrupo,
+                            storage_units
+                        })
                     })
                 })
             } else {
@@ -329,13 +337,12 @@ controller.conteo_guardar_POST = (req, res) => {
     gafete2 = captura_grupo.split("-", 1)
     estado_auditoria = 0
     serialesObsoletos = req.body.serialesObsoletos
+    errores="false"
 
-    
+
 
     funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => {
-        console.log(result);
-        console.log(err);
-        
+
     });
 
     if (seriales.includes(",")) {
@@ -343,23 +350,36 @@ controller.conteo_guardar_POST = (req, res) => {
         let serialesArray = seriales.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
-            
+
             funcion.InsertCapturaSerial(captura_grupo, serialesArray[i], ubicacion, gafete2[0], (err, result) => {
+                if (err != null) {
+                    errores = "true"
+                
+                }
+
             })
 
         }
-    } else {
+    } else if(seriales !="") {
 
         funcion.InsertCapturaSerial(captura_grupo, seriales, ubicacion, gafete2[0], (err, result) => {
+            if (err != null) {
+                errores = "true"
+               
+                
+            }
         })
 
     }
 
+    var delay = 500;
+
+    setTimeout(function () {
 
     if (serialesObsoletos == "") {
         return res.redirect('/login_conteo/ubicacion');
     } else {
-
+       
         res.render('conteo_obsoleto.ejs', {
 
             gafete,
@@ -367,9 +387,11 @@ controller.conteo_guardar_POST = (req, res) => {
             ubicacion,
             id_ubicacion,
             serialesObsoletos,
-            captura_grupo
+            captura_grupo,
+            errores
         });
     }
+    }, delay);
 
 }
 
@@ -377,12 +399,15 @@ controller.conteo_guardar_POST = (req, res) => {
 
 controller.conteoObsoleto_guardar_POST = (req, res) => {
 
+    
     seriales = req.body.inputSeriales
-    partes=req.body.inputPartes
-    cantidades= req.body.inputCantidades
+    partes = req.body.inputPartes
+    cantidades = req.body.inputCantidades
     gafete = req.body.gafete;
     ubicacion = req.body.ubicacion
     captura_grupo = req.body.captura_grupo
+    errores = false
+    errorAnterior= req.body.error
 
     gafete2 = captura_grupo.split("-", 1)
 
@@ -394,19 +419,38 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
         let cantidadesArray = cantidades.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
-            funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesArray[i],partesArray[i],cantidadesArray[i], ubicacion, gafete2[0], (err, result) => {
+            funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesArray[i], partesArray[i], cantidadesArray[i], ubicacion, gafete2[0], (err, result) => {
+                if (err != null) {
+                    errores = true
+                    res.redirect('/error');
+                }
+
+
             })
 
         }
     } else {
 
-        funcion.InsertCapturaSerialObsoleto(captura_grupo, seriales,partes, cantidades, ubicacion, gafete2[0], (err, result) => {
+        funcion.InsertCapturaSerialObsoleto(captura_grupo, seriales, partes, cantidades, ubicacion, gafete2[0], (err, result) => {
+            if (err != null) {
+                errores = true
+                res.redirect('/error');
+            }
         })
 
     }
+    var delay = 500;
 
+   
+    setTimeout(function () {
+        if (errores == false && errorAnterior=="false") {
+            res.redirect('/login_conteo/ubicacion');
+        }else if(errorAnterior=="true" && error==false){
+            res.redirect('/error');
+        }
 
-    res.redirect('/login_conteo/ubicacion');
+    }, delay);
+
 
 
 }
