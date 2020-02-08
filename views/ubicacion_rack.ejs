@@ -1,0 +1,66 @@
+<%include ./static/header.ejs %>
+<%include ./static/sidebar.ejs%>
+<%include ./static/navbar.ejs%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 ">
+                <div class="row ">
+                    <div class="col-lg-12">
+                        <h1 class="display-5 text-center">Seleccionar Rack</h1>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- form start -->
+
+    <form action="/conteo" method="POST">
+        <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
+            value="<%= gafete%>" hidden>
+        <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
+            placeholder="" value="<%= nombreContador%>" hidden>
+
+        <!-- ////////////////////////////// -->
+        <div class="jumbotron jumbotron-fluid animated pulse">
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Card -->
+                    <% for (let i = 0; i < racks.length; i++) { %>
+        
+                    <div class="col- mt-4 mr-1 ml-1 grow">
+                        <div style="animation-delay: .15s" class="card text-center animated bounceIn">
+                                <button type="submit" class="btn btn-outline-info" name="id_area"
+                                    formaction="/storageBin/<%= racks[i].racks %> " value="<%= racks[i].racks %> "><%= racks[i].racks %> </button>
+                        </div>
+                    </div>
+                    <% } %>
+                    <!-- /Card -->
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <!-- //////////////////////////// -->
+
+
+    <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+<% include ./static/footer.ejs%>
+
+<script>
+    $(document).ready(function () {
+        soundOk()
+        $('#ubicacion').focus()
+    });
+</script>

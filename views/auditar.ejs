@@ -101,12 +101,11 @@
                 <div class="card">
                     <div class="card-header bg-secondary text-white">Ubicaciones</div>
                     <div class="card-body">
-
                         <% for (let i = 0; i < ubicaciones.length; i++) { %>
                         <% if (ubicaciones[i].estado_auditoria == 1) { %>
-                        <span class="badge badge-success fspan"><%= ubicaciones[i].distinct_ubicacion %></span>
+                            <h6 style="display:inline; "><span class="badge badge-success fspan"><%= ubicaciones[i].distinct_ubicacion %></span></h6>
                         <% } else{%>
-                        <span class="badge badge-secondary fspan"><%= ubicaciones[i].distinct_ubicacion %></span>
+                            <h6 style="display:inline; "><span class="badge badge-secondary fspan"><%= ubicaciones[i].distinct_ubicacion %></span></h6>
                         <% } %>
                         <% } %>
 

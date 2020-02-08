@@ -91,6 +91,14 @@ controller.login_conteo = (req, res) => {
     }
 }
 
+controller.error_POST = (req, res) => {
+
+    res.render('error.ejs', {
+
+    });
+
+}
+
 
 controller.mesa_captura_POST = (req, res) => {
     gafete = req.body.user;
@@ -226,8 +234,36 @@ controller.ubicacion_POST = (req, res) => {
 
         res.render('ubicacion.ejs', {
             gafete,
-            nombreContador
+            nombreContador,
         })
+    })
+}
+
+controller.ubicacion_rack_POST = (req, res) => {
+    ubicacion = req.params.id
+    gafete = req.body.gafete
+    nombreContador = req.body.nombreContador
+    funcion.Ubicaciones_Conteo_Rack(ubicacion, (err, racks) => {
+        res.render('ubicacion_rack.ejs', {
+            gafete,
+            nombreContador,
+            racks
+        })
+
+    })
+}
+
+controller.ubicacion_storageBin_POST = (req, res) => {
+    rack = req.params.id
+    gafete = req.body.gafete
+    nombreContador = req.body.nombreContador
+    funcion.Ubicaciones_Conteo_StorageBin(rack, (err, bins) => {
+        res.render('ubicacion_storageBin.ejs', {
+            gafete,
+            nombreContador,
+            bins
+        })
+
     })
 }
 
@@ -243,15 +279,18 @@ controller.conteo_POST = (req, res) => {
             if (gruposCapturados == "") {
                 captura_grupo = `${gafete}-${+1}`
                 captura_actual = ""
-                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-                    res.render('conteo.ejs', {
-                        gafete,
-                        nombreContador,
-                        ubicacion,
-                        captura_grupo,
-                        captura_actual,
-                        serialesCapturados,
-                        capturasPorGrupo
+                funcion.Material_StUnit((err, storage_units) => {
+                    funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                        res.render('conteo.ejs', {
+                            gafete,
+                            nombreContador,
+                            ubicacion,
+                            captura_grupo,
+                            captura_actual,
+                            serialesCapturados,
+                            capturasPorGrupo,
+                            storage_units
+                        })
                     })
                 })
             } else {
@@ -263,15 +302,20 @@ controller.conteo_POST = (req, res) => {
 
                 captura_grupo = `${gafete}-${currentCaptura + 1}`
                 captura_actual = ""
-                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-                    res.render('conteo.ejs', {
-                        gafete,
-                        nombreContador,
-                        ubicacion,
-                        captura_grupo,
-                        captura_actual,
-                        serialesCapturados,
-                        capturasPorGrupo
+
+                funcion.Material_StUnit((err, storage_units) => {
+
+                    funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                        res.render('conteo.ejs', {
+                            gafete,
+                            nombreContador,
+                            ubicacion,
+                            captura_grupo,
+                            captura_actual,
+                            serialesCapturados,
+                            capturasPorGrupo,
+                            storage_units
+                        })
                     })
                 })
             }
@@ -283,83 +327,171 @@ controller.conteo_POST = (req, res) => {
 }
 
 controller.conteo_guardar_POST = (req, res) => {
+
     seriales = req.body.seriales
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
     id_ubicacion = req.body.ubicacion
-    // serial = req.body.serial
-    // serial = serial.slice(1)
     captura_grupo = req.body.captura_grupo
-
-    gafete2 = captura_grupo.split("-",1)
-    
-    
-    
+    gafete2 = captura_grupo.split("-", 1)
     estado_auditoria = 0
+    serialesObsoletos = req.body.serialesObsoletos
+    errores="false"
 
 
-    for (let i = 0; i < seriales.length; i++) {
 
+    funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
 
+    if (seriales.includes(",")) {
 
-        funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => {
+        let serialesArray = seriales.split(',');
+        for (let i = 0; i < serialesArray.length; i++) {
 
-            funcion.SelectCurrentCapturas(captura_grupo, (err, Countcaptura_actual) => {
-                captura_actual = Countcaptura_actual.length + 1
-                funcion.SelectSerial(seriales[i], (err, infoNumeroParte) => {
-                    if (infoNumeroParte.length == "") {
-                        material = "NULL"
-                        cantidad = null
+            
 
-                        RabbitPublisher.get_label(seriales[i], (callback) => {})
-
-                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
-                            funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-                                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-
-
-                                    // res.render('conteo.ejs', {
-                                    //     gafete,
-                                    //     nombreContador,
-                                    //     ubicacion,
-                                    //     captura_grupo,
-                                    //     captura_actual,
-                                    //     serialesCapturados,
-                                    //     capturasPorGrupo
-
-                                    // })
-                                })
-                            })
-                        })
-                    } else {
-                        material = infoNumeroParte[0].material
-                        cantidad = infoNumeroParte[0].stock
-
-
-                        funcion.InsertCapturaSerial(captura_grupo, seriales[i], material, cantidad, ubicacion, gafete2[0], (err, result) => {
-                            funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-                                funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
-
-                                    // res.render('conteo.ejs', {
-                                    //     gafete,
-                                    //     nombreContador,
-                                    //     ubicacion,
-                                    //     captura_grupo,
-                                    //     captura_actual,
-                                    //     serialesCapturados,
-                                    //     capturasPorGrupo
-                                    // })
-                                })
-                            })
-                        })
-                    }
-
-                })
+            funcion.InsertCapturaSerial(captura_grupo, serialesArray[i], ubicacion, gafete2[0], (err, result) => {
+                if (err != null) {
+                    errores = "true"
+                
+                }
 
             })
+
+        }
+    } else if(seriales !="") {
+
+        funcion.InsertCapturaSerial(captura_grupo, seriales, ubicacion, gafete2[0], (err, result) => {
+            if (err != null) {
+                errores = "true"
+               
+                
+            }
         })
+
     }
+
+
+    if (serialesObsoletos.includes(",")) {
+
+        let serialesObsoletosArray = serialesObsoletos.split(',');
+        for (let i = 0; i < serialesObsoletosArray.length; i++) {
+          
+          
+            
+            RabbitPublisher.get_label(serialesObsoletosArray[i], (callback) => {})
+            
+
+            funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletosArray[i], ubicacion, gafete2[0], (err, result) => {
+                if (err != null) {
+                    errores = "true"
+           
+                }
+
+            })
+
+        }
+    } else if(serialesObsoletos !="") {
+        RabbitPublisher.get_label(serialesObsoletos, (callback) => {})
+        funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletos,  ubicacion, gafete2[0], (err, result) => {
+            if (err != null) {
+                errores = "true"
+               
+                
+            }
+        })
+
+    }
+
+
+
+
+
+
+    var delay = 500;
+
+    setTimeout(function () {
+
+    if (serialesObsoletos == "") {
+        return res.redirect('/login_conteo/ubicacion');
+    } else {
+       
+        res.render('conteo_obsoleto.ejs', {
+
+            gafete,
+            nombreContador,
+            ubicacion,
+            id_ubicacion,
+            serialesObsoletos,
+            captura_grupo,
+            errores
+        });
+    }
+    }, delay);
+
+}
+
+
+
+controller.conteoObsoleto_guardar_POST = (req, res) => {
+
+    
+    seriales = req.body.inputSeriales
+    partes = req.body.inputPartes
+    cantidades = req.body.inputCantidades
+    gafete = req.body.gafete;
+    ubicacion = req.body.ubicacion
+    captura_grupo = req.body.captura_grupo
+    errores = false
+    errorAnterior= req.body.error
+
+    gafete2 = captura_grupo.split("-", 1)
+
+
+    if (seriales.includes(",")) {
+
+        let serialesArray = seriales.split(',');
+        let partesArray = partes.split(',');
+        let cantidadesArray = cantidades.split(',');
+        for (let i = 0; i < serialesArray.length; i++) {
+
+            funcion.UpdateSerialObsoleto(serialesArray[i], partesArray[i], cantidadesArray[i], (err, result) => {
+         
+                if (err != null || result.affectedRows==0) {
+                    errores = true
+                    res.redirect('/error');
+                    
+                  
+                }
+
+
+            })
+
+        }
+    } else if(seriales !="") {
+
+        funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
+            if (err != null || result.affectedRows==0) {
+                errores = true
+                res.redirect('/error');
+            }
+        })
+
+    }
+
+    var delay = 500;
+    setTimeout(function () {
+        if (errores == false && errorAnterior=="false") {
+            res.redirect('/login_conteo/ubicacion');
+        }else if(errorAnterior=="true" && errores==false){
+       
+            res.redirect('/error');
+        }
+
+    }, delay);
+
+
+
 }
 
 
@@ -912,18 +1044,18 @@ controller.auditar_temp_POST = (req, res) => {
         funcion.SelectAllStations_VULC((err, ubicaciones) => {
             funcion.SelectAuditoria_Auditado((err, auditado) => {
                 funcion.SelectAuditoria_NoAuditado((err, noAuditado) => {
-                    funcion.SelectEtiquetasVULC((err,etiquetas_semi)=>{
-                           
-                    auditado = auditado.length
-                    noAuditado = noAuditado.length
-                    res.render('auditar_temp.ejs', {
-                        gafete,
-                        nombreContador,
-                        ubicaciones,
-                        auditado,
-                        noAuditado,
-                        etiquetas_semi
-                    })
+                    funcion.SelectEtiquetasVULC((err, etiquetas_semi) => {
+
+                        auditado = auditado.length
+                        noAuditado = noAuditado.length
+                        res.render('auditar_temp.ejs', {
+                            gafete,
+                            nombreContador,
+                            ubicaciones,
+                            auditado,
+                            noAuditado,
+                            etiquetas_semi
+                        })
                     })
                 })
             })
@@ -941,7 +1073,7 @@ controller.auditar_ubicacion_temp_POST = (req, res) => {
     funcion.SelectLinea_Equals(linea, (err, capturas) => {
         funcion.SelectSerial_Contado_Vulc(linea, (err, contados) => {
             funcion.SelectSerial_SinContar_Vulc(linea, (err, sin_contar) => {
-         
+
 
                 contados = contados.length
                 sin_contar = sin_contar.length
@@ -967,11 +1099,11 @@ controller.terminar_auditoria_temp_POST = (req, res) => {
 
 
     for (let i = 0; i < seriales.length; i++) {
-        funcion.Update_Serial_Auditado_VULC(gafete,seriales[i], (err, result) => {   
+        funcion.Update_Serial_Auditado_VULC(gafete, seriales[i], (err, result) => {
             console.log(err);
             console.log(result);
-            
-                     
+
+
         })
     }
 
@@ -1066,38 +1198,38 @@ controller.descargar_reporte_POST = (req, res) => {
                         showRowStripes: true,
                     },
                     columns: [{
-                            name: 'TICKET',
-                            filterButton: true,
-                            key: 'ticket'
-                        },
-                        {
-                            name: 'NUMERO_DE_PARTE',
-                            filterButton: true
-                        },
-                        {
-                            name: 'CANTIDAD',
-                            filterButton: true
-                        },
-                        {
-                            name: 'AREA',
-                            filterButton: true
-                        },
-                        {
-                            name: 'SAPLOC',
-                            filterButton: true
-                        },
-                        {
-                            name: 'DESCRIPCION',
-                            filterButton: true
-                        },
-                        {
-                            name: 'UOM',
-                            filterButton: true
-                        },
-                        {
-                            name: 'CAPTURISTA',
-                            filterButton: true
-                        },
+                        name: 'TICKET',
+                        filterButton: true,
+                        key: 'ticket'
+                    },
+                    {
+                        name: 'NUMERO_DE_PARTE',
+                        filterButton: true
+                    },
+                    {
+                        name: 'CANTIDAD',
+                        filterButton: true
+                    },
+                    {
+                        name: 'AREA',
+                        filterButton: true
+                    },
+                    {
+                        name: 'SAPLOC',
+                        filterButton: true
+                    },
+                    {
+                        name: 'DESCRIPCION',
+                        filterButton: true
+                    },
+                    {
+                        name: 'UOM',
+                        filterButton: true
+                    },
+                    {
+                        name: 'CAPTURISTA',
+                        filterButton: true
+                    },
                     ],
                     rows: rows0,
                 });
@@ -1127,29 +1259,29 @@ controller.descargar_reporte_POST = (req, res) => {
                         showRowStripes: true,
                     },
                     columns: [{
-                            name: 'MATERIAL',
-                            filterButton: true
-                        },
-                        {
-                            name: 'MATERIAL_DESCRIPTION',
-                            filterButton: true
-                        },
-                        {
-                            name: 'STORAGE_LOCATION',
-                            filterButton: true
-                        },
-                        {
-                            name: 'BASE_UNIT_OF_MEASURE',
-                            filterButton: true
-                        },
-                        {
-                            name: 'STOCK',
-                            filterButton: true
-                        },
-                        {
-                            name: 'STORAGE_UNIT',
-                            filterButton: true
-                        },
+                        name: 'MATERIAL',
+                        filterButton: true
+                    },
+                    {
+                        name: 'MATERIAL_DESCRIPTION',
+                        filterButton: true
+                    },
+                    {
+                        name: 'STORAGE_LOCATION',
+                        filterButton: true
+                    },
+                    {
+                        name: 'BASE_UNIT_OF_MEASURE',
+                        filterButton: true
+                    },
+                    {
+                        name: 'STOCK',
+                        filterButton: true
+                    },
+                    {
+                        name: 'STORAGE_UNIT',
+                        filterButton: true
+                    },
                     ],
                     rows: rows2,
                 });
@@ -1176,29 +1308,29 @@ controller.descargar_reporte_POST = (req, res) => {
                         showRowStripes: true,
                     },
                     columns: [{
-                            name: 'IDTICKET/SERIAL',
-                            filterButton: true
-                        },
-                        {
-                            name: 'MATERIAL',
-                            filterButton: true
-                        },
-                        {
-                            name: 'CANTIDAD',
-                            filterButton: true
-                        },
-                        {
-                            name: 'UBICACION',
-                            filterButton: true
-                        },
-                        {
-                            name: 'EMPLEADO',
-                            filterButton: true
-                        },
-                        {
-                            name: 'FECHA',
-                            filterButton: true
-                        },
+                        name: 'IDTICKET/SERIAL',
+                        filterButton: true
+                    },
+                    {
+                        name: 'MATERIAL',
+                        filterButton: true
+                    },
+                    {
+                        name: 'CANTIDAD',
+                        filterButton: true
+                    },
+                    {
+                        name: 'UBICACION',
+                        filterButton: true
+                    },
+                    {
+                        name: 'EMPLEADO',
+                        filterButton: true
+                    },
+                    {
+                        name: 'FECHA',
+                        filterButton: true
+                    },
                     ],
                     rows: rows3,
                 });
@@ -1267,4 +1399,7 @@ controller.descargar_reporte_POST = (req, res) => {
         });
     })
 }
+
+
+
 module.exports = controller;

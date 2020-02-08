@@ -18,6 +18,46 @@ funcion.material= (callback)=>{
     })
 }
 
+
+funcion.Material_StUnit= (callback)=>{
+    db.query(`SELECT storage_unit FROM material`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Ubicaciones_Conteo_Rack= (ubicacion,callback)=>{
+    db.query(`SELECT DISTINCT rack AS racks FROM ubicaciones_conteo WHERE storage_location = '${ubicacion}' ORDER BY rack ASC`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Ubicaciones_Conteo_StorageBin= (rack,callback)=>{
+    db.query(`SELECT DISTINCT storage_bin AS bins FROM ubicaciones_conteo WHERE rack = '${rack}' ORDER BY storage_bin ASC`,function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.SelectSerial= (serial,callback)=>{
     db.query(`SELECT material, stock FROM material WHERE storage_unit = ${serial}`,function (err, result, fields) {
         if (err) {
@@ -89,11 +129,11 @@ funcion.Select_CapturaId= (serial,callback)=>{
     })
 }
 
-funcion.InsertCapturaSerial = (captura_grupo, serial,material, cantidad, ubicacion, gafete,callback)=>{
+funcion.InsertCapturaSerial = (captura_grupo, serial, ubicacion, gafete,callback)=>{
     
     db.query(`
-    INSERT INTO captura (captura_grupo, serial, material, cantidad, ubicacion, num_empleado, fecha)
-    VALUES ('${captura_grupo}','${serial}' , '${material}' , ${cantidad}, '${ubicacion}' , ${gafete} ,NOW())`,
+    INSERT INTO captura (captura_grupo, serial, ubicacion, num_empleado, fecha)
+    VALUES ('${captura_grupo}','${serial}' ,   '${ubicacion}' , ${gafete} ,NOW())`,
     function (err, result, fields) {
         if (err) {
             
@@ -104,6 +144,43 @@ funcion.InsertCapturaSerial = (captura_grupo, serial,material, cantidad, ubicaci
             callback(null, result);
         }
     })
+}
+
+funcion.InsertCapturaSerialObsoleto = (captura_grupo, serial, ubicacion, gafete,callback)=>{
+    
+    db.query(`
+    INSERT INTO captura (captura_grupo, serial, ubicacion, num_empleado, fecha, serial_obsoleto)
+    VALUES ('${captura_grupo}','${serial}','${ubicacion}' , ${gafete} ,NOW(),1)`,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+
+
+funcion.UpdateSerialObsoleto = (serial, parte, cantidad,callback)=>{
+
+    db.query(`UPDATE captura SET material = '${parte}',
+     cantidad=${cantidad}
+     WHERE serial = '${serial}'`, function (err, result, fields) {
+        if (err) {
+
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+
 }
 
 funcion.ticketsCapturados= (callback)=>{
@@ -423,9 +500,9 @@ funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
 funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
     db.query(`
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
-    VALUES ('${id_ubicacion}', ${emp_id}, LEFT(${estado_auditoria},2))
+    VALUES (LEFT('${id_ubicacion}',2), ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
-     id_ubicacion = '${id_ubicacion}'
+     id_ubicacion = LEFT('${id_ubicacion}',2)
     `,
     function (err, result, fields) {
         if (err) {
