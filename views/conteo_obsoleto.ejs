@@ -2,8 +2,7 @@
 <%include ./static/sidebar.ejs%>
 <%include ./static/navbar.ejs%>
 
-<!-- Begin Page Content -->
-<div class="container-fluid">
+
 
   <!-- Page Heading -->
 
@@ -19,7 +18,7 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="row">
-          <div class=" col-lg-2">
+          <div class=" col-lg-2 d-none d-sm-block">
             <label for=""> Ubicacion:</label>
             <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
               value="<%= ubicacion %>" readonly>
@@ -116,7 +115,7 @@
                 </span>
               </label>
             </label>
-
+            <br>
             <div class="input-group  col-lg-12">
 
               <div class="input-group-prepend ">
@@ -177,8 +176,37 @@
         
       </div> -->
       
-  <div class="col-lg-2 d-none d-sm-block">
+      <div class="col-lg-4 mt-2">
         <div class="col-lg-12">
+          <div>
+            <div class="card">
+              <div class="card-header bg-secondary text-white text-center"><strong >Pasos a seguir</strong></div>
+              
+              <div class="card-body">
+                
+                <h4>Separar Material con Serial Obsoleto</h4>
+                <h6><span class="badge badge-secondary fspan">1 </span> Escanear Serial</h6>
+                <h6> <span class="badge badge-secondary fspan">2 </span> Escanear Numero de Parte</h6>
+                <h6><span class="badge badge-secondary fspan">3 </span> Escanear Cantidad</h6> 
+                <h6><span class="badge badge-secondary fspan">4 </span>Repetir pasos 1 al 3 por cada serial</h6>
+                <h6><span class="badge badge-secondary fspan">5 </span>Para terminar presionar el boton</h6>
+                <h6><span class="badge badge-secondary fspan">6 </span>Para Soporte contacte a personal de materiales</h6>
+               
+                <h6><span class="badge badge-secondary fspan">=> </span>Alan.Pando, Iban.Garcia</h6> 
+     
+                </label>
+                
+              </div>
+            </div>
+          </div>
+          
+
+        </div>
+        
+      </div>
+
+  <div class="col-lg-2 ">
+        <div class="col-lg-12 mt-2">
       <div class="card">
         <div class="card-header bg-secondary text-white text-center font-weight-bold" id="tituloGuardar">Terminar Captura Incompleta</div>
         <div class="card-body text-center">
@@ -213,29 +241,7 @@
   </div> 
 
       
-      <div class="col-lg-4 d-none d-sm-block">
-        <div class="col-lg-12">
-          <div>
-            <div class="card">
-              <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
-              
-              <div class="card-body">
-                <h4>Separar Material con Serial Obsoleto</h4>
-                <h5>1. Escanear Serial</h5>
-                <h5>2. Escanear Numero de Parte</h5>
-                <h5>3. Escanear Cantidad</h5> 
-                <h5>Para Soporte contacte a personal de materiales</h5> 
-     
-                </label>
-                
-              </div>
-            </div>
-          </div>
-          
 
-        </div>
-        
-      </div>
 
 <!-- 
       <div class="col-lg-4">
@@ -316,8 +322,7 @@
     <!-- /Collapse -->
 
     <!-- /.container-fluid -->
-  </div>
-  <!-- End of Main Content -->
+
 
   <% include ./static/footer.ejs%>
 
