@@ -240,14 +240,15 @@ controller.ubicacion_POST = (req, res) => {
 }
 
 controller.ubicacion_rack_POST = (req, res) => {
-    ubicacion = req.params.id
+    storage_location = req.params.id
     gafete = req.body.gafete
     nombreContador = req.body.nombreContador
-    funcion.Ubicaciones_Conteo_Rack(ubicacion, (err, racks) => {
+    funcion.Ubicaciones_Conteo_Rack(storage_location, (err, racks) => {
         res.render('ubicacion_rack.ejs', {
             gafete,
             nombreContador,
-            racks
+            racks,
+            storage_location
         })
 
     })
@@ -256,12 +257,14 @@ controller.ubicacion_rack_POST = (req, res) => {
 controller.ubicacion_storageBin_POST = (req, res) => {
     rack = req.params.id
     gafete = req.body.gafete
+    storage_location = req.body.storage_location
     nombreContador = req.body.nombreContador
     funcion.Ubicaciones_Conteo_StorageBin(rack, (err, bins) => {
         res.render('ubicacion_storageBin.ejs', {
             gafete,
             nombreContador,
-            bins
+            bins,
+            storage_location
         })
 
     })
@@ -271,6 +274,8 @@ controller.conteo_POST = (req, res) => {
     gafete = req.body.gafete;
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
+    storage_location = req.body.storage_location
+
 
     funcion.Select_GruposCapturados((err, gruposCapturados) => {
         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
@@ -289,7 +294,8 @@ controller.conteo_POST = (req, res) => {
                             captura_actual,
                             serialesCapturados,
                             capturasPorGrupo,
-                            storage_units
+                            storage_units,
+                            storage_location
                         })
                     })
                 })
@@ -314,7 +320,8 @@ controller.conteo_POST = (req, res) => {
                             captura_actual,
                             serialesCapturados,
                             capturasPorGrupo,
-                            storage_units
+                            storage_units,
+                            storage_location
                         })
                     })
                 })
@@ -333,39 +340,45 @@ controller.conteo_guardar_POST = (req, res) => {
     nombreContador = req.body.nombreContador
     ubicacion = req.body.ubicacion
     id_ubicacion = req.body.ubicacion
+    storage_location = req.body.storage_location
     captura_grupo = req.body.captura_grupo
     gafete2 = captura_grupo.split("-", 1)
     estado_auditoria = 0
     serialesObsoletos = req.body.serialesObsoletos
-    errores="false"
+    errores = "false"
+
+    if (storage_location == "terminado") {
+        funcion.Update_Ubicacion_Captura_Terminado(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
+    } else if (storage_location == "vulcanizado") {
+        funcion.Update_Ubicacion_Captura_Vulcanizado(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
+    }
 
 
 
-    funcion.Update_Ubicacion_Captura(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
 
     if (seriales.includes(",")) {
 
         let serialesArray = seriales.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
-            
+
 
             funcion.InsertCapturaSerial(captura_grupo, serialesArray[i], ubicacion, gafete2[0], (err, result) => {
                 if (err != null) {
                     errores = "true"
-                
+
                 }
 
             })
 
         }
-    } else if(seriales !="") {
+    } else if (seriales != "") {
 
         funcion.InsertCapturaSerial(captura_grupo, seriales, ubicacion, gafete2[0], (err, result) => {
             if (err != null) {
                 errores = "true"
-               
-                
+
+
             }
         })
 
@@ -376,28 +389,28 @@ controller.conteo_guardar_POST = (req, res) => {
 
         let serialesObsoletosArray = serialesObsoletos.split(',');
         for (let i = 0; i < serialesObsoletosArray.length; i++) {
-          
-          
-            
+
+
+
             //RabbitPublisher.get_label(serialesObsoletosArray[i], (callback) => {})
-            
+
 
             funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletosArray[i], ubicacion, gafete2[0], (err, result) => {
                 if (err != null) {
                     errores = "true"
-           
+
                 }
 
             })
 
         }
-    } else if(serialesObsoletos !="") {
+    } else if (serialesObsoletos != "") {
         //RabbitPublisher.get_label(serialesObsoletos, (callback) => {})
-        funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletos,  ubicacion, gafete2[0], (err, result) => {
+        funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletos, ubicacion, gafete2[0], (err, result) => {
             if (err != null) {
                 errores = "true"
-               
-                
+
+
             }
         })
 
@@ -412,21 +425,21 @@ controller.conteo_guardar_POST = (req, res) => {
 
     setTimeout(function () {
 
-    if (serialesObsoletos == "") {
-        return res.redirect('/login_conteo/ubicacion');
-    } else {
-       
-        res.render('conteo_obsoleto.ejs', {
+        if (serialesObsoletos == "") {
+            return res.redirect('/login_conteo/ubicacion');
+        } else {
 
-            gafete,
-            nombreContador,
-            ubicacion,
-            id_ubicacion,
-            serialesObsoletos,
-            captura_grupo,
-            errores
-        });
-    }
+            res.render('conteo_obsoleto.ejs', {
+
+                gafete,
+                nombreContador,
+                ubicacion,
+                id_ubicacion,
+                serialesObsoletos,
+                captura_grupo,
+                errores
+            });
+        }
     }, delay);
 
 }
@@ -435,7 +448,7 @@ controller.conteo_guardar_POST = (req, res) => {
 
 controller.conteoObsoleto_guardar_POST = (req, res) => {
 
-    
+
     seriales = req.body.inputSeriales
     partes = req.body.inputPartes
     cantidades = req.body.inputCantidades
@@ -443,7 +456,7 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
     ubicacion = req.body.ubicacion
     captura_grupo = req.body.captura_grupo
     errores = false
-    errorAnterior= req.body.error
+    errorAnterior = req.body.error
 
     gafete2 = captura_grupo.split("-", 1)
 
@@ -455,63 +468,63 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
         let cantidadesArray = cantidades.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
-            if(partesArray[i]!=undefined && cantidadesArray[i]!=undefined){
-              
-            funcion.UpdateSerialObsoleto(serialesArray[i], partesArray[i], cantidadesArray[i], (err, result) => {
-         
-                if (err != null || result.affectedRows==0) {
-                    errores = true
-                    res.redirect('/error');
-                                
-                }
+            if (partesArray[i] != undefined && cantidadesArray[i] != undefined) {
+
+                funcion.UpdateSerialObsoleto(serialesArray[i], partesArray[i], cantidadesArray[i], (err, result) => {
+
+                    if (err != null || result.affectedRows == 0) {
+                        errores = true
+                        res.redirect('/error');
+
+                    }
 
 
-            })
-        }else if(partesArray[i]!=undefined && cantidadesArray[i]==undefined){
-            
-            funcion.UpdateSerialObsoletoNull(serialesArray[i], partesArray[i],  (err, result) => {
-         
-                if (err != null || result.affectedRows==0) {
-                    errores = true
-                    res.redirect('/error');
-                                
-                }
+                })
+            } else if (partesArray[i] != undefined && cantidadesArray[i] == undefined) {
+
+                funcion.UpdateSerialObsoletoNull(serialesArray[i], partesArray[i], (err, result) => {
+
+                    if (err != null || result.affectedRows == 0) {
+                        errores = true
+                        res.redirect('/error');
+
+                    }
 
 
-            })
+                })
+
+            }
 
         }
+    } else if (seriales != "") {
 
+        if (partes != "" && cantidades != "") {
+
+            funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
+                if (err != null || result.affectedRows == 0) {
+                    errores = true
+                    res.redirect('/error');
+                }
+            })
+        } else if (partes != "" && cantidades == "") {
+
+            funcion.UpdateSerialObsoletoNull(seriales, partes, (err, result) => {
+                if (err != null || result.affectedRows == 0) {
+                    errores = true
+                    res.redirect('/error');
+                }
+            })
         }
-    } else if(seriales !="") {
-        
-        if(partes!="" && cantidades!= ""){
-    
-        funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
-            if (err != null || result.affectedRows==0) {
-                errores = true
-                res.redirect('/error');
-            }
-        })
-    }else if(partes!="" && cantidades== ""){
-  
-        funcion.UpdateSerialObsoletoNull(seriales, partes, (err, result) => {
-            if (err != null || result.affectedRows==0) {
-                errores = true
-                res.redirect('/error');
-            }
-        })
-    }
 
 
     }
 
     var delay = 500;
     setTimeout(function () {
-        if (errores == false && errorAnterior=="false") {
+        if (errores == false && errorAnterior == "false") {
             res.redirect('/login_conteo/ubicacion');
-        }else if(errorAnterior=="true" && errores==false){
-       
+        } else if (errorAnterior == "true" && errores == false) {
+
             res.redirect('/error');
         }
 
@@ -980,25 +993,49 @@ controller.auditar_POST = (req, res) => {
 controller.auditar_ubicacion_POST = (req, res) => {
     gafete = req.body.gafete;
     ubicacion = req.body.ubicacion
-
+  
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
+        funcion.Search_Storage_Location(ubicacion, (err, storage_location) => {
+                if (storage_location.length == 0) {
+                    
 
-        funcion.SelectUbicacion_Equals(ubicacion, (err, capturas) => {
-            funcion.SelectSerial_Contado(ubicacion, (err, contados) => {
-                funcion.SelectSerial_SinContar(ubicacion, (err, sin_contar) => {
-                    contados = contados.length
-                    sin_contar = sin_contar.length
+                funcion.SelectUbicacion_Equals_Terminado(ubicacion, (err, capturas) => {
+                    funcion.SelectSerial_Contado(ubicacion, (err, contados) => {
+                        funcion.SelectSerial_SinContar(ubicacion, (err, sin_contar) => {
+                            contados = contados.length
+                            sin_contar = sin_contar.length
 
-                    res.render('auditar_ubicacion.ejs', {
-                        gafete,
-                        nombreContador,
-                        capturas,
-                        ubicacion,
-                        contados,
-                        sin_contar
+                            res.render('auditar_ubicacion.ejs', {
+                                gafete,
+                                nombreContador,
+                                capturas,
+                                ubicacion,
+                                contados,
+                                sin_contar
+                            })
+                        })
                     })
                 })
-            })
+            }else if(storage_location[0].storage_location == "vulcanizado"){
+                funcion.SelectUbicacion_Equals_Vulcanizado(ubicacion, (err, capturas) => {
+                    funcion.SelectSerial_Contado_Vulcanizado(ubicacion, (err, contados) => {
+                        funcion.SelectSerial_SinContar_Vulcanizado(ubicacion, (err, sin_contar) => {
+                            contados = contados.length
+                            sin_contar = sin_contar.length
+
+                            res.render('auditar_ubicacion.ejs', {
+                                gafete,
+                                nombreContador,
+                                capturas,
+                                ubicacion,
+                                contados,
+                                sin_contar
+                            })
+                        })
+                    })
+                })
+            }
+
         })
     })
 }
@@ -1097,6 +1134,7 @@ controller.auditar_ubicacion_temp_POST = (req, res) => {
     linea = parseInt(req.body.linea)
 
 
+
     funcion.SelectLinea_Equals(linea, (err, capturas) => {
         funcion.SelectSerial_Contado_Vulc(linea, (err, contados) => {
             funcion.SelectSerial_SinContar_Vulc(linea, (err, sin_contar) => {
@@ -1112,6 +1150,7 @@ controller.auditar_ubicacion_temp_POST = (req, res) => {
                     linea,
                     contados,
                     sin_contar
+
                 })
             })
         })

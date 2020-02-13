@@ -29,6 +29,9 @@
             placeholder="" value="<%= nombreContador%>" hidden>
         <input type="text" class="form-control" name="rack" id="rack" aria-describedby="helpId" placeholder=""
             value="<%= rack%>" hidden>
+            <input type="text" class="form-control" name="storage_location" id="storage_location" aria-describedby="helpId" placeholder=""
+            value="<%= storage_location%>" hidden>
+
 
         <!-- ////////////////////////////// -->
         <div class="jumbotron jumbotron-fluid animated pulse">
@@ -41,8 +44,9 @@
 
                     <div class="col- mb-2 mr-1 ml-1 grow">
                         <div style="animation-delay: .15s" class="card text-center animated bounceIn">
-                            <button type="submit" class="btn btn-outline-info" name="ubicacion" formaction="/conteo "
-                                value="<%= bins[i].bins %> "><%= bins[i].bins %> </button>
+                            <button type="submit" class="btn btn-outline-info" name="ubicacion" 
+                                value="<%= bins[i].bins%>"><%= bins[i].bins%> </button>
+                                    <%=console.log(bins[i].bins.length)%>
                         </div>
                     </div>
                     <% } %>

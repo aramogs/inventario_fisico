@@ -410,7 +410,7 @@ funcion.ubicacion = (callback)=>{
 }
 
 funcion.SelectAuditoria = (callback)=>{
-    db.query(`SELECT DISTINCT LEFT(id_ubicacion,2) AS distinct_ubicacion,estado_auditoria  FROM auditoria ORDER BY estado_auditoria ASC`, function (err, result, fields) {
+    db.query(`SELECT DISTINCT id_ubicacion AS distinct_ubicacion,estado_auditoria  FROM auditoria ORDER BY estado_auditoria ASC`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -449,8 +449,21 @@ funcion.SelectAuditoria_NoAuditado = (callback)=>{
 }
 
 
-funcion.SelectUbicacion_Equals = (ubicacion,callback)=>{
+funcion.SelectUbicacion_Equals_Terminado = (ubicacion,callback)=>{
     db.query(`SELECT * FROM captura WHERE LEFT(ubicacion,2) = '${ubicacion}'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectUbicacion_Equals_Vulcanizado = (ubicacion,callback)=>{
+    db.query(`SELECT * FROM captura WHERE ubicacion = '${ubicacion}'`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -475,8 +488,34 @@ funcion.SelectSerial_Contado = (ubicacion,callback)=>{
     })
 }
 
+funcion.SelectSerial_Contado_Vulcanizado = (ubicacion,callback)=>{
+    db.query(`SELECT * FROM captura WHERE ubicacion = '${ubicacion}' AND serial_auditado = 1`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
 funcion.SelectSerial_SinContar = (ubicacion,callback)=>{
     db.query(`SELECT * FROM captura WHERE LEFT(ubicacion,2) = '${ubicacion}' AND serial_auditado IS NULL`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.SelectSerial_SinContar_Vulcanizado = (ubicacion,callback)=>{
+    db.query(`SELECT * FROM captura WHERE ubicacion= '${ubicacion}' AND serial_auditado IS NULL`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -514,12 +553,31 @@ funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
     })
 }
 
-funcion.Update_Ubicacion_Captura = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
+funcion.Update_Ubicacion_Captura_Terminado = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
     db.query(`
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
     VALUES (LEFT('${id_ubicacion}',2), ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
      id_ubicacion = LEFT('${id_ubicacion}',2)
+    `,
+    function (err, result, fields) {
+        if (err) {
+            
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+funcion.Update_Ubicacion_Captura_Vulcanizado = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
+    db.query(`
+    INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
+    VALUES ('${id_ubicacion}', ${emp_id}, ${estado_auditoria})
+     ON DUPLICATE KEY UPDATE 
+     id_ubicacion = '${id_ubicacion}'
     `,
     function (err, result, fields) {
         if (err) {
@@ -745,6 +803,20 @@ funcion.SelectEtiquetasVULC = (callback)=>{
 
             callback(null, result);
         } 
+    })
+}
+
+
+funcion.Search_Storage_Location = (ubicacion,callback)=>{
+    db.query(`SELECT storage_location FROM ubicaciones_conteo WHERE storage_bin = '${ubicacion}'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
     })
 }
 
