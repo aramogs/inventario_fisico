@@ -4,64 +4,51 @@
 
 
 
-  <!-- Page Heading -->
+<!-- Page Heading -->
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12 d-none d-sm-block">
-        <h2>
-          Captura De Seriales Obsoletos
-        </h2>
-        <hr>
-      </div>
+<div class="container-fluid">
+  <div class="row d-none d-sm-block">
+    <div class="col-lg-12 ">
+      <h2>
+        Captura De Seriales Obsoletos
+      </h2>
+      <hr>
     </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="row">
-          <div class=" col-lg-2 d-none d-sm-block">
-            <label for=""> Ubicacion:</label>
-            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-              value="<%= ubicacion %>" readonly>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="row">
+        <div class=" col-lg-2 d-none d-sm-block">
+          <label for=""> Ubicacion:</label>
+          <input type="text" class="form-control" value="<%= ubicacion %>" readonly>
 
-          </div>
-          <div class=" col-lg-3 d-none d-sm-block">
-            <label for=""> Captura No:</label>
-            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-              value="<%= captura_grupo %>" readonly>
-
-          </div>
-          <div class=" col-lg-7 d-none d-sm-block">
-            <label for=""> Nombre de empleado:</label>
-            <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
-              value="<%= nombreContador %>" readonly>
-
-          </div>
         </div>
-        <div class="row">
-          <div class="col-lg-12">
+        <div class=" col-lg-3 d-none d-sm-block">
+          <label for=""> Captura No:</label>
+          <input type="text" class="form-control" value="<%= captura_grupo %>" readonly>
 
+        </div>
+        <div class=" col-lg-7 d-none d-sm-block">
+          <label for=""> Nombre de empleado:</label>
+          <input type="text" class="form-control" value="<%= nombreContador %>" readonly>
 
-            <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId" placeholder=""
-              value="<%= gafete%>" hidden>
-            <input type="text" class="form-control" name="nombreContador" id="nombreContador" aria-describedby="helpId"
-              placeholder="" value="<%= nombreContador%>" hidden>
-            <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-              placeholder="" value="<%= ubicacion%>" hidden>
-            <input type="text" class="form-control" name="captura_grupo" id="captura_grupo" aria-describedby="helpId"
-              placeholder="" value="<%= captura_grupo%>" hidden>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
 
-            <br>
-            <div id="divSerial" >
+          <br>
+          <div id="divSerial">
             <label>
-              <label>Serial:
-                <span class="badge badge-warning " id="serialWarning" hidden>
-                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                  </span>
-                  <span id="serialWarning2" style="font-size: 15px ; color:black" hidden>
-                    Incorrecto
-                  </span>
+              <label class="d-none d-sm-block">Serial:</label>
+              <span class="badge badge-warning " id="serialWarning" hidden>
+                <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
                 </span>
-              </label>
+                <span id="serialWarning2" style="font-size: 15px ; color:black" hidden>
+                  Incorrecto
+                </span>
+              </span>
+
             </label>
 
             <div class="input-group  col-lg-12">
@@ -77,17 +64,17 @@
           </div>
 
           <br>
-            <div id="divParte">
+          <div id="divParte">
             <label>
-              <label>Parte:
-                <span class="badge badge-warning " id="parteWarning" hidden>
-                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                  </span>
-                  <span id="parteWarning2" style="font-size: 15px ; color:black" hidden>
-                    Incorrecto
-                  </span>
+              <label class="d-none d-sm-block">Parte:</label>
+              <span class="badge badge-warning " id="parteWarning" hidden>
+                <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
                 </span>
-              </label>
+                <span id="parteWarning2" style="font-size: 15px ; color:black" hidden>
+                  Incorrecto
+                </span>
+              </span>
+
             </label>
 
             <div class="input-group  col-lg-12">
@@ -102,18 +89,18 @@
             </div>
           </div>
           <div id="divCantidad">
-       
+
             <br>
             <label>
-              <label>Cantidad:
-                <span class="badge badge-warning " id="cantidadWarning" hidden>
-                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                  </span>
-                  <span id="cantidadWarning2" style="font-size: 15px ; color:black" hidden>
-                    Incorrecto
-                  </span>
+              <label class="d-none d-sm-block">Cantidad:</label>
+              <span class="badge badge-warning " id="cantidadWarning" hidden>
+                <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
                 </span>
-              </label>
+                <span id="cantidadWarning2" style="font-size: 15px ; color:black" hidden>
+                  Incorrecto
+                </span>
+              </span>
+
             </label>
             <br>
             <div class="input-group  col-lg-12">
@@ -129,223 +116,132 @@
 
           </div>
 
-        
-          <!-- <form action="/conteoObsoleto_guardar" method="post">
-
-            <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" aria-describedby="helpId" placeholder=""
-                  value="" hidden>
-                  <input type="text" class="form-control" name="inputPartes" id="inputPartes" aria-describedby="helpId" placeholder=""
-                  value="" hidden>
-                  <input type="text" class="form-control" name="inputCantidades" id="inputCantidades" aria-describedby="helpId" placeholder=""
-                  value="" hidden>
-                  <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
-                  aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
-                  <input type="text" class="form-control" name="ubicacion" id="captura_grupo"
-                  aria-describedby="helpId" placeholder="" value="<%= ubicacion%>" hidden>
-                  <input type="text" class="form-control" name="error" id="error"
-                  aria-describedby="helpId" placeholder="" value="<%= errores%>" hidden>
-
-            <div class="modal-footer" id="divbtnGuardar" hidden>
-              <button  type="submit" class="btn btn-success btn-block" id="btnGuardar">Guardar</button>
-            </div>
-          
-          
-          </form> -->
 
 
-
-        </div>
-        </div>
-      </div>
-
-      <!-- <div class="col-lg-2 d-none d-sm-block">
-        <div class="col-lg-12">
-          <div>
-            <div class="card">
-              <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
-              
-              <div class="card-body">
-                <img src="/img/warning.jpg" alt="Warehouse Image" class="img-fluid">
-                
-              </div>
-            </div>
-          </div>
-          
-
-        </div>
-        
-      </div> -->
-      
-      <div class="col-lg-4 mt-2">
-        <div class="col-lg-12">
-          <div>
-            <div class="card">
-              <div class="card-header bg-secondary text-white text-center"><strong >Pasos a seguir</strong></div>
-              
-              <div class="card-body">
-                
-                <h4>Separar Material con Serial Obsoleto</h4>
-                <h6><span class="badge badge-secondary fspan">1 </span> Escanear Serial</h6>
-                <h6> <span class="badge badge-secondary fspan">2 </span> Escanear Numero de Parte</h6>
-                <h6><span class="badge badge-secondary fspan">3 </span> Escanear Cantidad</h6> 
-                <h6><span class="badge badge-secondary fspan">4 </span>Repetir pasos 1 al 3 por cada serial</h6>
-                <h6><span class="badge badge-secondary fspan">5 </span>Para terminar presionar el boton</h6>
-                <h6><span class="badge badge-secondary fspan">6 </span>Para Soporte contacte a personal de materiales</h6>
-               
-                <h6><span class="badge badge-secondary fspan">=> </span>Alan.Pando, Iban.Garcia</h6> 
-     
-                </label>
-                
-              </div>
-            </div>
-          </div>
-          
-
-        </div>
-        
-      </div>
-
-  <div class="col-lg-2 ">
-        <div class="col-lg-12 mt-2">
-      <div class="card">
-        <div class="card-header bg-secondary text-white text-center font-weight-bold" id="tituloGuardar">Terminar Captura Incompleta</div>
-        <div class="card-body text-center">
-
-          <form action="/conteoObsoleto_guardar" method="post">
-          
-              <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" aria-describedby="helpId" placeholder=""
-                  value="" hidden>
-                  <input type="text" class="form-control" name="inputPartes" id="inputPartes" aria-describedby="helpId" placeholder=""
-                  value="" hidden>
-                  <input type="text" class="form-control" name="inputCantidades" id="inputCantidades" aria-describedby="helpId" placeholder=""
-                  value="" hidden>
-                  <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
-                  aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
-                  <input type="text" class="form-control" name="ubicacion" id="captura_grupo"
-                  aria-describedby="helpId" placeholder="" value="<%= ubicacion%>" hidden>
-                  <input type="text" class="form-control" name="error" id="error"
-                  aria-describedby="helpId" placeholder="" value="<%= errores%>" hidden>
-
-                  <div id="divbtnGuardar" hidden>
-                   <button type="submit" name="btnGuardar" id="btnGuardar" class="btn btn-success btn-lg" ><span class="fas fa-clipboard-check"
-                  style="font-size: 125px;"></span></button>
-                </div>
-                <div id="divbtnGuardar2" >
-                   <button type="submit" name="btnGuardar" id="btnGuardar" class="btn btn-sm"> <img src="/img/warning3.png" alt="Warehouse Image" class="img-fluid"></button> 
-                  </div>
-            </form>
         </div>
       </div>
     </div>
-        
-  </div> 
 
-      
+    <div class="col-lg-4 mt-2 d-none d-sm-block">
 
-
-<!-- 
-      <div class="col-lg-4">
+      <div class="col-lg-12">
+        <div>
           <div class="card">
-  
+            <div class="card-header bg-secondary text-white text-center"><strong>Pasos a seguir</strong></div>
+
             <div class="card-body">
-              <table class="table table-sm ">
-                <thead>
-                  <tr>
-         
-                    <th style="border-top: none; text-align: center" >
-                      <h3>Instrucciones</h3>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-  
-                  <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">C</span></td>
-                    <td> Cancelado</td>
-                  </tr>
-                  <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">5V</span></td>
-                    <td style="border-top: none"> 5V000</td>
-                  </tr>
-                  <tr>
-                    <td style="border-top: none"> <span class="badge badge-secondary fspan">5E</span></td>
-                    <td style="border-top: none"> 5E000</td>
-                  </tr>
-                  <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">50</span></td>
-                    <td style="border-top: none"> 50000</td>
-                  </tr>
-                  <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">10</span></td>
-                    <td style="border-top: none"> 10000</td>
-                  </tr>
-                  <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">1M0 </span></td>
-                    <td style="border-top: none"> 1M0000</td>
-                  </tr>
-                  <tr>
-                    <td style="border-top: none"><span class="badge badge-secondary fspan">7 </span></td>
-                    <td style="border-top: none"> 70000</td>
-                  </tr>
-                </tbody>
-              </table>
+
+              <h6><span class="badge badge-secondary fspan">1 </span> Escanear Serial</h6>
+              <h6> <span class="badge badge-secondary fspan">2 </span> Escanear Numero de Parte</h6>
+              <h6><span class="badge badge-secondary fspan">3 </span> Escanear Cantidad</h6>
+              <h6><span class="badge badge-secondary fspan">4 </span> Repetir pasos 1 al 3 por cada serial</h6>
+              <h6><span class="badge badge-secondary fspan">5 </span> Para terminar presionar el boton</h6>
+              <h6><span class="badge badge-secondary fspan">6 </span> Para Soporte contactar:</h6>
+
+              <h6><span class="badge badge-secondary fspan">> </span> Alan.Pando, Iban.Garcia</h6>
+
+              </label>
+
             </div>
           </div>
-        </div> -->
-      
+        </div>
 
 
-      
+      </div>
+
     </div>
 
-    <!-- Collapse -->
-    <br>
-    <div class="col-lg-12 mt-2 ">
+    <div class="col-lg-2 ">
+      <div class="col-lg-12 mt-2">
+        <div class="card">
+          <div class="card-header bg-secondary text-white text-center font-weight-bold" id="tituloGuardar">Terminar
+            Captura Incompleta</div>
+          <div class="card-body text-center">
 
-      <div class="card shadow mb-4 shadow-lg">
-        <div class="card-header py-3 bg-secondary">
-          <h3 class="text-white">Capturado</h3>
-        </div>
-        <div class="accordion" id="accordionExample">
+            <form action="/conteoObsoleto_guardar" method="post">
 
-          <div class="card-body" id="cardCapturado">
+              <input type="text" class="form-control" name="inputSeriales" id="inputSeriales" value="" hidden>
+              <input type="text" class="form-control" name="inputPartes" id="inputPartes" value="" hidden>
+              <input type="text" class="form-control" name="inputCantidades" id="inputCantidades" value="" hidden>
+              <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
+                value="<%= captura_grupo%>" hidden>
+              <input type="text" class="form-control" name="ubicacion" id="ubicacion" value="<%= ubicacion%>" hidden>
+              <input type="text" class="form-control" name="error" id="error" value="<%= errores%>" hidden>
 
-
-
-
-
+              <div id="divbtnGuardar" hidden>
+                <button type="submit" name="btnGuardar" id="btnGuardar" class="btn btn-success btn-lg"><span
+                    class="iconoGuardar fas fa-clipboard-check" style="font-size: 125px;"></span></button>
+              </div>
+              <div id="divbtnGuardar2">
+                <button type="submit" name="btnGuardar2" id="btnGuardar2" class="btn btn-sm"> <span
+                    class="fas fa-exclamation-triangle text-warning iconoGuardar" ></span></button>
+              </div>
+            </form>
           </div>
+        </div>
+      </div>
 
+    </div>
+
+
+  </div>
+
+  <!-- Collapse -->
+  <br>
+  <div class="col-lg-12 mt-1 mt-lg-2 ">
+
+    <div class="card shadow mb-4 shadow-lg">
+      <div class="accordion" id="accordionExample">
+
+        <div class="card-body" id="cardCapturado">
+
+        </div>
+        <div class="card-header py-3 bg-secondary">
+          <h6 class="text-white">Capturado</h6>
         </div>
       </div>
     </div>
-    <!-- /Collapse -->
+  </div>
+  <!-- /Collapse -->
 
-    <!-- /.container-fluid -->
+  <!-- /.container-fluid -->
 
 
   <% include ./static/footer.ejs%>
 
   <script>
-      serialesObsoletos = <%- JSON.stringify(serialesObsoletos) %>;
-      let serialesObsoletosArray = serialesObsoletos.split(',');
-      let CapturaSeriales= [];
-      let CapturaPartes= [];
-      let CapturaCantidades= [];
+    iconoGuardar = document.getElementsByClassName('iconoGuardar')
+
+    window.onresize = window.onload = function() {
+    if (window.innerWidth > 400 ) {
+        iconoGuardar[0].style.fontSize = "100px"
+        iconoGuardar[1].style.fontSize = "100px"
+    }else{
+      iconoGuardar[0].style.fontSize = "65px"
+        iconoGuardar[1].style.fontSize = "65px"
+    }
+  }
+
+
+    serialesObsoletos = <%- JSON.stringify(serialesObsoletos) %>;
+    let serialesObsoletosArray = serialesObsoletos.split(',');
+    let CapturaSeriales = [];
+    let CapturaPartes = [];
+    let CapturaCantidades = [];
     $(document).ready(function () {
-     
+
       let serialesObsoletosArray
       document.getElementById("serial").focus();
       if (serialesObsoletos.includes(",")) {
-        
+
         let serialesObsoletosArray = serialesObsoletos.split(',');
         for (let i = 0; i < serialesObsoletosArray.length; i++) {
           let addSpan = `<h6 style="display:inline; "><span class="badge badge-danger fspan" id="id${serialesObsoletosArray[i]}">${serialesObsoletosArray[i]}</span></h6> `
           $('#cardCapturado').append(addSpan)
         }
-      }else{
+      } else {
         let addSpan = `<h6 style="display:inline; "><span class="badge badge-danger fspan" id="id${serialesObsoletos}">${serialesObsoletos}</span></h6> `
-          $('#cardCapturado').append(addSpan)
+        $('#cardCapturado').append(addSpan)
       }
 
       soundOk();
@@ -353,12 +249,12 @@
 
 
     $('#serial').keypress(function (e) {
-      
-        if (e.which == 13) {
-          e.preventDefault()
-          serialFunction()
-          
-        }
+
+      if (e.which == 13) {
+        e.preventDefault()
+        serialFunction()
+
+      }
     })
 
     $('#parte').keypress(function (e) {
@@ -366,11 +262,11 @@
       if (e.which == 13) {
         e.preventDefault()
         parteFunction()
-      
-      }
-      })
 
-      $('#cantidad').keypress(function (e) {
+      }
+    })
+
+    $('#cantidad').keypress(function (e) {
 
       if (e.which == 13) {
         e.preventDefault()
@@ -379,7 +275,7 @@
         $('#serial').val("")
         $('#parte').val("")
       }
-      })
+    })
 
 
 
@@ -387,8 +283,8 @@
       let serial = $('#serial').val();
       let encontrado = false;
 
-      
-      if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1))) ) {
+
+      if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1)))) {
 
         for (let i = 0; i < serialesObsoletos.length; i++) {
 
@@ -396,31 +292,31 @@
 
             encontrado = true;
             CapturaSeriales.push(serialesObsoletosArray[i])
-            serialesObsoletosArray.splice(i,1)
+            serialesObsoletosArray.splice(i, 1)
             soundOk()
 
-           $('#inputSeriales').val(CapturaSeriales)
-            $('#serialWarning').prop('hidden',true)
-            $('#serialWarning2').prop('hidden',true)
+            $('#inputSeriales').val(CapturaSeriales)
+            $('#serialWarning').prop('hidden', true)
+            $('#serialWarning2').prop('hidden', true)
             //$(`#id${serial.substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
-    
 
-            $('#serial').prop('readonly',true)
+
+            $('#serial').prop('readonly', true)
             $('#parte').removeAttr('readonly')
-          
+
             document.getElementById("parte").focus();
 
             break;
           }
         }
-        if(encontrado==false){
+        if (encontrado == false) {
           soundWrong()
-        $('#serialWarning').removeAttr('hidden')
-        $('#serialWarning2').text('Incorrecto')
-        $('#serialWarning2').removeAttr('hidden')
-        $('#serial').val('')
+          $('#serialWarning').removeAttr('hidden')
+          $('#serialWarning2').text('Incorrecto')
+          $('#serialWarning2').removeAttr('hidden')
+          $('#serial').val('')
         }
-        
+
 
       } else {
         soundWrong()
@@ -439,19 +335,19 @@
       let parte = $('#parte').val();
 
 
-      
+
       if (parte.charAt(0) == "P") {
 
-            CapturaPartes.push(parte.substr(1))
-            soundOk()
-         
-            $('#inputPartes').val(CapturaPartes)
-            $('#parteWarning').prop('hidden',true)
-            $('#parteWarning2').prop('hidden',true)
+        CapturaPartes.push(parte.substr(1))
+        soundOk()
 
-            $('#parte').prop('readonly',true)
-            $('#cantidad').removeAttr('readonly')
-            document.getElementById("cantidad").focus();
+        $('#inputPartes').val(CapturaPartes)
+        $('#parteWarning').prop('hidden', true)
+        $('#parteWarning2').prop('hidden', true)
+
+        $('#parte').prop('readonly', true)
+        $('#cantidad').removeAttr('readonly')
+        document.getElementById("cantidad").focus();
 
       } else {
         soundWrong()
@@ -470,24 +366,24 @@
 
       if (cantidad.charAt(0) == "Q") {
 
-            CapturaCantidades.push(cantidad.substr(1))
-            soundOk()
-         
-            $('#inputCantidades').val(CapturaCantidades)
-            $('#cantidadWarning').prop('hidden',true)
-            $('#cantidadWarning2').prop('hidden',true)
-            $('#cantidad').prop('readonly',true)
+        CapturaCantidades.push(cantidad.substr(1))
+        soundOk()
 
-            $(`#id${($('#serial').val()).substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
+        $('#inputCantidades').val(CapturaCantidades)
+        $('#cantidadWarning').prop('hidden', true)
+        $('#cantidadWarning2').prop('hidden', true)
+        $('#cantidad').prop('readonly', true)
 
-            if(serialesObsoletosArray.length==0){
-              $('#tituloGuardar').text("Terminar Captura")
-              $('#divbtnGuardar2').prop('hidden',true)
-              $('#divbtnGuardar').removeAttr('hidden')
-            }else{
-            $('#serial').removeAttr('readonly')
-            document.getElementById("serial").focus();
-            }
+        $(`#id${($('#serial').val()).substr(1)}`).removeClass('badge badge-danger fspan').addClass('badge badge-success fspan');
+
+        if (serialesObsoletosArray.length == 0) {
+          $('#tituloGuardar').text("Terminar Captura")
+          $('#divbtnGuardar2').prop('hidden', true)
+          $('#divbtnGuardar').removeAttr('hidden')
+        } else {
+          $('#serial').removeAttr('readonly')
+          document.getElementById("serial").focus();
+        }
 
 
       } else {
@@ -498,25 +394,9 @@
         $('#cantidad').val('')
       }
 
-      
+
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
 
 
   </script>

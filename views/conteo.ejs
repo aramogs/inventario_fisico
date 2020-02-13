@@ -53,7 +53,7 @@
               </label>
             </label>
 
-            <div class="input-group  col-lg-12">
+            <div class="input-group  col-lg-12 mb-2">
 
               <div class="input-group-prepend ">
                 <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
@@ -68,24 +68,25 @@
         </div>
       </div>
       <div class="col-lg-2">
+        <div class="col lg-12">
+          <div class="card">
+            <div class="card-header bg-secondary text-white text-center font-weight-bold"> Terminar Captura</div>
+            <div class="card-body text-center">
 
-        <div class="card">
-          <div class="card-header bg-secondary text-white text-center font-weight-bold"> Terminar Captura</div>
-          <div class="card-body text-center">
-
-            <button type="button" name="modalCaptura" id="modalCaptura" class="btn btn-primary btn-lg  "
-              data-toggle="modal" data-target="#exampleModal"><span class="fas fa-clipboard-check"
-                style="font-size: 50px;"></span></button>
+              <button type="button" name="modalCaptura" id="modalCaptura" class="btn btn-primary btn-lg  "
+                data-toggle="modal" data-target="#exampleModal"><span class="fas fa-clipboard-check"
+                  style="font-size: 50px;"></span></button>
+            </div>
           </div>
         </div>
-
+        </div>
         <!-- Modal -->
         <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
           <div class="modal-dialog" role="document">
             <div class="modal-content  ">
               <div class="modal-header">
-                <h4 class="modal-title ">Captura No: <span
-                    class="badge border-bottom-primary"><%= captura_grupo%></span> </h4>
+                <h6 class="modal-title ">Captura No: <span
+                    class="badge border-bottom-primary"><%= captura_grupo%></span> </h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -110,315 +111,299 @@
                 </div>
 
 
-
-                <label>
-                  <label>Seriales Contados:
-                    <span class="badge badge-warning " id="contadorWarning" hidden>
-                      <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                      </span>
-                      <span id="contadorWarning2" style="font-size: 15px ; color:black" hidden>
-                        Cantidad Incorrecta
-                      </span>
-                    </span>
-                  </label>
-                </label>
+                <form action="/conteo_guardar" method="POST">
+                  <div class="card">
 
 
-                <div class="row">
-
-                  <div class="col-lg-6 col- text-center">
-                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value"><span
-                        class="fas fa-minus-circle text-warning" style="font-size: 65px"></span></div>
-                  </div>
-                  <div class="col-lg-6  col- text-center">
-                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value"><span
-                        class="fas fa-plus-circle text-success" style="font-size: 65px"></span></div>
-                  </div>
-
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-lg-12 text-center">
-                    <div class="">
-                      <input type="number" class="form-control" name="contadorSeriales" id="contadorSeriales" value="0">
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
                     </div>
-                  </div>
+                    
+                    <div class="row text-center">
+
+                        <span class="col-4 col-lg-4 fas fa-minus-square text-warning" id="decrease" onclick="decreaseValue()" value="Decrease Value" style="font-size: 65px;"></span>
+                        
+                          <div class="col-4 col-lg-4 text-center">
+                            <div class="">
+                              <input type="number" class="form-control" name="contadorSeriales" id="contadorSeriales"
+                                value="0">
+                            </div>
+                          </div>
+                        
+                        <span class="col-4 col-lg-4 fas fa-plus-square text-success" id="increase" onclick="increaseValue()" value="Increase Value" style="font-size: 65px;"></span>
+                    </div>
+                    <div class="text-center"><strong >Seriales Contados</strong></div>
+                    <label class="mt-2">
+                     
+                        <span class="badge badge-warning " id="contadorWarning" hidden>
+                          <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
+                          </span>
+                          <span id="contadorWarning2" style="font-size: 15px ; color:black" hidden>
+                            Cantidad Incorrecta
+                          </span>
+                        </span>
+                      
+                    </label>
+                  
+                </div>
+                  <!-- Valores de POST -->
+                  <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
+                    placeholder="" value="<%=gafete%>" hidden>
+
+                  <input type="text" class="form-control" name="seriales" id="seriales" aria-describedby="helpId"
+                    placeholder="" value="" hidden>
+                  <input type="text" class="form-control" name="serialesObsoletos" id="serialesObsoletos"
+                    aria-describedby="helpId" placeholder="" value="" hidden>
+                  <input type="text" class="form-control" name="nombreContador" id="nombreContador"
+                    aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
+                  <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
+                    placeholder="" value="<%= ubicacion%>" hidden>
+                  <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
+                    aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
+                  <input type="text" class="form-control" name="rack" id="rack" aria-describedby="helpId" placeholder=""
+                    value="<%= rack%>" hidden>
+                  <!-- Valores de POST -->
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+          <!--/ Modal -->
+
+        </div>
+        <div class="col-lg-4 d-none d-sm-block">
+          <div class="col-lg-12">
+            <div>
+              <div class="card">
+                <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
+                <div class="card-body">
+                  <img src="/img/warehouse.jpg" alt="Warehouse Image" class="img-fluid">
                 </div>
               </div>
+            </div>
 
-              <form action="/conteo_guardar" method="POST">
+          </div>
+        </div>
+      </div>
 
-                <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
-                  placeholder="" value="<%=gafete%>" hidden>
+      <!-- Collapse -->
+      <div class="col-lg-12 mt-2 ">
 
-                <input type="text" class="form-control" name="seriales" id="seriales" aria-describedby="helpId"
-                  placeholder="" value="" hidden>
-                <input type="text" class="form-control" name="serialesObsoletos" id="serialesObsoletos"
-                  aria-describedby="helpId" placeholder="" value="" hidden>
-                <input type="text" class="form-control" name="nombreContador" id="nombreContador"
-                  aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
-                <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-                  placeholder="" value="<%= ubicacion%>" hidden>
-                <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
-                  aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
-                  <input type="text" class="form-control" name="rack" id="rack"
-                  aria-describedby="helpId" placeholder="" value="<%= rack%>" hidden>
-
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
-                </div>
-              </form>
-
+        <div class="card shadow mb-4 shadow-lg ">
+          <div class="accordion" id="accordionExample">
+            <div class="card-body" id="cardCapturado">
+              <!-- Seriales Capturados agregados por Jquery -->
+            </div>
+            <div class="card-header bg-secondary rounded-bottom">
+              <div class="text-white">Capturado</></div>
             </div>
           </div>
         </div>
-        <!--/ Modal -->
-
       </div>
-      <div class="col-lg-4 d-none d-sm-block">
-        <div class="col-lg-12">
-          <div>
-            <div class="card">
-              <div class="card-header bg-secondary text-white text-center"><strong id="date"></strong></div>
-              <div class="card-body">
-                <img src="/img/warehouse.jpg" alt="Warehouse Image" class="img-fluid">
-              </div>
-            </div>
-          </div>
+      <!-- /Collapse -->
 
-        </div>
-      </div>
+      <!-- /.container-fluid -->
     </div>
+    <!-- End of Main Content -->
 
-    <!-- Collapse -->
-    <div class="col-lg-12 mt-2 ">
+    <% include ./static/footer.ejs%>
 
-      <div class="card shadow mb-4 shadow-lg">
-        <div class="card-header py-3 bg-secondary">
-          <h3 class="text-white">Capturado</h3>
-        </div>
-        <div class="accordion" id="accordionExample">
-
-          <div class="card-body" id="cardCapturado">
-            <!-- Seriales Capturados agregados por Jquery -->
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!-- /Collapse -->
-
-    <!-- /.container-fluid -->
-  </div>
-  <!-- End of Main Content -->
-
-  <% include ./static/footer.ejs%>
-
-  <script>
-
-    function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
-
-    $(document).ready(function () {
-      $(document).on("keydown", disableF5);
-      $('#serial').focus()
-      soundOk()
-    });
-
-    serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
-    storage_units = <%- JSON.stringify(storage_units) %>;
-    let items = [];
-    let itemsObsoletos = [];
-
-    let currentDate = new Date(),
-      day = currentDate.getDate(),
-      month = currentDate.getMonth() + 1,
-      year = currentDate.getFullYear(),
-      date = day + "/" + month + "/" + year;
-
-    document.getElementById("date").innerHTML = date;
-
-
-    /////////////////////////////// Modal ////////////////////////////////////////////////
-    $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-    })
-
-    function increaseValue() {
-      let value = parseInt(document.getElementById('contadorSeriales').value, 10);
-      value = isNaN(value) ? 0 : value;
-      value++;
-      document.getElementById('contadorSeriales').value = value;
-    }
-
-    function decreaseValue() {
-      let value = parseInt(document.getElementById('contadorSeriales').value, 10);
-      value = isNaN(value) ? 0 : value;
-      value < 1 ? value = 1 : '';
-      value--;
-      document.getElementById('contadorSeriales').value = value;
-    }
-
-    modalCaptura.addEventListener("click", function (e) {
-
-      if (itemsObsoletos.length != 0) {
-
-        $('#serialesObsoletosRow').removeAttr('hidden')
-        for (let i = 0; i < itemsObsoletos.length; i++) {
-          $("#spanObsoletos").append(`<h6 style="display:inline; "><span class="badge badge-danger"> ${itemsObsoletos[i]} </span></h6>`);
-          $("#spanObsoletos").append(` `);
-        }
-      }
-    });
-    //Si el modal se cierra borra todos los append de la funcion de arriba
-    $('#exampleModal').on('hidden.bs.modal', function () {
-      $("#spanObsoletos").empty()
-    })
-
-    /////////////////////////////// Modal ////////////////////////////////////////////////
-
-
-    $('#serial').keypress(function (e) {
-
-      if (e.which == 13) {
-        e.preventDefault()
-        serialFunction()
-        $('#serial').val("")
-      }
-    })
+    <script>
 
 
 
-    function guardarNumeros(tipo) {
+      function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
 
-      let color
-      serialVal = document.getElementById('serial').value;
-      if (tipo == 'activo') {
-        items.push(serialVal.substr(1));
-        color = 'success'
-        $('#seriales').val(`${items}`)
-      } else {
-        itemsObsoletos.push(serialVal.substr(1));
-        color = 'danger'
-        $('#serialesObsoletos').val(`${itemsObsoletos}`)
+      $(document).ready(function () {
+        $(document).on("keydown", disableF5);
+        $('#serial').focus()
+        soundOk()
+      });
+
+      serialesCapturados = <%- JSON.stringify(serialesCapturados) %>;
+      storage_units = <%- JSON.stringify(storage_units) %>;
+      let items = [];
+      let itemsObsoletos = [];
+
+      let currentDate = new Date(),
+        day = currentDate.getDate(),
+        month = currentDate.getMonth() + 1,
+        year = currentDate.getFullYear(),
+        date = day + "/" + month + "/" + year;
+
+      document.getElementById("date").innerHTML = date;
+
+
+      /////////////////////////////// Modal ////////////////////////////////////////////////
+      $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+      })
+
+      function increaseValue() {
+        let value = parseInt(document.getElementById('contadorSeriales').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('contadorSeriales').value = value;
       }
 
-      $('#gafete').val(`${items}`)
-      let addSpan = `<h6 style="display:inline; "><span class="badge badge-${color} fspan">${serialVal.substr(1)}</span></h6> `
-      $('#cardCapturado').append(addSpan)
+      function decreaseValue() {
+        let value = parseInt(document.getElementById('contadorSeriales').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value < 1 ? value = 1 : '';
+        value--;
+        document.getElementById('contadorSeriales').value = value;
+      }
 
+      modalCaptura.addEventListener("click", function (e) {
 
-      return false; // stop submission
-    }
+        if (itemsObsoletos.length != 0) {
 
-
-    function serialFunction() {
-      let serial = $('#serial').val();
-      let encontrado = false;
-
-
-      if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1)))) {
-
-        for (let i = 0; i < serialesCapturados.length; i++) {
-
-          if (serial.substr(1) == serialesCapturados[i].serial) {
-
-            encontrado = true;
-            soundWrong()
-            $('#serialWarning').removeAttr('hidden')
-            $('#serialWarning2').text('Serial Duplicado')
-            $('#serialWarning2').removeAttr('hidden')
-            $('#serial').val('')
-            break;
+          $('#serialesObsoletosRow').removeAttr('hidden')
+          for (let i = 0; i < itemsObsoletos.length; i++) {
+            $("#spanObsoletos").append(`<h6 style="display:inline; "><span class="badge badge-danger"> ${itemsObsoletos[i]} </span></h6>`);
+            $("#spanObsoletos").append(` `);
           }
         }
-        for (let y = 0; y < items.length; y++) {
-          if (serial.substr(1) == items[y]) {
+      });
+      //Si el modal se cierra borra todos los append de la funcion de arriba
+      $('#exampleModal').on('hidden.bs.modal', function () {
+        $("#spanObsoletos").empty()
+      })
 
-            encontrado = true;
-            soundWrong()
-            $('#serialWarning').removeAttr('hidden')
-            $('#serialWarning2').text('Serial Duplicado')
-            $('#serialWarning2').removeAttr('hidden')
-            $('#serial').val('')
-            break;
-          }
+      /////////////////////////////// Modal ////////////////////////////////////////////////
 
+
+      $('#serial').keypress(function (e) {
+
+        if (e.which == 13) {
+          e.preventDefault()
+          serialFunction()
+          $('#serial').val("")
         }
-        for (let x = 0; x < itemsObsoletos.length; x++) {
-          if (serial.substr(1) == itemsObsoletos[x]) {
+      })
 
-            encontrado = true;
-            soundWrong()
-            $('#serialWarning').removeAttr('hidden')
-            $('#serialWarning2').text('Serial Duplicado')
-            $('#serialWarning2').removeAttr('hidden')
-            $('#serial').val('')
-            break;
-          }
 
+
+      function guardarNumeros(tipo) {
+
+        let color
+        serialVal = document.getElementById('serial').value;
+        if (tipo == 'activo') {
+          items.push(serialVal.substr(1));
+          color = 'success'
+          $('#seriales').val(`${items}`)
+        } else {
+          itemsObsoletos.push(serialVal.substr(1));
+          color = 'danger'
+          $('#serialesObsoletos').val(`${itemsObsoletos}`)
         }
-        if (encontrado == false) {
-          let SerialExistente = false
-          for (let y = 0; y < storage_units.length; y++) {
 
-            if (serial.substr(1) == storage_units[y].storage_unit) {
-              SerialExistente = true
-              break
+        $('#gafete').val(`${items}`)
+        let addSpan = `<h6 style="display:inline; "><span class="badge badge-${color} fspan">${serialVal.substr(1)}</span></h6> `
+        $('#cardCapturado').append(addSpan)
+
+
+        return false; // stop submission
+      }
+
+
+      function serialFunction() {
+        let serial = $('#serial').val();
+        let encontrado = false;
+
+
+        if (serial.charAt(0) == "S" && Number.isInteger(parseInt(serial.substr(1)))) {
+
+          for (let i = 0; i < serialesCapturados.length; i++) {
+
+            if (serial.substr(1) == serialesCapturados[i].serial) {
+
+              encontrado = true;
+              soundWrong()
+              $('#serialWarning').removeAttr('hidden')
+              $('#serialWarning2').text('Serial Duplicado')
+              $('#serialWarning2').removeAttr('hidden')
+              $('#serial').val('')
+              break;
             }
           }
+          for (let y = 0; y < items.length; y++) {
+            if (serial.substr(1) == items[y]) {
+
+              encontrado = true;
+              soundWrong()
+              $('#serialWarning').removeAttr('hidden')
+              $('#serialWarning2').text('Serial Duplicado')
+              $('#serialWarning2').removeAttr('hidden')
+              $('#serial').val('')
+              break;
+            }
+
+          }
+          for (let x = 0; x < itemsObsoletos.length; x++) {
+            if (serial.substr(1) == itemsObsoletos[x]) {
+
+              encontrado = true;
+              soundWrong()
+              $('#serialWarning').removeAttr('hidden')
+              $('#serialWarning2').text('Serial Duplicado')
+              $('#serialWarning2').removeAttr('hidden')
+              $('#serial').val('')
+              break;
+            }
+
+          }
+          if (encontrado == false) {
+            let SerialExistente = false
+            for (let y = 0; y < storage_units.length; y++) {
+
+              if (serial.substr(1) == storage_units[y].storage_unit) {
+                SerialExistente = true
+                break
+              }
+            }
 
 
-          if (SerialExistente == true) {
-            guardarNumeros('activo')
-          } else {
-            guardarNumeros('obsoleto')
+            if (SerialExistente == true) {
+              guardarNumeros('activo')
+            } else {
+              guardarNumeros('obsoleto')
+            }
+
+            soundOk()
+            //$('form#submitSerial').submit();
+            $('#serialWarning').prop('hidden', true)
+            $('#serialWarning2').prop('hidden', true)
           }
 
-          soundOk()
-          //$('form#submitSerial').submit();
-          $('#serialWarning').prop('hidden', true)
-          $('#serialWarning2').prop('hidden', true)
+        } else {
+          soundWrong()
+          $('#serialWarning').removeAttr('hidden')
+          $('#serialWarning2').text('Incorrecto')
+          $('#serialWarning2').removeAttr('hidden')
+          $('#serial').val('')
         }
 
-      } else {
-        soundWrong()
-        $('#serialWarning').removeAttr('hidden')
-        $('#serialWarning2').text('Incorrecto')
-        $('#serialWarning2').removeAttr('hidden')
-        $('#serial').val('')
       }
 
-    }
 
+      btnCapturar.addEventListener("click", function (e) {
 
-    btnCapturar.addEventListener("click", function (e) {
+        let cantidad = $('#contadorSeriales').val();
 
-      let cantidad = $('#contadorSeriales').val();
+        if (cantidad == (items.length + itemsObsoletos.length)) {
 
-      if (cantidad == (items.length + itemsObsoletos.length)) {
+          $('#contadorWarning').prop('hidden', true)
+          $('#contadorWarning2').prop('hidden', true)
+          soundOk()
+        } else {
+          e.preventDefault()
+          $('#contadorWarning').removeAttr('hidden')
+          $('#contadorWarning2').removeAttr('hidden')
+          soundWrong()
 
-        $('#contadorWarning').prop('hidden', true)
-        $('#contadorWarning2').prop('hidden', true)
-        soundOk()
-        console.log("bien");
+        }
+      });
 
-      } else {
-        e.preventDefault()
-        console.log("mal");
-
-
-        $('#contadorWarning').removeAttr('hidden')
-        $('#contadorWarning2').removeAttr('hidden')
-        soundWrong()
-
-      }
-    });
-
-
-
-
-
-
-
-
-  </script>
+    </script>
