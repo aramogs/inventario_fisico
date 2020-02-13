@@ -271,9 +271,7 @@
       if (e.which == 13) {
         e.preventDefault()
         cantidadFunction()
-        $('#cantidad').val("")
-        $('#serial').val("")
-        $('#parte').val("")
+        
       }
     })
 
@@ -385,6 +383,9 @@
           document.getElementById("serial").focus();
         }
 
+        $('#cantidad').val("")
+        $('#serial').val("")
+        $('#parte').val("")
 
       } else {
         soundWrong()
