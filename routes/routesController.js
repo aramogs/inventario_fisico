@@ -8,7 +8,7 @@ const saveAs = require('file-saver')
 const funcion = require('../public/js/controllerFunctions');
 const funcionE = require('../public/js/empleadosFunctions');
 //Conexion RabbitMQ
-const RabbitPublisher = require('../public/js/RabbitMQ_Publisher');
+//const //RabbitPublisher = require('../public/js/RabbitMQ_Publisher');
 
 // Index GET
 controller.index_GET = (req, res) => {
@@ -379,7 +379,7 @@ controller.conteo_guardar_POST = (req, res) => {
           
           
             
-            RabbitPublisher.get_label(serialesObsoletosArray[i], (callback) => {})
+            //RabbitPublisher.get_label(serialesObsoletosArray[i], (callback) => {})
             
 
             funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletosArray[i], ubicacion, gafete2[0], (err, result) => {
@@ -392,7 +392,7 @@ controller.conteo_guardar_POST = (req, res) => {
 
         }
     } else if(serialesObsoletos !="") {
-        RabbitPublisher.get_label(serialesObsoletos, (callback) => {})
+        //RabbitPublisher.get_label(serialesObsoletos, (callback) => {})
         funcion.InsertCapturaSerialObsoleto(captura_grupo, serialesObsoletos,  ubicacion, gafete2[0], (err, result) => {
             if (err != null) {
                 errores = "true"
@@ -455,27 +455,54 @@ controller.conteoObsoleto_guardar_POST = (req, res) => {
         let cantidadesArray = cantidades.split(',');
         for (let i = 0; i < serialesArray.length; i++) {
 
+            if(partesArray[i]!=undefined && cantidadesArray[i]!=undefined){
+              
             funcion.UpdateSerialObsoleto(serialesArray[i], partesArray[i], cantidadesArray[i], (err, result) => {
          
                 if (err != null || result.affectedRows==0) {
                     errores = true
                     res.redirect('/error');
-                    
-                  
+                                
+                }
+
+
+            })
+        }else if(partesArray[i]!=undefined && cantidadesArray[i]==undefined){
+            
+            funcion.UpdateSerialObsoletoNull(serialesArray[i], partesArray[i],  (err, result) => {
+         
+                if (err != null || result.affectedRows==0) {
+                    errores = true
+                    res.redirect('/error');
+                                
                 }
 
 
             })
 
         }
-    } else if(seriales !="") {
 
+        }
+    } else if(seriales !="") {
+        
+        if(partes!="" && cantidades!= ""){
+    
         funcion.UpdateSerialObsoleto(seriales, partes, cantidades, (err, result) => {
             if (err != null || result.affectedRows==0) {
                 errores = true
                 res.redirect('/error');
             }
         })
+    }else if(partes!="" && cantidades== ""){
+  
+        funcion.UpdateSerialObsoletoNull(seriales, partes, (err, result) => {
+            if (err != null || result.affectedRows==0) {
+                errores = true
+                res.redirect('/error');
+            }
+        })
+    }
+
 
     }
 

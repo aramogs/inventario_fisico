@@ -183,6 +183,23 @@ funcion.UpdateSerialObsoleto = (serial, parte, cantidad,callback)=>{
 
 }
 
+funcion.UpdateSerialObsoletoNull = (serial, parte,callback)=>{
+
+    db.query(`UPDATE captura SET material = '${parte}'
+     WHERE serial = '${serial}'`, function (err, result, fields) {
+        if (err) {
+
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+
+
+}
+
 funcion.ticketsCapturados= (callback)=>{
     db.query(`SELECT serial FROM captura WHERE captura_grupo IS NULL`,function (err, result, fields) {
         if (err) {
