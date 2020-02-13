@@ -8,15 +8,16 @@
     <!-- Page Heading -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 ">
-                <div class="row ">
-                    <div class="col-lg-12">
-                        <h1 class="display-5 text-center">Seleccionar Rack</h1>
-                    </div>
-                </div>
-                <hr>
+            <div class="col-lg-12">
+                <h3 class="text-center">Seleccionar Rack</h3>
             </div>
         </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="" id="searchRack" aria-describedby="helpId" placeholder="">
+            <small id="helpId" class="form-text text-muted">Segregar Rack</small>
+        </div>
+        <hr>
+
     </div>
     <br>
     <!-- form start -->
@@ -35,11 +36,12 @@
                 <div class="row">
                     <!-- Card -->
                     <% for (let i = 0; i < racks.length; i++) { %>
-        
-                    <div class="col- mt-4 mr-1 ml-1 grow">
+
+                    <div class="col- mb-2 mr-1 ml-1 grow">
                         <div style="animation-delay: .15s" class="card text-center animated bounceIn">
-                                <button type="submit" class="btn btn-outline-info" name="id_area"
-                                    formaction="/storageBin/<%= racks[i].racks %> " value="<%= racks[i].racks %> "><%= racks[i].racks %> </button>
+                            <button type="submit" class="btn btn-outline-info" name="id_area"
+                                formaction="/storageBin/<%= racks[i].racks %> "
+                                value="<%= racks[i].racks %> "><%= racks[i].racks %> </button>
                         </div>
                     </div>
                     <% } %>
@@ -63,4 +65,24 @@
         soundOk()
         $('#ubicacion').focus()
     });
+
+    let botones = document.getElementsByClassName('btn')
+    let matches
+    searchRack.focus()
+    searchRack.addEventListener("keyup", function(){ 
+       
+        this.value = this.value.toUpperCase();
+        for (let i = 1; i < botones.length; i++) {
+                
+             matches = (botones[i].value).indexOf(this.value) >= 0 ? true : false;
+            if (matches) {
+                    botones[i].parentElement.parentElement.removeAttribute("hidden")                    
+            }else{
+                    botones[i].parentElement.parentElement.setAttribute("hidden", true)
+                
+            }
+        }
+
+
+     });
 </script>
