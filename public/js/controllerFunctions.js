@@ -553,6 +553,20 @@ funcion.Update_Ubicacion_Auditada = (ubicacion,callback)=>{
     })
 }
 
+funcion.Update_Ubicacion_Auditada_Vulcanizado = (ubicacion,callback)=>{
+    db.query(`UPDATE auditoria SET estado_auditoria = 1 WHERE id_ubicacion = '${ubicacion}'`, function (err, result, fields) {
+        if (err) {
+          
+            callback(err, null);
+
+        } else {
+
+            callback(null, result);
+        }
+    })
+}
+
+
 funcion.Update_Ubicacion_Captura_Terminado = (id_ubicacion, emp_id, estado_auditoria, callback)=>{
     db.query(`
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
