@@ -997,8 +997,7 @@ controller.auditar_ubicacion_POST = (req, res) => {
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
         funcion.Search_Storage_Location(ubicacion, (err, storage_location) => {
                 if (storage_location.length == 0) {
-                    
-
+                    storage_location = null
                 funcion.SelectUbicacion_Equals_Terminado(ubicacion, (err, capturas) => {
                     funcion.SelectSerial_Contado(ubicacion, (err, contados) => {
                         funcion.SelectSerial_SinContar(ubicacion, (err, sin_contar) => {
@@ -1011,12 +1010,14 @@ controller.auditar_ubicacion_POST = (req, res) => {
                                 capturas,
                                 ubicacion,
                                 contados,
-                                sin_contar
+                                sin_contar,
+                                storage_location
                             })
                         })
                     })
                 })
             }else if(storage_location[0].storage_location == "vulcanizado"){
+               storage_location =  storage_location[0].storage_location
                 funcion.SelectUbicacion_Equals_Vulcanizado(ubicacion, (err, capturas) => {
                     funcion.SelectSerial_Contado_Vulcanizado(ubicacion, (err, contados) => {
                         funcion.SelectSerial_SinContar_Vulcanizado(ubicacion, (err, sin_contar) => {
@@ -1029,7 +1030,8 @@ controller.auditar_ubicacion_POST = (req, res) => {
                                 capturas,
                                 ubicacion,
                                 contados,
-                                sin_contar
+                                sin_contar,
+                                storage_location
                             })
                         })
                     })
@@ -1073,11 +1075,11 @@ controller.serial_auditado_POST = (req, res) => {
 }
 
 controller.terminar_auditoria_POST = (req, res) => {
-
+    
     ubicacion = req.body.ubicacion
     gafete = req.body.gafete
     seriales = req.body.seriales
-
+    storage_location = req.body.storage_location
 
     for (let i = 0; i < seriales.length; i++) {
         funcion.Update_Serial_Auditado(seriales[i], (err, result) => {
@@ -1086,15 +1088,29 @@ controller.terminar_auditoria_POST = (req, res) => {
     }
 
     funcionE.empleadosNombre(gafete, (err, nombre) => {
-        funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => {
 
-            res.render('auditoria_terminada.ejs', {
-                ubicacion,
-                gafete,
-                nombre
+        if (storage_location == "vulcanizado") {
+            funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => {
 
+                res.render('auditoria_terminada.ejs', {
+                    ubicacion,
+                    gafete,
+                    nombre
+    
+                })
             })
-        })
+        }else{
+            funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => {
+
+                res.render('auditoria_terminada.ejs', {
+                    ubicacion,
+                    gafete,
+                    nombre
+    
+                })
+            })
+        }
+
     })
 }
 
@@ -1165,12 +1181,7 @@ controller.terminar_auditoria_temp_POST = (req, res) => {
 
 
     for (let i = 0; i < seriales.length; i++) {
-        funcion.Update_Serial_Auditado_VULC(gafete, seriales[i], (err, result) => {
-            console.log(err);
-            console.log(result);
-
-
-        })
+        funcion.Update_Serial_Auditado_VULC(gafete, seriales[i], (err, result) => { })
     }
 
 }
