@@ -619,7 +619,7 @@ funcion.CountTicketsCapturados= (callback)=>{
 
 funcion.CountSerialesCapturados= (callback)=>{
     db.query(`SELECT COUNT (serial) AS SCapturados FROM captura WHERE (captura_grupo IS NOT NULL )
-    AND (material IS NOT NULL)`, function (err, result, fields) {
+    `, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
