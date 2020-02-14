@@ -572,7 +572,8 @@ funcion.Update_Ubicacion_Captura_Terminado = (id_ubicacion, emp_id, estado_audit
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
     VALUES (LEFT('${id_ubicacion}',2), ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
-     id_ubicacion = LEFT('${id_ubicacion}',2)
+     id_ubicacion = LEFT('${id_ubicacion}',2),
+     estado_auditoria = 0
     `,
     function (err, result, fields) {
         if (err) {
@@ -591,7 +592,8 @@ funcion.Update_Ubicacion_Captura_Vulcanizado = (id_ubicacion, emp_id, estado_aud
     INSERT INTO auditoria (id_ubicacion, emp_id, estado_auditoria)
     VALUES ('${id_ubicacion}', ${emp_id}, ${estado_auditoria})
      ON DUPLICATE KEY UPDATE 
-     id_ubicacion = '${id_ubicacion}'
+     id_ubicacion = '${id_ubicacion}',
+     estado_auditoria = 0
     `,
     function (err, result, fields) {
         if (err) {
