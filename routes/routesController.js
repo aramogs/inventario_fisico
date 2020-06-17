@@ -279,13 +279,14 @@ controller.conteo_POST = (req, res) => {
 
     funcion.Select_GruposCapturados((err, gruposCapturados) => {
         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
+console.log(gruposCapturados);
 
 
             if (gruposCapturados == "") {
                 captura_grupo = `${gafete}-${+1}`
                 captura_actual = ""
                 funcion.Material_StUnit((err, storage_units) => {
-                    funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {
+                    funcion.Select_CapturaGrupo(captura_grupo, (err, capturasPorGrupo) => {                        
                         res.render('conteo.ejs', {
                             gafete,
                             nombreContador,
@@ -941,7 +942,8 @@ controller.graficas_GET = (req, res) => {
                                     TalonesNoContados = TalonesNoContados[0].TalonesNoContados
 
 
-
+                                    console.log(TalonesP);
+                                    
                                     res.render('graficas.ejs', {
                                         TicketsCapturados,
                                         SerialesCapturados,

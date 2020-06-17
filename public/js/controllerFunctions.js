@@ -214,7 +214,7 @@ funcion.ticketsCapturados= (callback)=>{
 }
 
 funcion.Select_SerialesCapturados= (callback)=>{
-    db.query(`SELECT serial FROM captura WHERE captura_grupo IS NOT NULL`,function (err, result, fields) {
+    db.query(`SELECT serial FROM captura WHERE captura_grupo NOT LIKE "%T-%"`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -227,7 +227,7 @@ funcion.Select_SerialesCapturados= (callback)=>{
 }
 
 funcion.Select_GruposCapturados= (callback)=>{
-    db.query(`SELECT captura_grupo FROM captura WHERE captura_grupo IS NOT NULL`,function (err, result, fields) {
+    db.query(`SELECT captura_grupo FROM captura WHERE captura_grupo NOT LIKE "%T-%"`,function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -679,7 +679,7 @@ funcion.DeleteUbicacion= (idTicket,callback)=>{
 }
 
 funcion.CountTicketsCapturados= (callback)=>{
-    db.query(`SELECT COUNT (serial) AS TCapturados FROM captura WHERE captura_grupo IS NULL`, function (err, result, fields) {
+    db.query(`SELECT COUNT (serial) AS TCapturados FROM captura WHERE captura_grupo LIKE "%T-%"`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);
@@ -692,7 +692,7 @@ funcion.CountTicketsCapturados= (callback)=>{
 }
 
 funcion.CountSerialesCapturados= (callback)=>{
-    db.query(`SELECT COUNT (serial) AS SCapturados FROM captura WHERE (captura_grupo IS NOT NULL )
+    db.query(`SELECT COUNT (serial) AS SCapturados FROM captura WHERE (captura_grupo  NOT LIKE "%T-%" )
     `, function (err, result, fields) {
         if (err) {
           

@@ -218,7 +218,8 @@
             </div>
           </div>
         </div>
-        <div class="carousel-item ">
+
+        <!-- <div class="carousel-item ">
             <div class="row">
               <div class="col-1"></div>
               <div class="col-4">
@@ -289,7 +290,9 @@
             </div>
   
   
-          </div>
+          </div> -->
+
+          
       <div class="carousel-item ">
         <div class="row">
           <div class="col-1"></div>
@@ -414,54 +417,54 @@
       }
     });
 
-    new Chart(document.getElementById("bar-chart2"), {
-      type: 'bar',
-      data: {
-        labels: ["Contados", "Sin Contar"],
-        datasets: [
-          {
-            label: "Contados Pendientes",
-            backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
-            borderWidth: 5,
-            data: [<%= TalonesContados %>, <%= TalonesNoContados %>]
-          }
-        ]
-      },
+    // new Chart(document.getElementById("bar-chart2"), {
+    //   type: 'bar',
+    //   data: {
+    //     labels: ["Contados", "Sin Contar"],
+    //     datasets: [
+    //       {
+    //         label: "Contados Pendientes",
+    //         backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+    //         borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+    //         borderWidth: 5,
+    //         data: [<%= TalonesContados %>, <%= TalonesNoContados %>]
+    //       }
+    //     ]
+    //   },
 
-      options: {
-        cutoutPercentage: 75,
-        legend: { display: false },
-        title: { display: false },
-        datalabels: { display: false },
-        scaleShowLabels: false,
-        scales: {
-          xAxes: [{
-            gridLines: { display: false },
-            ticks: { display: false ,min : 0}
-          }],
+    //   options: {
+    //     cutoutPercentage: 75,
+    //     legend: { display: false },
+    //     title: { display: false },
+    //     datalabels: { display: false },
+    //     scaleShowLabels: false,
+    //     scales: {
+    //       xAxes: [{
+    //         gridLines: { display: false },
+    //         ticks: { display: false ,min : 0}
+    //       }],
 
-          yAxes: [{
-            gridLines: { display: false },
-            ticks: { display: false, min : 0}
+    //       yAxes: [{
+    //         gridLines: { display: false },
+    //         ticks: { display: false, min : 0}
 
-          }]
-        },
-        plugins: {
-          datalabels: {
-            display: true,
-            anchor: 'top',
-            clamp: true,
+    //       }]
+    //     },
+    //     plugins: {
+    //       datalabels: {
+    //         display: true,
+    //         anchor: 'top',
+    //         clamp: true,
 
-            color: 'white',
-            font: {
-              size: 30,
-            }
-          }
-        }
-      }
+    //         color: 'white',
+    //         font: {
+    //           size: 30,
+    //         }
+    //       }
+    //     }
+    //   }
 
-    });
+    // });
 
     TalonesP = <%- JSON.stringify(TalonesP) %>;
 
