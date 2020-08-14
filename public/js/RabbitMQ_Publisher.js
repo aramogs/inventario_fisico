@@ -18,7 +18,7 @@ amqp.connect('amqp://TristoneDel:1234@10.56.98.233', function(error0, connection
     channel.sendToQueue(queue, Buffer.from(msg), {
       persistent: true
     });
-    console.log(`[x] Sent '${msg}'`);
+    // console.log(`[x] Sent '${msg}'`);
   });
   setTimeout(function() {
     connection.close();
