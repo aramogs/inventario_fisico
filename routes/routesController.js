@@ -279,7 +279,7 @@ controller.conteo_POST = (req, res) => {
 
     funcion.Select_GruposCapturados((err, gruposCapturados) => {
         funcion.Select_SerialesCapturados((err, serialesCapturados) => {
-console.log(gruposCapturados);
+
 
 
             if (gruposCapturados == "") {
@@ -543,12 +543,12 @@ controller.cancelar_multiple_POST = (req, res) => {
 
 
     funcion.ticketsCapturados((err, tickets) => {
-        if (err) throw err;
+        if (err) console.error();
         funcionE.empleadosNombre(gafete, (err, nombre) => {
             funcion.misTicketsCapturadosC(gafete, (err, misTickets) => {
-                if (err) throw err;
+                if (err) console.error();
                 funcion.TalonesEntregados((err, talones) => {
-                    if (err) throw err;
+                    if (err) console.error();
 
                     res.render('cancelar_multiple.ejs', {
                         gafete,
@@ -576,27 +576,27 @@ controller.guardar_cancelado_POST = (req, res) => {
     for (let i = ticketI; i <= ticketF; i++) {
 
         funcion.InsertCaptura(i, "CANCELADO", 0, "N/A", gafete, (err, result3) => {
-            if (err) throw err;
+            if (err) console.error();
             funcion.IncrementCaptura(idTalon, (err, resul) => {
-                if (err) throw err;
+                if (err) console.error();
             });
         });
     }
 
     funcion.material((err, materiales) => {
-        if (err) throw err;
+        if (err) console.error();
         funcionE.empleadosNombre(gafete, (err, nombre) => {
-            if (err) throw err;
+            if (err) console.error();
             funcion.ticketsCapturados((err, tickets) => {
-                if (err) throw err;
+                if (err) console.error();
                 funcion.MaxTickets((err, maxmin) => {
-                    if (err) throw err;
+                    if (err) console.error();
                     funcion.misTicketsCapturados(gafete, (err, misTickets) => {
-                        if (err) throw err;
+                        if (err) console.error();
                         funcion.ubicacion((err, ubicacion) => {
-                            if (err) throw err;
+                            if (err) console.error();
                             funcion.Talones((err, talones) => {
-                                if (err) throw err;
+                                if (err) console.error();
 
                                 res.render('mesa_captura.ejs', {
                                     gafete,
@@ -628,7 +628,7 @@ controller.talones_POST = (req, res) => {
     funcionE.empleadosNombre(gafete, (err, nombre) => {
         funcion.Talones((err, talones) => {
             funcionE.empleados((err, empleados) => {
-                if (err) throw err;
+                if (err) console.error();
                 funcion.CountTalonesP((err, TalonesP) => {
                     res.render('talones.ejs', {
                         gafete,
@@ -655,7 +655,7 @@ controller.acceso_POST = (req, res) => {
                 funcionE.empleados((err, empleados) => {
                     funcion.Select_Captura((err, captura) => {
                         funcion.Select_Material((err, material) => {
-                            if (err) throw err;
+                            if (err) console.error();
                             res.render('accesos.ejs', {
                                 gafete,
                                 nombre,
@@ -687,11 +687,11 @@ controller.guardar_talon_POST = (req, res) => {
 
 
     funcion.InsertTalon(inicio, final, empleado, nombreE, telefono, (err, result) => {
-        if (err) throw err;
+        if (err) console.error();
         funcionE.empleadosNombre(gafete, (err, nombre) => {
             funcion.Talones((err, talones) => {
                 funcionE.empleados((err, empleados) => {
-                    if (err) throw err;
+                    if (err) console.error();
                     funcion.CountTalonesP((err, TalonesP) => {
                         res.render('talones.ejs', {
                             gafete,
@@ -718,7 +718,7 @@ controller.delete_talon_POST = (req, res) => {
         funcionE.empleadosNombre(gafete, (err, nombre) => {
             funcion.Talones((err, talones) => {
                 funcionE.empleados((err, empleados) => {
-                    if (err) throw err;
+                    if (err) console.error();
                     funcion.CountTalonesP((err, TalonesP) => {
                         res.render('talones.ejs', {
                             gafete,
@@ -752,7 +752,7 @@ controller.status_talon_POST = (req, res) => {
         funcionE.empleadosNombre(gafete, (err, nombre) => {
             funcion.Talones((err, talones) => {
                 funcionE.empleados((err, empleados) => {
-                    if (err) throw err;
+                    if (err) console.error();
                     funcion.CountTalonesP((err, TalonesP) => {
                         res.render('talones.ejs', {
                             gafete,
@@ -781,7 +781,7 @@ controller.guardar_ubicacion_POST = (req, res) => {
                 funcionE.empleadosNombre(gafete, (err, nombre) => {
                     funcion.Talones((err, talones) => {
                         funcionE.empleados((err, empleados) => {
-                            if (err) throw err;
+                            if (err) console.error();
                             funcion.Select_Captura((err, captura) => {
                                 funcion.Select_Material((err, material) => {
                                     res.render('accesos.ejs', {
@@ -817,7 +817,7 @@ controller.delete_ubicacion_POST = (req, res) => {
                 funcionE.empleadosNombre(gafete, (err, nombre) => {
                     funcion.Talones((err, talones) => {
                         funcionE.empleados((err, empleados) => {
-                            if (err) throw err;
+                            if (err) console.error();
                             funcion.Select_Captura((err, captura) => {
                                 funcion.Select_Material((err, material) => {
                                     res.render('accesos.ejs', {
@@ -896,7 +896,7 @@ controller.delete_acceso_POST = (req, res) => {
     empleado = req.body.idGafete
 
     funcionE.DeleteAcceso(empleado, (err, result) => {
-        if (err) throw err;
+        if (err) console.error();
         funcion.ubicacion((err, ubicaciones) => {
             funcionE.empleadosNombre(gafete, (err, nombre) => {
                 funcion.Talones((err, talones) => {
@@ -940,9 +940,6 @@ controller.graficas_GET = (req, res) => {
                                     TicketsFaltantes = TicketsTotales[0].TTotales - TicketsCapturados[0].TCapturados
                                     TalonesContados = TalonesContados[0].TalonesContados
                                     TalonesNoContados = TalonesNoContados[0].TalonesNoContados
-
-
-                                    console.log(TalonesP);
                                     
                                     res.render('graficas.ejs', {
                                         TicketsCapturados,
