@@ -352,9 +352,10 @@ controller.conteo_guardar_POST = (req, res) => {
         funcion.Update_Ubicacion_Captura_Terminado(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
     } else if (storage_location == "vulcanizado") {
         funcion.Update_Ubicacion_Captura_Vulcanizado(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
+    }   else if (storage_location == "mp") {
+            funcion.Update_Ubicacion_Captura_MP(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
+
     }
-
-
 
 
     if (seriales.includes(",")) {
@@ -1035,6 +1036,26 @@ controller.auditar_ubicacion_POST = (req, res) => {
                         })
                     })
                 })
+            } else if (storage_location[0].storage_location == "mp") {
+                storage_location = storage_location[0].storage_location
+                funcion.SelectUbicacion_Equals_MP(ubicacion, (err, capturas) => {
+                    funcion.SelectSerial_Contado_MP(ubicacion, (err, contados) => {
+                        funcion.SelectSerial_SinContar_MP(ubicacion, (err, sin_contar) => {
+                            contados = contados.length
+                            sin_contar = sin_contar.length
+
+                            res.render('auditar_ubicacion.ejs', {
+                                gafete,
+                                nombreContador,
+                                capturas,
+                                ubicacion,
+                                contados,
+                                sin_contar,
+                                storage_location
+                            })
+                        })
+                    })
+                })
             }
 
         })
@@ -1095,6 +1116,8 @@ controller.terminar_auditoria_POST = (req, res) => {
 
             if (storage_location == "vulcanizado") {
                 funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => { })
+            } else if(storage_location == "mp"){
+                funcion.Update_Ubicacion_Auditada_MP(ubicacion, (err, result) => { })
             } else {
                 funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => { })
             }
@@ -1105,7 +1128,10 @@ controller.terminar_auditoria_POST = (req, res) => {
 
             if (storage_location == "vulcanizado") {
                 funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => { })
-            } else {
+            }  else if(storage_location == "mp"){
+                funcion.Update_Ubicacion_Auditada_MP(ubicacion, (err, result) => { })
+            }
+                else {
                 funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => { })
             }
 
