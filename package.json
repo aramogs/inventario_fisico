@@ -38,6 +38,6 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.1",
-    "nodemon": "^1.19.2"
+    "nodemon": "^2.0.4"
   }
 }
