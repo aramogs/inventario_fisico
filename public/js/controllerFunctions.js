@@ -408,9 +408,8 @@ funcion.ubicacion = (callback)=>{
         }
     })
 }
-
 funcion.SelectAuditoria = (callback)=>{
-    db.query(`SELECT DISTINCT id_ubicacion AS distinct_ubicacion,estado_auditoria  FROM auditoria ORDER BY estado_auditoria ASC`, function (err, result, fields) {
+    db.query(`SELECT DISTINCT LEFT(id_ubicacion,2) AS distinct_ubicacion,estado_auditoria  FROM auditoria ORDER BY estado_auditoria ASC`, function (err, result, fields) {
         if (err) {
           
             callback(err, null);

@@ -354,7 +354,6 @@ controller.conteo_guardar_POST = (req, res) => {
         funcion.Update_Ubicacion_Captura_Vulcanizado(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
     }   else if (storage_location == "mp") {
             funcion.Update_Ubicacion_Captura_MP(id_ubicacion, gafete2[0], estado_auditoria, (err, result) => { });
-
     }
 
 
@@ -971,7 +970,7 @@ controller.auditar_POST = (req, res) => {
 
     funcionE.empleadosNombre(gafete, (err, nombreContador) => {
         funcion.SelectAuditoria((err, ubicaciones) => {
-
+            console.log(ubicaciones);
             funcion.SelectAuditoria_Auditado((err, auditado) => {
                 funcion.SelectAuditoria_NoAuditado((err, noAuditado) => {
                     auditado = auditado.length
