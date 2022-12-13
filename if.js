@@ -17,6 +17,7 @@ const routes = require('./routes/routes');
 
 app.get(db);
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
+app.use(bodyParser.json());
 app.use(routes);
 
 app.set('port', process.env.PORT || 3009);

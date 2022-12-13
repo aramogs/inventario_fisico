@@ -41,6 +41,13 @@ router.post('/auditar_temp', routesController.auditar_temp_POST);
 router.post('/auditar_ubicacion_temp', routesController.auditar_ubicacion_temp_POST);
 router.post('/terminar_auditoria_temp', routesController.terminar_auditoria_temp_POST);
 
+/////////////////////////////////////////////////////////////////////////
+
+router.post('/revisarSerial', routesController.revisarSerial_POST);
+router.post('/insertConteoManual', routesController.insertConteoManual_POST);
+
+
+
 router.get('*', (req, res) => {
   res.send('404 Page not found');
 });

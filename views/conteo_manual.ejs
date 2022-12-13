@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-lg-12 d-none d-sm-block">
         <h2>
-          Captura De Seriales Por Ubicación....
+          Captura De Seriales Con Cantidad
         </h2>
         <hr>
       </div>
@@ -23,6 +23,10 @@
             <label for=""> Ubicacion:</label>
             <input type="text" class="form-control" name="" id="ub" aria-describedby="helpId" placeholder=""
               value="<%= ubicacion %>" readonly>
+              <input type="text" class="form-control" name="" id="rack" aria-describedby="helpId" placeholder=""
+              value="<%= rack %>" hidden>
+              <input type="text" class="form-control" name="" id="storage_location" aria-describedby="helpId" placeholder=""
+              value="<%= storage_location %>" hidden>
 
           </div>
           <div class=" col-lg-3 d-none d-sm-block">
@@ -38,7 +42,7 @@
 
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-2">
           <div class="col-lg-12">
 
             <label>
@@ -60,120 +64,127 @@
                   id="basic-addon1"><span class="fas fa-barcode"></span></span>
               </div>
               <input oninput="this.value = this.value.toUpperCase()" type="text" name="serial" id="serial"
-                class="form-control" placeholder="Serial" aria-describedby="helpId" required>
+                class="form-control" placeholder="Serial" aria-describedby="helpId" required autocomplete="off">
 
             </div>
 
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+
+            <label>
+              <label>Numero Parte:
+                <span class="badge badge-warning " id="parteWarning" hidden>
+                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
+                  </span>
+                  <span id="parteWarning2" style="font-size: 15px ; color:black" hidden>
+                    Incorrecto
+                  </span>
+                </span>
+              </label>
+            </label>
+
+            <div class="input-group  col-lg-12 mb-2">
+
+              <div class="input-group-prepend ">
+                <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                  id="basic-addon1"><span class="fas fa-barcode"></span></span>
+              </div>
+              <input oninput="this.value = this.value.toUpperCase()" type="text" name="parte" id="parte"
+                class="form-control" placeholder="Numero Parte" aria-describedby="helpId" required autocomplete="off">
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+
+            <label>
+              <label>Cantidad:
+                <span class="badge badge-warning " id="cantidadWarning" hidden>
+                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
+                  </span>
+                  <span id="cantidadWarning2" style="font-size: 15px ; color:black" hidden>
+                    Incorrecto
+                  </span>
+                </span>
+              </label>
+            </label>
+
+            <div class="input-group  col-lg-12 mb-2">
+
+              <div class="input-group-prepend ">
+                <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                  id="basic-addon1"><span class="fas fa-barcode"></span></span>
+              </div>
+              <input oninput="this.value = this.value.toUpperCase()" type="text" name="cantidad" id="cantidad"
+                class="form-control" placeholder="Cantidad" aria-describedby="helpId" required autocomplete="off" min="1">
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+
+            <label>
+              <label>Cantidad:
+                <span class="badge badge-warning " id="cantidadWarningv" hidden>
+                  <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
+                  </span>
+                  <span id="cantidadWarningv2" style="font-size: 15px ; color:black" hidden>
+                    Incorrecto
+                  </span>
+                </span>
+              </label>
+            </label>
+
+            <div class="input-group  col-lg-12 mb-2">
+
+              <div class="input-group-prepend ">
+                <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+                  id="basic-addon1"><span class="fas fa-barcode"></span></span>
+              </div>
+              <input oninput="this.value = this.value.toUpperCase()" type="text" name="cantidad2" id="cantidad2"
+                class="form-control" placeholder="Cantidad" aria-describedby="helpId" required autocomplete="off" min="1">
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="input-group  col-lg-12 mb-2" hidden>
+
+          <div class="input-group-prepend ">
+            <span class="animated jello slow cdelay-2 input-group-text bg-secondary text-white"
+              id="basic-addon1"><span class="fas fa-barcode"></span></span>
+          </div>
+          <input oninput="this.value = this.value.toUpperCase()" type="number" name="obsoleto" id="obsoleto"
+            class="form-control" placeholder="" aria-describedby="helpId" required autocomplete="off" min="1">
+
+        </div>
+
+
       </div>
       <div class="col-lg-2">
         <div class="col lg-12">
           <div class="card">
-            <div class="card-header bg-secondary text-white text-center font-weight-bold"> Terminar Captura</div>
+            <div class="card-header bg-secondary text-white text-center font-weight-bold"> Cambiar Ubicacion</div>
             <div class="card-body text-center">
 
-              <button type="button" name="modalCaptura" id="modalCaptura" class="btn btn-primary btn-lg  "
-                data-toggle="modal" data-target="#exampleModal"><span class="fas fa-clipboard-check"
+              <button type="button" name="cambiarUbicacion" id="cambiarUbicacion" class="btn btn-primary btn-lg" onClick="history.go(-3)"><span class="fas fa-arrow-left"
                   style="font-size: 50px;"></span></button>
             </div>
           </div>
         </div>
         </div>
         <!-- Modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content  ">
-              <div class="modal-header">
-                <h6 class="modal-title ">Captura No: <span
-                    class="badge border-bottom-primary"><%= captura_grupo%></span> </h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body text-center">
-
-                <input type="text" class="form-control" name="captura_actual" id="captura_actual"
-                  aria-describedby="helpId" placeholder="" value="<%= captura_actual%>" hidden>
-
-                <div class="card" id="serialesObsoletosRow" hidden>
-                  <div class="card-header bg-danger text-white text-center font-weight-bold"> Apartar Seriales Obsoletos
-                  </div>
-                  <div class="card-body text-center">
-                    <div class="row">
-                      <div class="col-lg-12 text-center">
-                        <div id="spanObsoletos">
-                          <!-- Se hace append desde Jquery -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <form action="/conteo_guardar" method="POST">
-                  <div class="card">
-
-
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-success btn-block" id="btnCapturar">Capturar</button>
-                    </div>
-                    
-                    <div class="row text-center">
-
-                        <span class="col-4 col-lg-4 fas fa-minus-square text-warning" id="decrease" onclick="decreaseValue()" value="Decrease Value" style="font-size: 65px;"></span>
-                        
-                          <div class="col-4 col-lg-4 text-center">
-                            <div class="">
-                              <input type="number" class="form-control" name="contadorSeriales" id="contadorSeriales"
-                                value="0">
-                            </div>
-                          </div>
-                        
-                        <span class="col-4 col-lg-4 fas fa-plus-square text-success" id="increase" onclick="increaseValue()" value="Increase Value" style="font-size: 65px;"></span>
-                    </div>
-                    <div class="text-center"><strong >Seriales Contados</strong></div>
-                    <label class="mt-2">
-                     
-                        <span class="badge badge-warning " id="contadorWarning" hidden>
-                          <span class="badge badge-danger fas fa-exclamation-triangle" style="font-size: 10px;">
-                          </span>
-                          <span id="contadorWarning2" style="font-size: 15px ; color:black" hidden>
-                            Cantidad Incorrecta
-                          </span>
-                        </span>
-                      
-                    </label>
-                  
-                </div>
-                  <!-- Valores de POST -->
-                  <input type="text" class="form-control" name="gafete" id="gafete" aria-describedby="helpId"
-                    placeholder="" value="<%=gafete%>" hidden>
-
-                  <input type="text" class="form-control" name="seriales" id="seriales" aria-describedby="helpId"
-                    placeholder="" value="" hidden>
-                  <input type="text" class="form-control" name="serialesObsoletos" id="serialesObsoletos"
-                    aria-describedby="helpId" placeholder="" value="" hidden>
-                  <input type="text" class="form-control" name="nombreContador" id="nombreContador"
-                    aria-describedby="helpId" placeholder="" value="<%= nombreContador%>" hidden>
-                  <input type="text" class="form-control" name="ubicacion" id="ubicacion" aria-describedby="helpId"
-                    placeholder="" value="<%= ubicacion%>" hidden>
-                  <input type="text" class="form-control" name="captura_grupo" id="captura_grupo"
-                    aria-describedby="helpId" placeholder="" value="<%= captura_grupo%>" hidden>
-                  <input type="text" class="form-control" name="rack" id="rack" aria-describedby="helpId" placeholder=""
-                    value="<%= rack%>" hidden>
-                    <input type="text" class="form-control" name="storage_location" id="storage_location" aria-describedby="helpId"
-                    placeholder="" value="<%=storage_location%>" hidden>
-                  <!-- Valores de POST -->
-
-                </form>
-
-              </div>
-            </div>
-          </div>
-          <!--/ Modal -->
-
-        </div>
+     
         <div class="col-lg-4 d-none d-sm-block">
           <div class="col-lg-12">
             <div>
@@ -198,7 +209,7 @@
               <!-- Seriales Capturados agregados por Jquery -->
             </div>
             <div class="card-header bg-secondary rounded-bottom">
-              <div class="text-white">Capturado</></div>
+              <div class="text-white">Captura Actual</></div>
             </div>
           </div>
         </div>
@@ -209,9 +220,72 @@
     </div>
     <!-- End of Main Content -->
 
-    <% include ./static/footer.ejs%>
 
-    <script>
+    <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header card-mov">
+                <img src="../public/img/TristoneLogo2.png" alt="" srcset="" class="card-mov">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-times text-danger" style="font-size: 2rem;"> </i>
+                    </div>
+                    <div class="col">
+                        <h5>Apartar Serial Obsoleto</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCerrar_error" type="button" class="btn btn-secondary btnCerrar"
+                    data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalSuccess" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header card-mov">
+            <img src="../public/img/TristoneLogo2.png" alt="" srcset="" class="card-mov">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-2">
+                    <i class="fas fa-check text-success" style="font-size: 2rem;"> </i>
+                </div>
+                <div class="col">
+                    <h5>Serial Guardado</h5>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btnCerrar_success" type="button" class="btn btn-secondary btnCerrar"
+                data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+    <% include ./static/footer.ejs%>
+    <script src="/js/functions/conteo_manual.js"></script>
+
+    <!-- <script>
 
 
 
@@ -408,6 +482,6 @@
         }
       });
 
-    </script>
+    </script> -->
 
     

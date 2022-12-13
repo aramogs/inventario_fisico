@@ -103,32 +103,38 @@
                         <div class="card-header bg-secondary text-white">Ubicaciones</div>
                         <div class="card-body">
                             <div class="row">
-                                <% for (let i = 0; i < ubicaciones.length; i++) { %>
-                                <% if (ubicaciones[i].estado_auditoria == 1) { %>
-                                <!-- <h6 style="display:inline; "><span class="badge badge-success fspan"><%= ubicaciones[i].distinct_ubicacion %></span></h6> -->
+                                <% for (let y = 0; y < unique_sl.length; y++) { %>
 
-                                <div class="col- mb-2 mr-1 ml-1 grow">
-                                    <div style="animation-delay: .15s" class="card text-center animated bounceIn">
-                                        <button type="submit" class="btn btn-success" name="ubicacion" disabled
-                                            formaction="/auditar_ubicacion/ "
-                                            value="<%= ubicaciones[i].distinct_ubicacion %> "><%= ubicaciones[i].distinct_ubicacion %>
-                                        </button>
-                                    </div>
-                                </div>
+                                    <div class="alert alert-secondary btn-block" role="alert"><%= (unique_sl[y].distinct_area).toUpperCase() %></div>
 
-                                <% } else{%>
-                                <!-- <h6 style="display:inline; "><span class="badge badge-secondary fspan"><%= ubicaciones[i].distinct_ubicacion %></span></h6> -->
+                                        <% for (let i = 0; i < ubicaciones.length; i++) { %>
+                                       
+                                        <% if (ubicaciones[i].estado_auditoria == 1 && ubicaciones[i].area_ubicacion == unique_sl[y].distinct_area) { %>
+                                        <!-- <h6 style="display:inline; "><span class="badge badge-success fspan"><%= ubicaciones[i].distinct_ubicacion %></span></h6> -->
+                                            
+                                            <div class="col- mb-2 mr-1 ml-1 grow">
+                                                <div style="animation-delay: .15s" class="card text-center animated bounceIn">
+                                                    <button type="submit" class="btn btn-success" name="ubicacion" disabled
+                                                        formaction="/auditar_ubicacion/ "
+                                                        value="<%= ubicaciones[i].distinct_ubicacion %> "><%= ubicaciones[i].distinct_ubicacion %>
+                                                    </button>
+                                                </div>
+                                            </div>
 
-                                <div class="col- mb-2 mr-1 ml-1 grow">
-                                    <div style="animation-delay: .15s" class="card text-center animated bounceIn">
-                                        <button type="submit" class="btn btn-outline-info" name="ubicacion"
-                                            formaction="/auditar_ubicacion/ "
-                                            value="<%= ubicaciones[i].distinct_ubicacion %> "><%= ubicaciones[i].distinct_ubicacion %></button>
-                                    </div>
-                                </div>
+                                        <% } else if ((ubicaciones[i].estado_auditoria == 0 && ubicaciones[i].area_ubicacion == unique_sl[y].distinct_area) ){%>
+                                        <!-- <h6 style="display:inline; "><span class="badge badge-secondary fspan"><%= ubicaciones[i].distinct_ubicacion %></span></h6> -->
+
+                                        <div class="col- mb-2 mr-1 ml-1 grow">
+                                            <div style="animation-delay: .15s" class="card text-center animated bounceIn">
+                                                <button type="submit" class="btn btn-outline-info" name="ubicacion"
+                                                    formaction="/auditar_ubicacion/ "
+                                                    value="<%= ubicaciones[i].distinct_ubicacion %> "><%= ubicaciones[i].distinct_ubicacion %></button>
+                                            </div>
+                                        </div>
 
 
-                                <% } %>
+                                    <% } %>
+                                    <% } %>
                                 <% } %>
                             </div>
                         </div>
