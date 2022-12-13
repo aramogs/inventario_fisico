@@ -21,7 +21,7 @@
     "chart.js": "^2.8.0",
     "chartjs-plugin-datalabels": "^0.7.0",
     "datatables": "^1.10.18",
-    "ejs": "^2.7.1",
+    "ejs": "^3.1.7",
     "exceljs": "^3.5.0",
     "express": "^4.17.1",
     "express-mailer": "^0.3.1",
