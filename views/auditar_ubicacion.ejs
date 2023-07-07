@@ -65,7 +65,7 @@
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header bg-secondary text-white text-center font-weight-bold">
-                                <h5>Terminar Auditoria</h5>
+                                <h5>Guardar Auditoria</h5>
                             </div>
                             <div class="card-body text-center">
 
@@ -77,7 +77,7 @@
                                 <input type="text" class="form-control" name="ubicacion" id="ubicacion"
                                     value="<%= ubicacion%>" hidden>
 
-                                <button type="submit" name="" id="btnTerminar" class="btn btn-warning btn-lg " disabled>
+                                <button type="submit" name="" id="btnTerminar" class="btn btn-warning btn-lg " >
                                     <span class="fas fa-clipboard-check" style="font-size: 40px;"></span>
                                 </button>
 
@@ -278,7 +278,8 @@
                 'gafete': <%= gafete%>,
                 'ubicacion': '<%= ubicacion%>',
                 'seriales[]': items,
-                'storage_location': '<%= storage_location%>'
+                'storage_location': '<%= storage_location%>',
+                'porcentaje': Math.round((100 * (contados + items.length)) / total)
          });
         window.location.href = '/login/auditar';
         })

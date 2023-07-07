@@ -1128,7 +1128,7 @@ controller.terminar_auditoria_POST = (req, res) => {
     gafete = req.body.gafete
     seriales = req.body.seriales
     storage_location = req.body.storage_location
-
+    porcentaje_contado = req.body.porcentaje
 
     if (seriales != undefined) {
 
@@ -1142,12 +1142,17 @@ controller.terminar_auditoria_POST = (req, res) => {
         funcionE.empleadosNombre(gafete, (err, nombre) => {
 
             if (storage_location == "vulcanizado" || storage_location == "green") {
-                funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => { })
+                if (porcentaje_contado > 10) {
+                    funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => { })
+                }
             } else if (storage_location == "mp") {
-
-                funcion.Update_Ubicacion_Auditada_MP(ubicacion, (err, result) => { })
+                if (porcentaje_contado > 10) {
+                    funcion.Update_Ubicacion_Auditada_MP(ubicacion, (err, result) => { })
+                }
             } else {
-                funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => { })
+                if (porcentaje_contado > 10) {
+                    funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => { })
+                }
             }
 
         })
@@ -1155,12 +1160,18 @@ controller.terminar_auditoria_POST = (req, res) => {
         funcionE.empleadosNombre(gafete, (err, nombre) => {
 
             if (storage_location == "vulcanizado" || storage_location == "green") {
-                funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => { })
+                if (porcentaje_contado > 10) {
+                    funcion.Update_Ubicacion_Auditada_Vulcanizado(ubicacion, (err, result) => { })
+                }
             } else if (storage_location == "mp") {
-                funcion.Update_Ubicacion_Auditada_MP(ubicacion, (err, result) => { })
+                if (porcentaje_contado > 10) {
+                    funcion.Update_Ubicacion_Auditada_MP(ubicacion, (err, result) => { })
+                }
             }
             else {
-                funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => { })
+                if (porcentaje_contado > 10) {
+                    funcion.Update_Ubicacion_Auditada(ubicacion, (err, result) => { })
+                }
             }
 
         })
